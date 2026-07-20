@@ -1,0 +1,147 @@
+/* =============================================
+   Modal Styles
+   ============================================= */
+
+/* Overlay - 배경 어둡게 */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: var(--space-4);
+    animation: fadeIn 0.2s ease-out;
+}
+
+/* Modal Content */
+.modal {
+    background-color: var(--bg-primary);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl);
+    width: 100%;
+    max-width: 400px;
+    padding: var(--space-6);
+    position: relative;
+    animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Header */
+.header {
+    margin-bottom: var(--space-4);
+}
+
+.title {
+    font-size: var(--text-xl);
+    font-weight: var(--font-bold);
+    color: var(--ditto-700);
+    margin-bottom: var(--space-3);
+}
+
+.description {
+    font-size: var(--text-base);
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* Footer (Buttons) */
+.footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+}
+
+.button {
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    transition: all var(--transition-fast);
+}
+
+.cancelButton {
+    background-color: var(--bg-tertiary);
+    color: var(--text-secondary);
+}
+
+.cancelButton:hover {
+    background-color: var(--color-gray-200);
+    color: var(--text-primary);
+}
+
+.confirmButton {
+    background: linear-gradient(135deg, var(--ditto-500), var(--ditto-600));
+    color: white;
+    border: none;
+}
+
+.confirmButton:hover {
+    background: linear-gradient(135deg, var(--ditto-600), var(--ditto-700));
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.2);
+}
+
+.dittoButton {
+    background: var(--ditto-100);
+    color: var(--ditto-700);
+    border: 1px solid var(--ditto-200);
+}
+
+.dittoButton:hover {
+    background: var(--ditto-200);
+}
+
+.dangerButton {
+    background-color: #fb7185;
+    color: white;
+}
+
+.dangerButton:hover {
+    background-color: #e11d48;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.kbd {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1px 5px;
+    margin-left: 4px;
+    background: rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    font-family: monospace;
+    color: inherit;
+    opacity: 0.6;
+    line-height: 1;
+    vertical-align: middle;
+}

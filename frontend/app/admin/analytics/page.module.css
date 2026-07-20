@@ -1,0 +1,378 @@
+.container {
+    padding: var(--space-6);
+    max-width: 1100px;
+}
+
+/* 페이지 헤더 */
+.pageHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    gap: 1rem;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0 0 4px;
+}
+
+.subtitle {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* 기간 탭 */
+.periodTabs {
+    display: flex;
+    gap: 4px;
+    background: #f4f4f8;
+    border-radius: 10px;
+    padding: 3px;
+}
+
+.periodTab {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #888;
+    cursor: pointer;
+    transition: all 150ms;
+    white-space: nowrap;
+}
+
+.periodTab:hover {
+    color: #555;
+}
+
+.periodActive {
+    background: white;
+    color: #7c3aed;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+/* 요약 카드 */
+.summaryGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 1.5rem;
+}
+
+.summaryCard {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 18px 20px;
+    background: white;
+    border: 1px solid #e8e8ee;
+    border-radius: 14px;
+}
+
+.cardLabel {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.cardValue {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #1a1a2e;
+}
+
+.cardValue.danger {
+    color: #dc2626;
+}
+
+.cardSub {
+    font-size: 0.75rem;
+    color: #b0b0b8;
+}
+
+/* 차트 섹션 */
+.chartSection {
+    background: white;
+    border: 1px solid #e8e8ee;
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 1rem;
+}
+
+.sectionTitle {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0 0 16px;
+}
+
+.twoCol {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+/* 바 차트 */
+.chartContainer {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 180px;
+    padding-bottom: 24px;
+}
+
+.chartScroll {
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #ddd transparent;
+}
+
+.barGroup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    min-width: 28px;
+    gap: 4px;
+}
+
+.barWrapper {
+    width: 100%;
+    height: 140px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.bar {
+    width: 70%;
+    max-width: 32px;
+    min-height: 2px;
+    background: linear-gradient(180deg, #a78bfa, #8b5cf6);
+    border-radius: 4px 4px 0 0;
+    transition: height 400ms ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.bar:hover {
+    opacity: 0.85;
+    filter: brightness(1.1);
+}
+
+.barTooltip {
+    position: absolute;
+    top: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #555;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.barGreen {
+    background: linear-gradient(180deg, #86efac, #22c55e);
+}
+
+.barOrange {
+    background: linear-gradient(180deg, #fdba74, #f97316);
+}
+
+.barLabel {
+    font-size: 0.68rem;
+    color: #888;
+    white-space: nowrap;
+}
+
+.barLabelHidden {
+    visibility: hidden;
+}
+
+/* 인기 메뉴 랭킹 */
+.rankList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.emptyRank {
+    text-align: center;
+    padding: 2rem;
+    color: #999;
+}
+
+.rankItem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    background: #faf8ff;
+    border-radius: 12px;
+    transition: background 150ms;
+}
+
+.rankItem:hover {
+    background: #f0e6ff;
+}
+
+.rankNum {
+    font-size: 1.2rem;
+    width: 32px;
+    text-align: center;
+    flex-shrink: 0;
+    font-weight: 700;
+    color: #7c3aed;
+}
+
+.rankInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.rankName {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #1a1a2e;
+}
+
+.rankBarOuter {
+    width: 100%;
+    height: 6px;
+    background: #ede9fe;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.rankBarInner {
+    height: 100%;
+    background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+    border-radius: 3px;
+    transition: width 600ms ease;
+}
+
+.rankStats {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    flex-shrink: 0;
+}
+
+.rankQty {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #7c3aed;
+}
+
+.rankRev {
+    font-size: 0.78rem;
+    color: #999;
+}
+
+/* ─── 반응형 (태블릿) ─── */
+@media (max-width: 1024px) {
+    .container {
+        max-width: none;
+    }
+
+    .summaryGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .twoCol {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ─── 반응형 (모바일) ─── */
+@media (max-width: 768px) {
+    .container {
+        padding: var(--space-4);
+        max-width: none;
+    }
+
+    .pageHeader {
+        flex-direction: column;
+    }
+
+    .periodTabs {
+        width: 100%;
+    }
+
+    .periodTab {
+        flex: 1;
+        text-align: center;
+        padding: 8px 10px;
+        font-size: 0.82rem;
+    }
+
+    .summaryGrid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .summaryCard {
+        padding: 14px;
+    }
+
+    .cardValue {
+        font-size: 1.1rem;
+    }
+
+    .chartSection {
+        padding: 14px;
+    }
+
+    .chartContainer {
+        height: 140px;
+    }
+
+    .barLabel {
+        font-size: 0.55rem;
+    }
+
+    .rankItem {
+        padding: 10px 12px;
+        gap: 8px;
+    }
+
+    .rankName {
+        font-size: 0.88rem;
+    }
+
+    .rankStats {
+        min-width: 60px;
+    }
+
+    .rankQty {
+        font-size: 0.82rem;
+    }
+
+    .rankRev {
+        font-size: 0.72rem;
+    }
+}
+
+/* ─── 반응형 (작은 모바일) ─── */
+@media (max-width: 480px) {
+    .summaryGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .barGroup {
+        min-width: 20px;
+    }
+}

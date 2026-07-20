@@ -1,0 +1,47 @@
+/* =============================================
+   메타몽 카페 랜딩 페이지 스타일 (Global & Page Container)
+   ============================================= */
+
+.page {
+  /* 파스텔 라벤더 팔레트 */
+  --ditto-50: #fdfcff;
+  --ditto-100: #f8f4ff;
+  --ditto-200: #f0e6ff;
+  --ditto-300: #e4d4fc;
+  --ditto-400: #d4bbf7;
+  --ditto-500: #c4a4f0;
+  --ditto-600: #a87edb;
+  --ditto-700: #8b62c0;
+  --ditto-800: #6e4a9e;
+  --ditto-900: #4a3570;
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--ditto-50);
+  overflow-x: hidden;
+  position: relative;
+}
+
+.fadeIn {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.8s ease-in-out;
+}
+
+.hidden {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+.fullPageLoader {
+  position: fixed;
+  inset: 0;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}

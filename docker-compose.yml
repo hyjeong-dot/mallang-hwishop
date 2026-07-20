@@ -1,0 +1,81 @@
+services:
+  backend:
+    image: ${BACKEND_IMAGE:-${USER_ID}-backend:latest}
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ${USER_ID}-backend
+    # ports 제거: 외부 노출 차단 (BFF 패턴)
+    volumes:
+      - /home/hyjeong/dist/ncafe2026/backend/upload:/app/upload
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL:?SPRING_DATASOURCE_URL 환경변수가 설정되지 않았습니다.}
+      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME:-ncafe}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD:?DB_PASSWORD 환경변수가 설정되지 않았습니다.}
+      - JWT_SECRET=${JWT_SECRET:?JWT_SECRET 환경변수가 설정되지 않았습니다.}
+      - JWT_EXPIRATION=${JWT_EXPIRATION:-86400000}
+      - UPLOAD_LOCATION=file:/app/upload/
+      - TOSS_SECRET_KEY=${TOSS_SECRET_KEY}
+    restart: unless-stopped
+    depends_on:
+      - db
+
+  frontend:
+    image: ${FRONTEND_IMAGE:-${USER_ID}-frontend:latest}
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_TOSS_CLIENT_KEY: ${TOSS_CLIENT_KEY}
+        NEXT_PUBLIC_TOSS_CHANNEL_KEY: ${TOSS_CHANNEL_KEY}
+    container_name: ${USER_ID}-frontend
+    ports:
+      - "${FRONTEND_PORT:-3034}:3000" # 외부 포트:내부 포트(3000)
+    environment:
+      # 컨테이너 내부 포트를 3000으로 설정
+      - PORT=3000
+      - API_BASE_URL=http://backend:8080
+      - AGENT_BASE_URL=http://agent:8000
+      - SESSION_SECRET=${SESSION_SECRET}
+      - NEXT_PUBLIC_TOSS_CLIENT_KEY=${TOSS_CLIENT_KEY}
+      - NEXT_PUBLIC_TOSS_CHANNEL_KEY=${TOSS_CHANNEL_KEY}
+    depends_on:
+      - backend
+      - agent
+    restart: unless-stopped
+
+  agent:
+    image: ${AGENT_IMAGE:-${USER_ID}-agent:latest}
+    build:
+      context: ./agent-server
+      dockerfile: Dockerfile
+    container_name: ${USER_ID:-hyjeong}-agent
+    # ports:
+    #   - "8000:8000"
+    environment:
+      - DB_NAME=${DB_NAME:-ncafedb}
+      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME:-ncafe}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=db
+      - DB_PORT=5432
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    restart: unless-stopped
+
+  # DB 서비스
+  db:
+    # 벡터 검색 지원을 지원하는 PostgreSQL 이미지 (Postgres 17 기반)
+    image: pgvector/pgvector:pg17
+    container_name: ${USER_ID}-db
+    environment:
+      POSTGRES_DB: ${DB_NAME:-ncafedb}
+      POSTGRES_USER: ${SPRING_DATASOURCE_USERNAME:-ncafe}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    # ports 제거: 외부에서 DB 접근 불가 (보안 강화)
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  db-data:
+    name: ${USER_ID:-hyjeong}-db-data

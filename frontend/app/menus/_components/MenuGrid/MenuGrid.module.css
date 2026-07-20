@@ -1,0 +1,128 @@
+.gridSection {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+    position: relative;
+}
+
+.overlayLoader {
+    padding: 5rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+}
+
+.fadeIn {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.6s ease-in-out;
+}
+
+.hidden {
+    opacity: 0;
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
+}
+
+/* Empty / Error */
+.emptyWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem 1rem;
+    text-align: center;
+}
+
+.emptyEmoji {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.emptyText {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #6e4a9e;
+    margin-bottom: 0.4rem;
+}
+
+.emptySubText {
+    font-size: 0.9rem;
+    color: #a87edb;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .gridSection {
+        padding: 1.5rem 1rem 3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .grid {
+        grid-template-columns: 1fr;
+        max-width: 380px;
+        margin: 0 auto;
+    }
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 3rem;
+    padding-bottom: 2rem;
+}
+
+.pageButton {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    border: 2px solid #f8f4ff;
+    background: #fff;
+    color: #8b62c0;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.pageButton:hover:not(:disabled) {
+    border-color: #d4bbf7;
+    background: #f8f4ff;
+}
+
+.pageButton.active {
+    background: #a87edb;
+    color: #fff;
+    border-color: #a87edb;
+    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.2);
+}
+
+.pageButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #fdfcff;
+}

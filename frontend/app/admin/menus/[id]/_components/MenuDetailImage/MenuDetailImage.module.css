@@ -1,0 +1,165 @@
+/* Image Section */
+.imageSection {
+    position: sticky;
+    top: var(--space-6);
+}
+
+.mainImageWrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+}
+
+.mainImage {
+    object-fit: cover;
+}
+
+.primaryBadge {
+    position: absolute;
+    top: var(--space-4);
+    left: var(--space-4);
+    background-color: var(--ditto-600);
+    /* Slightly deeper primary */
+    color: white;
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    /* Softer, deeper shadow */
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    backdrop-filter: blur(4px);
+    /* Glass effect if possible */
+}
+
+.thumbnailBadge {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background-color: var(--ditto-500);
+    color: white;
+    width: 16px;
+    height: 16px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+}
+
+.noImage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    color: var(--text-muted);
+}
+
+/* Thumbnail Gallery */
+.thumbnailList {
+    display: flex;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+    overflow-x: auto;
+    padding-bottom: var(--space-2);
+}
+
+.thumbnailItem {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 2px solid transparent;
+    transition: all var(--transition-fast);
+    padding: 0;
+    background: none;
+}
+
+.thumbnailItem:hover {
+    border-color: var(--ditto-300);
+}
+
+.activeThumbnail {
+    border-color: var(--ditto-500);
+    box-shadow: var(--shadow-sm);
+}
+
+.thumbnailImage {
+    object-fit: cover;
+}
+
+/* Nutrition Grid */
+.nutritionGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+    background-color: var(--bg-secondary);
+    padding: var(--space-5);
+    border-radius: var(--radius-lg);
+}
+
+.nutritionItem {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.nutritionIcon {
+    width: 32px;
+    height: 32px;
+    background-color: white;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ditto-500);
+}
+
+.nutritionInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.nutritionLabel {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+}
+
+.nutritionValue {
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: var(--text-primary);
+}
+
+@media (max-width: 1024px) {
+    .imageSection {
+        position: static;
+    }
+
+    .mainImageWrapper {
+        max-height: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .nutritionGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .mainImageWrapper {
+        max-height: 300px;
+    }
+}

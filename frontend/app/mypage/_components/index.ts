@@ -1,0 +1,9 @@
+export { default as MyPageHeader } from "./MyPageHeader/MyPageHeader";
+export { default as MyPageSidebar } from "./MyPageSidebar/MyPageSidebar";
+export { default as MyPageProfile } from "./MyPageProfile/MyPageProfile";
+export { default as MyPageOrders } from "./MyPageOrders/MyPageOrders";
+export { default as MyPageFavorites } from "./MyPageFavorites/MyPageFavorites";
+export { default as MyPageCoupons } from "./MyPageCoupons/MyPageCoupons";
+export { default as MyPageReviews } from "./MyPageReviews/MyPageReviews";
+export { default as MyPageInquiries } from "./MyPageInquiries/MyPageInquiries";
+export { default as MyPageMain } from "./MyPageMain/MyPageMain";
