@@ -40,18 +40,19 @@ public class CafeSettingsService implements GetCafeSettingsUseCase, UpdateCafeSe
         if (command.getInstagramUrl() != null) settings.setInstagramUrl(command.getInstagramUrl());
         settings.setManualClosed(command.isManualClosed());
 
-        return toResult(repository.save(settings));
+        return toResult(repository.save(com.mallanghwishop.backend.admin.cafe.adapter.out.persistence.entity.CafeSettingsJpaEntity.fromDomain(settings)).toDomain());
     }
 
     private CafeSettings getOrCreateSettings() {
         return repository.findAll().stream().findFirst()
-                .orElseGet(() -> repository.save(CafeSettings.builder()
-                        .cafeName("Meta Cafe")
-                        .description("메타몽이 운영하는 힐링 카페에 오신 걸 환영해몽! (._.)")
+                .map(com.mallanghwishop.backend.admin.cafe.adapter.out.persistence.entity.CafeSettingsJpaEntity::toDomain)
+                .orElseGet(() -> repository.save(com.mallanghwishop.backend.admin.cafe.adapter.out.persistence.entity.CafeSettingsJpaEntity.fromDomain(CafeSettings.builder()
+                        .cafeName("Mallang-hwishop")
+                        .description("말랑이가 운영하는 상점에 오신 걸 환영해!")
                         .openTime(LocalTime.of(9, 0))
                         .closeTime(LocalTime.of(22, 0))
                         .manualClosed(false)
-                        .build()));
+                        .build())).toDomain());
     }
 
     private CafeSettingsResult toResult(CafeSettings settings) {

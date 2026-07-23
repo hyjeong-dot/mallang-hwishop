@@ -33,6 +33,7 @@ public class AdminOrderService implements GetAdminOrderListUseCase, UpdateOrderS
     @Transactional(readOnly = true)
     public List<AdminOrderResult> getAllOrders() {
         return orderRepository.findAll().stream()
+                .map(com.mallanghwishop.backend.order.adapter.out.persistence.entity.OrderJpaEntity::toDomain)
                 .sorted((o1, o2) -> o2.getCreatedAt().compareTo(o1.getCreatedAt()))
                 .map(this::toResult)
                 .collect(Collectors.toList());
@@ -41,10 +42,11 @@ public class AdminOrderService implements GetAdminOrderListUseCase, UpdateOrderS
     @Override
     public void updateStatus(Long orderId, OrderStatus status) {
         Order order = orderRepository.findById(orderId)
+                .map(com.mallanghwishop.backend.order.adapter.out.persistence.entity.OrderJpaEntity::toDomain)
                 .orElseThrow(() -> new IllegalArgumentException("Order not found with id: " + orderId));
 
         order.setStatus(status);
-        orderRepository.save(order);
+        orderRepository.save(com.mallanghwishop.backend.order.adapter.out.persistence.entity.OrderJpaEntity.fromDomain(order));
 
         // Phase 2에서 적립금 차감 로직 추가 예정
     }

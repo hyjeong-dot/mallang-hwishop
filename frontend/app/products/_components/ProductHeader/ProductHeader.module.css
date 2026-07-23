@@ -16,13 +16,12 @@
 
 .bannerArea {
     width: 100%;
-    max-width: 800px; /* 배너 최대 너비 지정 */
 }
 
 .heroBanner {
     width: 100%;
-    height: auto;
-    object-fit: contain;
+    height: 300px;
+    object-fit: cover;
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-sm);
 }

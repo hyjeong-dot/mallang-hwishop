@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import java.util.Optional;
 import java.util.UUID;
+import com.mallanghwishop.backend.member.adapter.out.persistence.entity.MemberJpaEntity;
+
 @Component
 @RequiredArgsConstructor
 public class MemberPersistenceAdapter implements LoadMemberPort, SaveMemberPort, DeleteMemberPort {
@@ -16,22 +18,23 @@ public class MemberPersistenceAdapter implements LoadMemberPort, SaveMemberPort,
 
     @Override
     public Optional<Member> findByNickname(String nickname) {
-        return memberJpaRepository.findByNickname(nickname);
+        return memberJpaRepository.findByNickname(nickname).map(MemberJpaEntity::toDomain);
     }
 
     @Override
     public Optional<Member> findByUsername(String username) {
-        return memberJpaRepository.findByUsername(username);
+        return memberJpaRepository.findByUsername(username).map(MemberJpaEntity::toDomain);
     }
 
     @Override
     public Optional<Member> findById(UUID memberId) {
-        return memberJpaRepository.findById(memberId);
+        return memberJpaRepository.findById(memberId).map(MemberJpaEntity::toDomain);
     }
 
     @Override
     public Member save(Member member) {
-        return memberJpaRepository.save(member);
+        MemberJpaEntity entity = MemberJpaEntity.fromDomain(member);
+        return memberJpaRepository.save(entity).toDomain();
     }
 
     @Override

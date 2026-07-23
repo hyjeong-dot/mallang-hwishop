@@ -1,16 +1,16 @@
 package com.mallanghwishop.backend.member.adapter.out.persistence;
 
-import com.mallanghwishop.backend.member.domain.model.Member;
+import com.mallanghwishop.backend.member.adapter.out.persistence.entity.MemberJpaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface MemberJpaRepository extends JpaRepository<Member, UUID> {
-    Optional<Member> findByNickname(String nickname);
+public interface MemberJpaRepository extends JpaRepository<MemberJpaEntity, UUID> {
+    Optional<MemberJpaEntity> findByNickname(String nickname);
     boolean existsByNickname(String nickname);
     void deleteByNickname(String nickname);
 
-    Optional<Member> findByUsername(String username);
+    Optional<MemberJpaEntity> findByUsername(String username);
     boolean existsByUsername(String username);
     void deleteByUsername(String username);
     

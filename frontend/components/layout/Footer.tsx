@@ -28,8 +28,8 @@ export default function Footer() {
                     <div>
                         <div className={styles.logoArea} style={{ color: '#fff', marginBottom: '1rem' }}>
                             <Image
-                                src="/images/ditto/favicon-ditto.png"
-                                alt="Ditto Logo"
+                                src="/images/logo.png"
+                                alt="Mallang Logo"
                                 width={28}
                                 height={28}
                                 className={styles.footerLogoImage}
@@ -84,7 +84,7 @@ export default function Footer() {
                         </div>
                         <div className={styles.contactItem}>
                             <Mail size={16} />
-                            <span>hello@dittocafe.kr</span>
+                            <span>hello@mallangshop.kr</span>
                         </div>
                         <div className={styles.contactItem}>
                             <Clock size={16} />
@@ -93,11 +93,21 @@ export default function Footer() {
                     </div>
                 </div>
 
+                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>
+                    <Image
+                        src="/images/footer-illustration.png"
+                        alt="Cute Fluffy Character"
+                        width={250}
+                        height={250}
+                        style={{ borderRadius: '20px', objectFit: 'cover', boxShadow: '0 8px 24px rgba(0,0,0,0.1)' }}
+                    />
+                </div>
+
                 <div className={styles.footerBottom}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
                         <Image
-                            src="/images/ditto/favicon-ditto.png"
-                            alt="Ditto Icon"
+                            src="/images/logo.png"
+                            alt="Mallang Icon"
                             width={16}
                             height={16}
                             style={{ opacity: 0.7 }}
@@ -115,7 +125,7 @@ export default function Footer() {
                     title="맨 위로 가기"
                 >
                     <Image
-                        src="/images/ditto/favicon-ditto.png"
+                        src="/images/logo-alt.png"
                         alt="Top"
                         width={40}
                         height={40}

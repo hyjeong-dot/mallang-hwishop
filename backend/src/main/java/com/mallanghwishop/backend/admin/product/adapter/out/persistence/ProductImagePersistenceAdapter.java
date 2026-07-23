@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
 
+import com.mallanghwishop.backend.admin.product.adapter.out.persistence.entity.AdminProductImageJpaEntity;
+import java.util.stream.Collectors;
+
 @Component("adminProductImagePersistenceAdapter")
 @RequiredArgsConstructor
 public class ProductImagePersistenceAdapter implements ProductImagePort {
@@ -15,7 +18,7 @@ public class ProductImagePersistenceAdapter implements ProductImagePort {
 
     @Override
     public Long saveImage(AdminProductImage image) {
-        return repository.save(image).getId();
+        return repository.save(AdminProductImageJpaEntity.fromDomain(image)).getId();
     }
 
     @Override
@@ -25,12 +28,14 @@ public class ProductImagePersistenceAdapter implements ProductImagePort {
 
     @Override
     public Optional<AdminProductImage> findImageById(Long imageId) {
-        return repository.findById(imageId);
+        return repository.findById(imageId).map(AdminProductImageJpaEntity::toDomain);
     }
 
     @Override
     public List<AdminProductImage> findAllByProductId(Long productId) {
-        return repository.findAllByProductIdOrderBySortOrderAsc(productId);
+        return repository.findAllByProductIdOrderBySortOrderAsc(productId).stream()
+                .map(AdminProductImageJpaEntity::toDomain)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -41,14 +46,14 @@ public class ProductImagePersistenceAdapter implements ProductImagePort {
     @Override
     public void setPrimaryImage(Long productId, Long imageId) {
         // 이 상품의 모든 이미지를 일단 순서 1로 밀어냄 (비대표)
-        List<AdminProductImage> allImages = repository.findAllByProductIdOrderBySortOrderAsc(productId);
-        for (AdminProductImage img : allImages) {
-            img.updateSortOrder(1);
+        List<AdminProductImageJpaEntity> allImages = repository.findAllByProductIdOrderBySortOrderAsc(productId);
+        for (AdminProductImageJpaEntity img : allImages) {
+            img.setSortOrder(1);
         }
         
         // 선택된 이미지만 0으로 설정 (대표)
         repository.findById(imageId).ifPresent(img -> {
-            img.updateSortOrder(0);
+            img.setSortOrder(0);
         });
         
         repository.saveAll(allImages);

@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
 
+import com.mallanghwishop.backend.admin.category.adapter.out.persistence.entity.AdminCategoryJpaEntity;
+import java.util.stream.Collectors;
+
 @Component("adminCategoryPersistenceAdapter")
 @RequiredArgsConstructor
 public class CategoryPersistenceAdapter implements SaveCategoryPort, LoadCategoryPort, DeleteCategoryPort {
@@ -17,17 +20,20 @@ public class CategoryPersistenceAdapter implements SaveCategoryPort, LoadCategor
 
     @Override
     public Long save(AdminCategory category) {
-        return categoryJpaRepository.save(category).getId();
+        AdminCategoryJpaEntity entity = AdminCategoryJpaEntity.fromDomain(category);
+        return categoryJpaRepository.save(entity).getId();
     }
 
     @Override
     public List<AdminCategory> findAll() {
-        return categoryJpaRepository.findAllByOrderBySortOrderAsc();
+        return categoryJpaRepository.findAllByOrderBySortOrderAsc().stream()
+                .map(AdminCategoryJpaEntity::toDomain)
+                .collect(Collectors.toList());
     }
 
     @Override
     public Optional<AdminCategory> findById(Long id) {
-        return categoryJpaRepository.findById(id);
+        return categoryJpaRepository.findById(id).map(AdminCategoryJpaEntity::toDomain);
     }
 
     @Override

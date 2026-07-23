@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.mallanghwishop.backend.cart.adapter.out.persistence.entity.CartJpaEntity;
+
 @Repository
 @RequiredArgsConstructor
 public class CartPersistenceAdapter implements CartPersistencePort {
@@ -16,11 +18,12 @@ public class CartPersistenceAdapter implements CartPersistencePort {
 
     @Override
     public Optional<Cart> findByMemberId(UUID memberId) {
-        return repository.findByMemberId(memberId);
+        return repository.findByMemberId(memberId).map(CartJpaEntity::toDomain);
     }
 
     @Override
     public Cart save(Cart cart) {
-        return repository.save(cart);
+        CartJpaEntity entity = CartJpaEntity.fromDomain(cart);
+        return repository.save(entity).toDomain();
     }
 }

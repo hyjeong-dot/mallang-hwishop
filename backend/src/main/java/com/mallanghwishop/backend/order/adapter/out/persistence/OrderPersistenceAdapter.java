@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+import com.mallanghwishop.backend.order.adapter.out.persistence.entity.OrderJpaEntity;
+import java.util.stream.Collectors;
+
 @Component
 @RequiredArgsConstructor
 public class OrderPersistenceAdapter implements OrderPort {
@@ -16,16 +19,19 @@ public class OrderPersistenceAdapter implements OrderPort {
 
     @Override
     public Order saveOrder(Order order) {
-        return orderRepository.save(order);
+        OrderJpaEntity entity = OrderJpaEntity.fromDomain(order);
+        return orderRepository.save(entity).toDomain();
     }
 
     @Override
     public Optional<Order> findById(Long id) {
-        return orderRepository.findById(id);
+        return orderRepository.findById(id).map(OrderJpaEntity::toDomain);
     }
 
     @Override
     public java.util.List<Order> findAllByMemberIdOrderByCreatedAtDesc(java.util.UUID memberId) {
-        return orderRepository.findAllByMemberIdOrderByCreatedAtDesc(memberId);
+        return orderRepository.findAllByMemberIdOrderByCreatedAtDesc(memberId).stream()
+                .map(OrderJpaEntity::toDomain)
+                .collect(Collectors.toList());
     }
 }

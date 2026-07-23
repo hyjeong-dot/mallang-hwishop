@@ -1,17 +1,17 @@
 package com.mallanghwishop.backend.review.domain.repository;
 
-import com.mallanghwishop.backend.review.domain.model.Review;
+import com.mallanghwishop.backend.review.adapter.out.persistence.entity.ReviewJpaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface ReviewRepository extends JpaRepository<Review, Long> {
+public interface ReviewRepository extends JpaRepository<ReviewJpaEntity, Long> {
 
-    List<Review> findByMemberIdOrderByCreatedAtDesc(UUID memberId);
+    List<ReviewJpaEntity> findByMemberIdOrderByCreatedAtDesc(UUID memberId);
 
-    Optional<Review> findByOrder_Id(Long orderId);
+    Optional<ReviewJpaEntity> findByOrder_Id(Long orderId);
 
     boolean existsByOrder_Id(Long orderId);
 
@@ -19,6 +19,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     long countByMemberId(UUID memberId);
 
     /** 특정 상품가 포함된 주문의 리뷰 조회 (JPA 파생 쿼리) */
-    List<Review> findByOrder_Items_ProductIdOrderByCreatedAtDesc(Long productId);
+    List<ReviewJpaEntity> findByOrder_Items_ProductIdOrderByCreatedAtDesc(Long productId);
 }
 

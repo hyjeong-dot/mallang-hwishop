@@ -3,17 +3,24 @@
    ============================================= */
 
 .page {
-  /* 파스텔 라벤더 팔레트 */
-  --color-primary-50: #fdfcff;
-  --color-primary-100: #f8f4ff;
-  --color-primary-200: #f0e6ff;
-  --color-primary-300: #e4d4fc;
-  --color-primary-400: #d4bbf7;
-  --color-primary-500: #c4a4f0;
-  --color-primary-600: #a87edb;
-  --color-primary-700: #8b62c0;
-  --color-primary-800: #6e4a9e;
-  --color-primary-900: #4a3570;
+  /* 말랑이샵 전역 팔레트 */
+  --color-primary-50: #FFF8F0; /* 크림 배경 */
+  --color-primary-100: #FFE4E8; /* 아주 연한 핑크 */
+  --color-primary-200: #FFD1DB;
+  --color-primary-300: #FFC0CB;
+  --color-primary-400: #FFB5C2; /* 말랑 핑크 (메인) */
+  --color-primary-500: #FF9EAE;
+  --color-primary-600: #FF8BA7; /* 딥 핑크 (액센트) */
+  --color-primary-700: #E67A95;
+  --color-primary-800: #CC6983;
+  --color-primary-900: #B35871;
+
+  --mallang-pink: #FFB5C2;
+  --mallang-green: #A8D97F;
+  --color-warning: #FFD1DB;
+  --bg-primary: #FFF8F0;
+  --text-main: #333333;
+  --text-sub: #888888;
 
   display: flex;
   flex-direction: column;

@@ -35,36 +35,36 @@ public class DataInitializer implements CommandLineRunner {
         public void run(String... args) throws Exception {
                 // 0. 카페 설정 초기화
                 if (cafeSettingsRepository.count() == 0) {
-                        cafeSettingsRepository.save(CafeSettings.builder()
+                        cafeSettingsRepository.save(com.mallanghwishop.backend.admin.cafe.adapter.out.persistence.entity.CafeSettingsJpaEntity.fromDomain(CafeSettings.builder()
                                         .cafeName("말랑이샵")
                                         .description("말랑이가 운영하는 귀여운 소품샵에 오신 걸 환영합니다!")
                                         .openTime(LocalTime.of(9, 0))
                                         .closeTime(LocalTime.of(22, 0))
                                         .manualClosed(false)
-                                        .build());
+                                        .build()));
                 }
 
                 // 1. 관리자 계정 생성 // 데이터가 하나도 없을 때만 실행됩니다.
                 if (memberRepository.count() == 0) {
                         // 관리자 계정
-                        memberRepository.save(Member.builder()
+                        memberRepository.save(com.mallanghwishop.backend.member.adapter.out.persistence.entity.MemberJpaEntity.fromDomain(Member.builder()
                                         .username("admin")
                                         .nickname("관리자")
                                         .password(passwordEncoder.encode("1234"))
                                         .email("admin@ncafe.com")
                                         .phoneNumber("010-0000-0000")
                                         .role("ROLE_ADMIN")
-                                        .build());
+                                        .build()));
 
                         // 테스트 유저 (heo)
-                        memberRepository.save(Member.builder()
+                        memberRepository.save(com.mallanghwishop.backend.member.adapter.out.persistence.entity.MemberJpaEntity.fromDomain(Member.builder()
                                         .username("heo")
                                         .nickname("둥이")
                                         .password(passwordEncoder.encode("1234"))
                                         .email("heo@ncafe.com")
                                         .phoneNumber("010-1234-5678")
                                         .role("ROLE_USER")
-                                        .build());
+                                        .build()));
                 }
 
                 // 1. 카테고리 데이터 생성 (ID는 자동 발급됨)
@@ -88,12 +88,13 @@ public class DataInitializer implements CommandLineRunner {
         }
         private AdminCategory findOrCreateCategory(String name, String icon, int sortOrder) {
                 return categoryRepository.findByName(name)
-                                .orElseGet(() -> categoryRepository.save(AdminCategory.builder()
+                                .map(com.mallanghwishop.backend.admin.category.adapter.out.persistence.entity.AdminCategoryJpaEntity::toDomain)
+                                .orElseGet(() -> categoryRepository.save(com.mallanghwishop.backend.admin.category.adapter.out.persistence.entity.AdminCategoryJpaEntity.fromDomain(AdminCategory.builder()
                                                 .name(name)
                                                 .icon(icon)
                                                 .sortOrder(sortOrder)
                                                 .isActive(true)
-                                                .build()));
+                                                .build())).toDomain());
         }
 
         private void saveMenu(String korName, String engName, String desc, int price, Long categoryId, int sortOrder,

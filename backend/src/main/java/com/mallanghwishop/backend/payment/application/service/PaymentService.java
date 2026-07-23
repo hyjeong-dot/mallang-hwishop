@@ -48,6 +48,7 @@ public class PaymentService {
         int amount = req.getAmount();
         // 1. 주문 조회 및 금액 검증
         Order order = orderRepository.findByOrderUid(orderUid)
+                .map(com.mallanghwishop.backend.order.adapter.out.persistence.entity.OrderJpaEntity::toDomain)
                 .orElseThrow(() -> new IllegalArgumentException("주문을 찾을 수 없습니다: " + orderUid));
 
         if (order.getTotalPrice() != amount) {
@@ -82,7 +83,7 @@ public class PaymentService {
                 // 3. 결제 성공 → 주문 상태 업데이트
                 order.setPaymentKey(paymentKey);
                 order.setStatus(OrderStatus.PAID);
-                orderRepository.save(order);
+                orderRepository.save(com.mallanghwishop.backend.order.adapter.out.persistence.entity.OrderJpaEntity.fromDomain(order));
 
                 log.info("결제 승인 성공: orderUid={}, paymentKey={}", orderUid, paymentKey);
                 return Map.of(

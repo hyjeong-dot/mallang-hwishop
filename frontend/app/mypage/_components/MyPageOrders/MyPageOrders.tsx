@@ -58,7 +58,6 @@ export default function MyPageOrders() {
     const [reviewContent, setReviewContent] = useState('');
     const [reviewRating, setReviewRating] = useState(5);
     const [reviewedOrders, setReviewedOrders] = useState<Set<number>>(new Set());
-    const [lastStickerResult, setLastStickerResult] = useState<{ stickerNumber: number | null; stickerEnded: boolean } | null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -292,7 +291,7 @@ export default function MyPageOrders() {
                             </div>
                         </div>
 
-                        {/* 내용 */}
+                        {/* 리뷰 내용 */}
                         <div style={{ marginBottom: '1.5rem' }}>
                             <label style={{ fontSize: '0.9rem', fontWeight: 600, marginBottom: '0.5rem', display: 'block' }}>리뷰 내용</label>
                             <textarea
@@ -310,59 +309,31 @@ export default function MyPageOrders() {
                             </div>
                         </div>
 
-                        {/* 스티커 안내 */}
-                        <div style={{
-                            background: '#f5f3ff', borderRadius: '8px', padding: '0.75rem',
-                            fontSize: '0.85rem', color: '#6d28d9', marginBottom: '1rem', textAlign: 'center'
-                        }}>
-                            🎨 리뷰를 남기면 말랑이 스티커를 받을 수 있어요!
-                        </div>
-
-                        {/* 스티커 결과 표시 */}
-                        {lastStickerResult && (
-                            <div style={{
-                                background: '#fef3c7', borderRadius: '8px', padding: '1rem',
-                                textAlign: 'center', marginBottom: '1rem'
-                            }}>
-                                {lastStickerResult.stickerNumber ? (
-                                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
-                                        <Image src={`/stickers/sticker-${lastStickerResult.stickerNumber}.png?v=2`} 
-                                            alt="스티커" width={80} height={80} />
-                                        <span style={{ fontWeight: 600 }}>🎉 말랑이 스티커 #{lastStickerResult.stickerNumber} 획득!</span>
-                                    </div>
-                                ) : (
-                                    <span>스티커 이벤트가 종료되었습니다. 감사합니다! 💜</span>
-                                )}
-                            </div>
-                        )}
-
                         <div style={{ display: 'flex', gap: '0.5rem' }}>
-                            <button onClick={() => { setIsReviewModalOpen(false); setLastStickerResult(null); }}
+                            <button onClick={() => { setIsReviewModalOpen(false); }}
                                 style={{ flex: 1, padding: '0.75rem', borderRadius: '8px', border: '1px solid #d1d5db', background: '#fff', cursor: 'pointer' }}>
                                 닫기
                             </button>
-                            {!lastStickerResult && (
-                                <button onClick={async () => {
-                                    if (!reviewContent.trim()) { toast.error('리뷰 내용을 입력해주세요.'); return; }
-                                    try {
-                                        const result = await fetchAPI('/reviews', {
-                                            method: 'POST',
-                                            body: JSON.stringify({ orderId: reviewOrderId, content: reviewContent, rating: reviewRating })
-                                        });
-                                        toast.success('리뷰가 등록되었습니다!');
-                                        setReviewedOrders(prev => new Set(prev).add(reviewOrderId!));
-                                        setLastStickerResult({ stickerNumber: result.stickerNumber, stickerEnded: result.stickerEnded });
-                                    } catch (e: any) {
-                                        toast.error(e.message || '리뷰 등록에 실패했습니다.');
-                                    }
-                                }} style={{
-                                    flex: 1, padding: '0.75rem', borderRadius: '8px', border: 'none',
-                                    background: 'linear-gradient(135deg, #a78bfa, #7c3aed)', color: '#fff',
-                                    fontWeight: 700, cursor: 'pointer'
-                                }}>
-                                    등록하기
-                                </button>
-                            )}
+                            <button onClick={async () => {
+                                if (!reviewContent.trim()) { toast.error('리뷰 내용을 입력해주세요.'); return; }
+                                try {
+                                    await fetchAPI('/reviews', {
+                                        method: 'POST',
+                                        body: JSON.stringify({ orderId: reviewOrderId, content: reviewContent, rating: reviewRating })
+                                    });
+                                    toast.success('리뷰가 등록되었습니다!');
+                                    setReviewedOrders(prev => new Set(prev).add(reviewOrderId!));
+                                    setIsReviewModalOpen(false);
+                                } catch (e: any) {
+                                    toast.error(e.message || '리뷰 등록에 실패했습니다.');
+                                }
+                            }} style={{
+                                flex: 1, padding: '0.75rem', borderRadius: '8px', border: 'none',
+                                background: 'linear-gradient(135deg, var(--color-primary-400), var(--color-primary-600))', color: '#fff',
+                                fontWeight: 700, cursor: 'pointer'
+                            }}>
+                                등록하기
+                            </button>
                         </div>
                     </div>
                 </div>

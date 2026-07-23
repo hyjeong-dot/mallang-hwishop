@@ -60,6 +60,7 @@ public class ReviewService {
         }
 
         Order order = orderRepository.findById(request.getOrderId())
+                .map(com.mallanghwishop.backend.order.adapter.out.persistence.entity.OrderJpaEntity::toDomain)
                 .orElseThrow(() -> new IllegalArgumentException("주문을 찾을 수 없습니다."));
 
         Review review = Review.builder()
@@ -69,7 +70,8 @@ public class ReviewService {
                 .rating(request.getRating())
                 .build();
 
-        Review saved = reviewRepository.save(review);
+        com.mallanghwishop.backend.review.adapter.out.persistence.entity.ReviewJpaEntity entity = com.mallanghwishop.backend.review.adapter.out.persistence.entity.ReviewJpaEntity.fromDomain(review, com.mallanghwishop.backend.order.adapter.out.persistence.entity.OrderJpaEntity.fromDomain(order));
+        Review saved = reviewRepository.save(entity).toDomain();
         log.info("Review created: orderId={}", request.getOrderId());
 
         String productNames = resolveProductNames(order);
@@ -85,6 +87,7 @@ public class ReviewService {
                 .orElseThrow(() -> new IllegalArgumentException("회원을 찾을 수 없습니다."));
 
         return reviewRepository.findByMemberIdOrderByCreatedAtDesc(member.getId()).stream()
+                .map(com.mallanghwishop.backend.review.adapter.out.persistence.entity.ReviewJpaEntity::toDomain)
                 .map(r -> {
                     String productNames = resolveProductNames(r.getOrder());
                     return ReviewResponse.from(r, member.getNickname(), productNames);
@@ -101,6 +104,7 @@ public class ReviewService {
                 .orElseThrow(() -> new IllegalArgumentException("회원을 찾을 수 없습니다."));
 
         Review review = reviewRepository.findByOrder_Id(orderId)
+                .map(com.mallanghwishop.backend.review.adapter.out.persistence.entity.ReviewJpaEntity::toDomain)
                 .orElseThrow(() -> new IllegalArgumentException("리뷰를 찾을 수 없습니다."));
 
         String productNames = resolveProductNames(review.getOrder());
@@ -114,6 +118,7 @@ public class ReviewService {
     @Transactional(readOnly = true)
     public List<ReviewResponse> getReviewsByProductId(Long productId) {
         return reviewRepository.findByOrder_Items_ProductIdOrderByCreatedAtDesc(productId).stream()
+                .map(com.mallanghwishop.backend.review.adapter.out.persistence.entity.ReviewJpaEntity::toDomain)
                 .map(r -> {
                     String nickname = loadMemberPort.findById(r.getMemberId())
                             .map(Member::getNickname)

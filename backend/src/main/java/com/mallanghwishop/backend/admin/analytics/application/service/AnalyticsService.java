@@ -28,10 +28,14 @@ public class AnalyticsService {
         List<Order> allOrders;
 
         if (days <= 0) {
-            allOrders = orderRepository.findAll();
+            allOrders = orderRepository.findAll().stream()
+                    .map(com.mallanghwishop.backend.order.adapter.out.persistence.entity.OrderJpaEntity::toDomain)
+                    .collect(Collectors.toList());
         } else {
             LocalDateTime since = LocalDateTime.now().minusDays(days);
-            allOrders = orderRepository.findAllByCreatedAtAfter(since);
+            allOrders = orderRepository.findAllByCreatedAtAfter(since).stream()
+                    .map(com.mallanghwishop.backend.order.adapter.out.persistence.entity.OrderJpaEntity::toDomain)
+                    .collect(Collectors.toList());
         }
 
         // 취소 제외 유효 주문

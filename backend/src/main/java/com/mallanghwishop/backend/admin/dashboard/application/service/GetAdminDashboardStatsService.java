@@ -29,7 +29,9 @@ public class GetAdminDashboardStatsService implements GetAdminDashboardStatsUseC
 
         long totalMenus = productRepository.count();
         
-        List<Order> todayOrdersList = orderRepository.findAllByCreatedAtAfter(todayStart);
+        List<Order> todayOrdersList = orderRepository.findAllByCreatedAtAfter(todayStart).stream()
+                .map(com.mallanghwishop.backend.order.adapter.out.persistence.entity.OrderJpaEntity::toDomain)
+                .collect(java.util.stream.Collectors.toList());
         long todayOrders = todayOrdersList.size();
         long todaySales = todayOrdersList.stream()
                 .mapToLong(Order::getTotalPrice)
