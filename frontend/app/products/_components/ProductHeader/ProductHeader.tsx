@@ -9,7 +9,10 @@ export default function ProductHeader() {
         <header className={styles.header}>
             <div className={styles.inner}>
                 <div className={styles.bannerArea}>
-                    <img src="/images/hero-banner.png" alt="Mallang Shop Banner" className={styles.heroBanner} />
+                    <picture>
+                        <source media="(max-width: 768px)" srcSet="/images/banner-mobile.png" />
+                        <img src="/images/hero-banner.png" alt="Mallang Shop Banner" className={styles.heroBanner} />
+                    </picture>
                 </div>
             </div>
         </header>

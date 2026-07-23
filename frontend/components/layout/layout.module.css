@@ -445,8 +445,13 @@
   padding: 0;
 }
 
+@keyframes jumpBlink {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
 .scrollTopButton:hover {
-  transform: translateY(-5px) scale(1.1) rotate(5deg);
+  animation: jumpBlink 0.4s infinite ease-in-out;
   border-color: var(--color-primary-400);
   box-shadow: 0 8px 25px rgba(255, 181, 194, 0.3);
 }

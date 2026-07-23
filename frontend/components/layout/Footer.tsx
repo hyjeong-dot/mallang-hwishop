@@ -9,6 +9,9 @@ import styles from "./layout.module.css";
 export default function Footer() {
     const [showTop, setShowTop] = useState(false);
 
+    const [isHoveringTop, setIsHoveringTop] = useState(false);
+    const [frame, setFrame] = useState(1);
+
     useEffect(() => {
         const handleScroll = () => {
             setShowTop(window.scrollY > 400);
@@ -16,6 +19,18 @@ export default function Footer() {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
+
+    useEffect(() => {
+        let interval: NodeJS.Timeout;
+        if (isHoveringTop) {
+            interval = setInterval(() => {
+                setFrame((prev) => (prev % 3) + 1);
+            }, 150); // Change frame every 150ms
+        } else {
+            setFrame(1);
+        }
+        return () => clearInterval(interval);
+    }, [isHoveringTop]);
 
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -115,9 +130,11 @@ export default function Footer() {
                     className={styles.scrollTopButton}
                     onClick={scrollToTop}
                     title="맨 위로 가기"
+                    onMouseEnter={() => setIsHoveringTop(true)}
+                    onMouseLeave={() => setIsHoveringTop(false)}
                 >
                     <Image
-                        src="/images/logo-alt.png"
+                        src={`/images/scroll-top-${frame}.png`}
                         alt="Top"
                         width={40}
                         height={40}
