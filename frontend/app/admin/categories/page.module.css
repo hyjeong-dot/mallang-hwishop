@@ -32,7 +32,7 @@
     padding: 10px 18px;
     border: none;
     border-radius: 12px;
-    background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+    background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-400));
     color: white;
     font-weight: 600;
     font-size: 0.9rem;
@@ -98,7 +98,7 @@
 }
 
 .dropTarget {
-    border-color: #8b5cf6;
+    border-color: var(--color-primary-600);
     background: #faf5ff;
     box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.15);
 }
@@ -113,7 +113,7 @@
 
 .dragHandle:active {
     cursor: grabbing;
-    color: #8b5cf6;
+    color: var(--color-primary-600);
 }
 
 .catIcon {
@@ -259,7 +259,7 @@
 }
 
 .modalInput:focus {
-    border-color: #a78bfa;
+    border-color: var(--color-primary-400);
     box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.15);
 }
 
@@ -290,7 +290,7 @@
 }
 
 .emojiSelected {
-    border-color: #8b5cf6;
+    border-color: var(--color-primary-600);
     background: #f0e6ff;
     box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
 }
@@ -326,7 +326,7 @@
     padding: 8px 18px;
     border: none;
     border-radius: 10px;
-    background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+    background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-400));
     color: white;
     cursor: pointer;
     font-size: 0.9rem;

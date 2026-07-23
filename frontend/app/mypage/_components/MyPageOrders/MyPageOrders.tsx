@@ -232,7 +232,7 @@ export default function MyPageOrders() {
                                         }}
                                         style={{
                                             padding: '4px 12px',
-                                            background: 'linear-gradient(135deg, #a78bfa, #8b5cf6)',
+                                            background: 'linear-gradient(135deg, #ff8fa4, #ed4b68)',
                                             border: 'none',
                                             color: '#fff',
                                             fontSize: '0.85rem',

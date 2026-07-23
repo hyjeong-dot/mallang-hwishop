@@ -62,7 +62,7 @@
 }
 
 .statIconWrapper.pink {
-    background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+    background: linear-gradient(135deg, var(--color-primary-400), var(--color-primary-600));
     color: white;
 }
 

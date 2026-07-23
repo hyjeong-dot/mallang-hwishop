@@ -18,7 +18,7 @@
 }
 
 .successIcon {
-    color: #8b5cf6;
+    color: var(--color-primary-600);
     margin-bottom: 1.5rem;
 }
 
@@ -28,7 +28,7 @@
 }
 
 .spinner {
-    color: #8b5cf6;
+    color: var(--color-primary-600);
     animation: spin 1s linear infinite;
     margin-bottom: 1.5rem;
 }
@@ -81,7 +81,7 @@
     width: 100%;
     padding: 1rem;
     background: white;
-    color: #8b5cf6;
+    color: var(--color-primary-600);
     border: 2px solid #ede9fe;
     border-radius: 1rem;
     font-size: 1rem;
