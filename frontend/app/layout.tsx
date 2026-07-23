@@ -14,10 +14,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "메타몽 카페 💜",
-  description: "말랑말랑한 메타몽 바리스타가 직접 내려주는 달콤한 커피 타임!",
+  title: "말랑이샵 🎀",
+  description: "말랑말랑 귀여운 핸드메이드 말랑이 판매 자사몰",
   icons: {
-    icon: "/images/ditto/favicon-ditto.png",
+    icon: "/images/favicon-origin.png",
+  },
+  openGraph: {
+    images: ["/images/og-image.png"],
   },
 };
 

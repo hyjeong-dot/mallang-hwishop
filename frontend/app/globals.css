@@ -1,41 +1,34 @@
 /* =============================================
-   NCafe Design System - Global Styles
+   Mallang Shop Design System - Global Styles
    ============================================= */
 
 /* Google Fonts - Pretendard */
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
 
 /* =============================================
    CSS Variables (Design Tokens)
    ============================================= */
 :root {
-  /* Primary - 따뜻한 갈색 계열 (커피 테마) */
-  --color-primary-50: #fdf8f6;
-  --color-primary-100: #f2e8e5;
-  --color-primary-200: #eaddd7;
-  --color-primary-300: #d4c4b0;
-  --color-primary-400: #b89c7a;
-  --color-primary-500: #a47551;
-  --color-primary-600: #8b5a3c;
-  --color-primary-700: #6f4a31;
-  --color-primary-800: #5a3d29;
-  --color-primary-900: #4a3222;
+  /* Primary - 말랑 핑크 */
+  --color-primary-50: #fff6f8;
+  --color-primary-100: #ffe4e9;
+  --color-primary-200: #ffcdd7;
+  --color-primary-300: #ffb5c2; /* 말랑 핑크 */
+  --color-primary-400: #ff8fa4;
+  --color-primary-500: #ff6a85;
+  --color-primary-600: #ed4b68;
+  --color-primary-700: #c8324e;
+  --color-primary-800: #a52d43;
+  --color-primary-900: #88293a;
 
-  /* Ditto Theme Colors */
-  --ditto-50: #fdfcff;
-  --ditto-100: #f8f4ff;
-  --ditto-200: #f0e6ff;
-  --ditto-300: #e4d4fc;
-  --ditto-400: #d4bbf7;
-  --ditto-500: #c4a4f0;
-  --ditto-600: #a87edb;
-  --ditto-700: #8b62c0;
-  --ditto-800: #6e4a9e;
-  --ditto-900: #4a3570;
-
-  --pink-accent: #fcc8e4;
-  --yellow-accent: #fdeaa7;
-  --mint-accent: #b8f0d8;
+  /* Mallang Theme Colors */
+  --mallang-pink: #FFB5C2;
+  --mallang-green: #A8D97F;
+  --mallang-cream: #FFF8F0;
+  --mallang-dark: #333333;
+  --mallang-heart: #FF8BA7;
+  --mallang-gray: #888888;
 
   /* Neutral */
   --color-gray-50: #fafafa;
@@ -60,9 +53,9 @@
   --color-info-light: #dbeafe;
 
   /* Background */
-  --bg-primary: #ffffff;
-  --bg-secondary: #fafafa;
-  --bg-tertiary: #f5f5f5;
+  --bg-primary: #FFF8F0; /* 크림 */
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #fff6f8;
 
   /* Text */
   --text-primary: #171717;
@@ -82,6 +75,7 @@
 
   /* Typography */
   --font-sans: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-point: 'Jua', sans-serif; /* 귀여운 포인트 폰트 */
 
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
