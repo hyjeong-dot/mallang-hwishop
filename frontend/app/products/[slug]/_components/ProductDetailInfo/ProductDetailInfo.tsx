@@ -1,0 +1,240 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import type { SelectedOptions } from '../ProductDetailOptions/ProductDetailOptions';
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
+import { Heart, Share2, Info, ShoppingBag } from 'lucide-react';
+import styles from './ProductDetailInfo.module.css';
+import { useProductDetail } from './useProductDetail';
+import { useAuth } from '@/context/AuthContext';
+import { useCart } from '@/context/CartContext';
+import { fetchAPI } from '@/lib/api';
+import Modal from '@/components/common/Modal/Modal';
+import LoadingDitto from '@/components/common/LoadingDitto/LoadingDitto';
+
+interface ProductDetailInfoProps {
+    slug: string;
+    selectedOptions?: SelectedOptions;
+    extraPrice?: number;
+    selectedOptionNames?: string[];
+    allRequiredSelected?: boolean;
+}
+
+export default function ProductDetailInfo({ slug, selectedOptions = {}, extraPrice = 0, selectedOptionNames = [], allRequiredSelected = true }: ProductDetailInfoProps) {
+    const { product, isLoading, error } = useProductDetail(slug);
+    const { user } = useAuth();
+    const { addItem, setCartOpen } = useCart();
+    const router = useRouter();
+    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+    const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
+    const [isCartConfirmModalOpen, setIsCartConfirmModalOpen] = useState(false);
+    const [isLiked, setIsLiked] = useState(false);
+
+    // Initial check on mount or when product/user changes
+    useEffect(() => {
+        if (user && product) {
+            fetch(`${window.location.origin}/api/favorites/${product.id}/check`)
+                .then(res => res.json())
+                .then(data => {
+                    // API가 { isFavorite: true } 또는 직접 true/false를 줄 수 있음을 대비
+                    const liked = typeof data === 'boolean' ? data : !!data.isFavorite;
+                    setIsLiked(liked);
+                })
+                .catch(err => console.error("Error checking favorite:", err));
+        }
+    }, [user, product]);
+
+    const handleShare = () => {
+        if (typeof window !== 'undefined') {
+            navigator.clipboard.writeText(window.location.href);
+            toast.success("주소가 복사되었어요! 💜");
+        }
+    };
+
+    const handleLike = async () => {
+        if (!user) {
+            setIsLoginModalOpen(true);
+            return;
+        }
+
+        try {
+            const result = await fetchAPI(`/favorites`, {
+                method: 'POST',
+                body: JSON.stringify({ menuId: product?.id })
+            });
+
+            // 결과값 체크 (isFavorite 필드 혹은 불리언)
+            const newLikedState = typeof result === 'boolean' ? result : !!result.isFavorite;
+            setIsLiked(newLikedState);
+
+            if (newLikedState) {
+                toast.success("찜 목록에 담았어요! 마이페이지에서 확인해 보세요 🍮", {
+                    icon: '💜',
+                });
+            } else {
+                toast("찜 목록에서 제외했습니다.", {
+                    icon: '🤍',
+                });
+            }
+        } catch (err) {
+            console.error("Failed to toggle interest:", err);
+            toast.error("처리 중 오류가 발생했습니다.");
+        }
+    };
+
+    const formatPrice = (price: number) => {
+        return new Intl.NumberFormat('ko-KR').format(price);
+    };
+
+    const handleAction = (action: () => void) => {
+        if (!user) {
+            setIsLoginModalOpen(true);
+            return;
+        }
+        action();
+    };
+
+    if (isLoading) return <LoadingDitto message="정보를 불러오는 중..." />;
+    if (error || !product) return null;
+
+    return (
+        <div className={styles.info}>
+            <div className={styles.categoryInfo}>
+                <span className={styles.categoryBadge}>
+                    {product.categoryIcon} {product.categoryName}
+                </span>
+            </div>
+
+            <div className={styles.titleRow}>
+                <h1 className={styles.title}>{product.korName}</h1>
+                <div className={styles.actionIcons}>
+                    <button
+                        className={`${styles.iconBtn} ${isLiked ? styles.liked : ''}`}
+                        onClick={handleLike}
+                        aria-label="좋아요"
+                    >
+                        <Heart size={22} fill={isLiked ? "currentColor" : "none"} />
+                    </button>
+                    <button
+                        className={styles.iconBtn}
+                        onClick={handleShare}
+                        aria-label="공유하기"
+                    >
+                        <Share2 size={22} />
+                    </button>
+                </div>
+            </div>
+            <p className={styles.engTitle}>{product.engName}</p>
+
+            <div className={styles.priceSection}>
+                <span className={styles.price}>₩{formatPrice(product.price + extraPrice)}</span>
+                {extraPrice > 0 && (
+                    <span className={styles.extraPriceNote}>
+                        (기본 ₩{formatPrice(product.price)} + 옵션 ₩{formatPrice(extraPrice)})
+                    </span>
+                )}
+            </div>
+
+            <div className={styles.descSection}>
+                <h3 className={styles.sectionTitle}><Info size={16} /> 상품 설명</h3>
+                <p className={styles.description}>{product.description || '준비된 설명이 없습니다.'}</p>
+            </div>
+
+            <div className={styles.ctaRow}>
+                <button
+                    className={styles.cartBtn}
+                    disabled={product.isSoldOut}
+                    onClick={() => {
+                        if (!allRequiredSelected) {
+                            toast.error('필수 옵션을 모두 선택해주세요! 💜');
+                            return;
+                        }
+                        addItem({
+                            menuId: product.id,
+                            korName: product.korName,
+                            engName: product.engName,
+                            price: product.price + extraPrice,
+                            image: product.imageSrc,
+                            imageSrc: product.imageSrc,
+                            selectedOptionNames: selectedOptionNames.length > 0 ? selectedOptionNames : undefined
+                        });
+                        setIsCartConfirmModalOpen(true);
+                    }}
+                >
+                    <ShoppingBag size={20} />
+                    <span>장바구니</span>
+                </button>
+                <button
+                    className={styles.mainCta}
+                    disabled={product.isSoldOut}
+                    onClick={() => handleAction(() => {
+                        if (!allRequiredSelected) {
+                            toast.error('필수 옵션을 모두 선택해주세요! 💜');
+                            return;
+                        }
+                        setIsOrderModalOpen(true);
+                    })}
+                >
+                    {product.isSoldOut ? '현재 준비 중입니다' : '주문하기 💜'}
+                </button>
+            </div>
+
+            {/* 로그인 필요 모달 */}
+            <Modal
+                isOpen={isLoginModalOpen}
+                onClose={() => setIsLoginModalOpen(false)}
+                title="로그인이 필요해요 💜"
+                description="말랑이가 사장님을 기다리고 있어요! 로그인하고 맛있는 상품를 주문하시겠어요?"
+                confirmText="로그인하러 가기"
+                cancelText="나중에 할게요"
+                onConfirm={() => router.push('/login')}
+                variant="ditto"
+            />
+
+
+
+            {/* 주문하기 모달 */}
+            <Modal
+                isOpen={isOrderModalOpen}
+                onClose={() => setIsOrderModalOpen(false)}
+                title="단일 상품 주문! ☕"
+                description={`${product.korName} 상품만 바로 결제하시겠어요?\n(기존 장바구니 내용은 그대로 보존됩니다.)`}
+                confirmText="주문 페이지로 이동"
+                cancelText="취소"
+                onConfirm={() => {
+                    setIsOrderModalOpen(false);
+                    // 옵션: 장바구니에 담지 않고 SessionStorage를 활용하여 단건 결제 데이터만 넘김
+                    sessionStorage.setItem('directOrder', JSON.stringify([{
+                        id: product.id.toString(),
+                        menuId: product.id,
+                        korName: product.korName,
+                        engName: product.engName,
+                        price: product.price + extraPrice,
+                        quantity: 1,
+                        image: product.imageSrc,
+                        imageSrc: product.imageSrc,
+                        selectedOptionNames: selectedOptionNames.length > 0 ? selectedOptionNames : undefined
+                    }]));
+                    router.push('/order');
+                }}
+                variant="ditto"
+            />
+
+            {/* 장바구니 확인 모달 */}
+            <Modal
+                isOpen={isCartConfirmModalOpen}
+                onClose={() => setIsCartConfirmModalOpen(false)}
+                title="장바구니에 담았어요! 💜"
+                description={`${product.korName}을(를) 장바구니에 담았습니다. 바로 확인해 보시겠어요?`}
+                confirmText="장바구니 가기"
+                cancelText="계속 쇼핑하기"
+                onConfirm={() => {
+                    setIsCartConfirmModalOpen(false);
+                    setCartOpen(true);
+                }}
+                variant="ditto"
+            />
+        </div>
+    );
+}

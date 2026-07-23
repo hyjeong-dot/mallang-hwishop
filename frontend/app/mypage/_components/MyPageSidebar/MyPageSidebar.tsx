@@ -52,51 +52,51 @@ export default function MyPageSidebar({
                 </span>
             </div>
 
-            <nav className={styles.menuList}>
+            <nav className={styles.productList}>
                 <button
-                    className={`${styles.menuItem} ${activeTab === "profile" ? styles.active : ""}`}
+                    className={`${styles.productItem} ${activeTab === "profile" ? styles.active : ""}`}
                     onClick={() => onTabChange("profile")}
                 >
                     <User size={18} />
                     프로필 설정
                 </button>
                 <button
-                    className={`${styles.menuItem} ${activeTab === "orders" ? styles.active : ""}`}
+                    className={`${styles.productItem} ${activeTab === "orders" ? styles.active : ""}`}
                     onClick={() => onTabChange("orders")}
                 >
                     <History size={18} />
                     주문 내역
                 </button>
                 <button
-                    className={`${styles.menuItem} ${activeTab === "favorites" ? styles.active : ""}`}
+                    className={`${styles.productItem} ${activeTab === "favorites" ? styles.active : ""}`}
                     onClick={() => onTabChange("favorites")}
                 >
                     <Heart size={18} />
-                    찜한 메뉴
+                    찜한 상품
                 </button>
                 <button
-                    className={`${styles.menuItem} ${activeTab === "coupons" ? styles.active : ""}`}
+                    className={`${styles.productItem} ${activeTab === "coupons" ? styles.active : ""}`}
                     onClick={() => onTabChange("coupons")}
                 >
                     <Ticket size={18} />
                     내 쿠폰
                 </button>
                 <button
-                    className={`${styles.menuItem} ${activeTab === "reviews" ? styles.active : ""}`}
+                    className={`${styles.productItem} ${activeTab === "reviews" ? styles.active : ""}`}
                     onClick={() => onTabChange("reviews")}
                 >
                     <MessageSquare size={18} />
                     내 리뷰
                 </button>
                 <button
-                    className={`${styles.menuItem} ${activeTab === "inquiries" ? styles.active : ""}`}
+                    className={`${styles.productItem} ${activeTab === "inquiries" ? styles.active : ""}`}
                     onClick={() => onTabChange("inquiries")}
                 >
                     <MessageSquarePlus size={18} />
                     1:1 문의
                 </button>
                 <button
-                    className={`${styles.menuItem} ${activeTab === "payment" ? styles.active : ""}`}
+                    className={`${styles.productItem} ${activeTab === "payment" ? styles.active : ""}`}
                     onClick={() => onTabChange("payment")}
                 >
                     <CreditCard size={18} />
@@ -106,14 +106,14 @@ export default function MyPageSidebar({
             <hr style={{ margin: 'var(--space-2) 0', border: 'none', borderTop: '1px solid var(--border-color)' }} />
             <div className={styles.bottomActions}>
                 <button
-                    className={styles.menuItem}
+                    className={styles.productItem}
                     onClick={onLogout}
                 >
                     <LogOut size={18} />
                     로그아웃
                 </button>
                 <button
-                    className={`${styles.menuItem} ${styles.dangerItem}`}
+                    className={`${styles.productItem} ${styles.dangerItem}`}
                     onClick={onDeleteAccount}
                 >
                     <UserMinus size={18} />

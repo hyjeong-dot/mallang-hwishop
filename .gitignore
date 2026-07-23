@@ -12,6 +12,6 @@ bin/
 *.class
 *.log
 .DS_Store
-# backend/upload/ (메뉴 이미지 동기화를 위해 주석 처리 혹은 삭제)
+# backend/upload/ (상품 이미지 동기화를 위해 주석 처리 혹은 삭제)
 *:Zone.Identifier
 docker-compose.override.yml

@@ -19,7 +19,7 @@ public class SalesAnalyticsResult {
     // 일별 매출/주문
     private final List<DailyData> dailyData;
 
-    // 인기 메뉴 Top 5
+    // 인기 상품 Top 5
     private final List<PopularMenu> popularMenus;
 
     // 시간대별 주문 분포 (0~23시)

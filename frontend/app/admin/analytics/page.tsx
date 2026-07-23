@@ -5,7 +5,7 @@ import { useAnalytics } from './_components/useAnalytics';
 import AnalyticsHeader from './_components/AnalyticsHeader';
 import SummaryCards from './_components/SummaryCards';
 import BarChart, { toDailyRevenueData, toDailyOrderData, toHourlyData, getAutoInterval } from './_components/BarChart';
-import PopularMenuRank from './_components/PopularMenuRank';
+import PopularProductRank from './_components/PopularProductRank';
 import DashboardLoading from '../_components/DashboardLoading';
 import styles from './page.module.css';
 
@@ -43,7 +43,7 @@ export default function AnalyticsPage() {
                 formatValue={(v) => `${v}건`}
             />
 
-            <PopularMenuRank menus={data.popularMenus} />
+            <PopularProductRank products={data.popularProducts} />
         </main>
     );
 }

@@ -34,7 +34,7 @@ public class GetMyOrdersService implements GetMyOrdersUseCase {
 
         List<Order> orders = orderPort.findAllByMemberIdOrderByCreatedAtDesc(member.getId());
 
-        // 모든 주문의 메뉴 ID를 모아서 한번에 조회 (N+1 방지)
+        // 모든 주문의 상품 ID를 모아서 한번에 조회 (N+1 방지)
         Set<Long> menuIds = orders.stream()
                 .flatMap(o -> o.getItems().stream())
                 .map(item -> item.getMenuId())

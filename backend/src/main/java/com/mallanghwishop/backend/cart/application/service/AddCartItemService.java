@@ -35,7 +35,7 @@ public class AddCartItemService implements AddCartItemUseCase {
             optionNamesStr = String.join(",", command.getSelectedOptionNames());
         }
 
-        // 같은 메뉴 + 같은 옵션 조합인 경우에만 수량 증가
+        // 같은 상품 + 같은 옵션 조합인 경우에만 수량 증가
         final String finalOptionNamesStr = optionNamesStr;
         Optional<CartItem> existingItem = cart.getItems().stream()
                 .filter(item -> item.getMenuId().equals(command.getMenuId())

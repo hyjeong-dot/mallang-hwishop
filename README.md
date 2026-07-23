@@ -10,9 +10,8 @@ Next.js(BFF) + Spring Boot + PostgreSQL(pgvector) + FastAPI(AI Agent) 기반의 
 
 | 구분 | 기능 |
 |------|------|
-| **사용자** | 회원가입/로그인, 메뉴 탐색, 장바구니, 주문/결제(Toss Payments), 리뷰 작성, 마이페이지, 1:1 문의 |
-| **관리자** | 대시보드(매출 분석), 메뉴/카테고리 CRUD, 주문 관리, 문의 답변, 쿠폰 관리, RAG 지식 관리, 사이트 설정 |
-| **AI 챗봇** | Gemini 기반 RAG 챗봇 (카페 정보 안내, 메뉴 추천) |
+| **사용자** | 회원가입/로그인, 상품 탐색, 장바구니, 주문/결제(Toss Payments), 리뷰 작성, 마이페이지, 1:1 문의 |
+| **관리자** | 대시보드(매출 분석), 상품/카테고리 CRUD, 주문 관리, 문의 답변, 쿠폰 관리, RAG 지식 관리, 사이트 설정 |
 | **결제** | Toss Payments 위젯 연동 |
 | **인증** | JWT + HttpOnly Cookie, iron-session 기반 BFF 세션 관리 |
 
@@ -70,11 +69,6 @@ Next.js(BFF) + Spring Boot + PostgreSQL(pgvector) + FastAPI(AI Agent) 기반의 
 - **Spring Data JPA** + **PostgreSQL**
 - **Gradle**
 
-### Agent Server (AI)
-- **FastAPI** + **Uvicorn**
-- **Google Gemini** (google-genai)
-- **pgvector** (벡터 검색)
-- **Sentence Transformers** (임베딩)
 
 ### Infra
 - **Docker** + **Docker Compose**
@@ -90,7 +84,7 @@ ncafe2026/
 ├── frontend/               # Next.js 프론트엔드 (BFF)
 │   ├── app/
 │   │   ├── admin/          # 관리자 페이지
-│   │   ├── menus/          # 메뉴 페이지
+│   │   ├── menus/          # 상품 페이지
 │   │   ├── order/          # 주문/결제 페이지
 │   │   ├── mypage/         # 마이페이지
 │   │   ├── login/          # 로그인
@@ -105,7 +99,7 @@ ncafe2026/
 │   └── src/main/java/.../
 │       ├── auth/           # 인증 (JWT)
 │       ├── member/         # 회원 관리
-│       ├── menu/           # 메뉴
+│       ├── menu/           # 상품
 │       ├── category/       # 카테고리
 │       ├── cart/           # 장바구니
 │       ├── order/          # 주문
@@ -116,8 +110,6 @@ ncafe2026/
 │       ├── favorite/       # 즐겨찾기
 │       └── admin/          # 관리자 기능
 │
-├── agent-server/           # FastAPI AI 챗봇 서버
-│   └── app/                # RAG 기반 Gemini 챗봇
 │
 ├── docker-compose.yml      # 컨테이너 오케스트레이션
 ├── .env.example            # 환경 변수 템플릿
@@ -134,7 +126,6 @@ ncafe2026/
 |------|------|------|
 | **Node.js** | 20+ | Frontend |
 | **Java JDK** | 21+ | Backend |
-| **Python** | 3.11+ | Agent Server |
 | **PostgreSQL** | 17+ | 데이터베이스 |
 | **Docker** | 24+ | 컨테이너 배포 (선택) |
 
@@ -179,9 +170,6 @@ SESSION_SECRET=<32자 이상 랜덤 문자열>
 TOSS_SECRET_KEY=<토스 시크릿 키>
 TOSS_CLIENT_KEY=<토스 클라이언트 키>
 TOSS_CHANNEL_KEY=<토스 채널 키>
-
-# AI (Agent Server)
-GEMINI_API_KEY=<Gemini API 키>
 ```
 
 Frontend 환경 변수도 설정합니다:
@@ -208,15 +196,6 @@ npm install
 npm run dev
 ```
 
-**Agent Server:**
-```bash
-cd agent-server
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload --port 8000
-```
-
 ### 4. Docker 실행 (프로덕션)
 
 ```bash
@@ -240,7 +219,6 @@ docker compose ps
 | `TOSS_SECRET_KEY` | ⚠️ | Toss 결제 시크릿 키 (결제 기능 사용 시) |
 | `TOSS_CLIENT_KEY` | ⚠️ | Toss 결제 클라이언트 키 |
 | `TOSS_CHANNEL_KEY` | ⚠️ | Toss 결제 채널 키 |
-| `GEMINI_API_KEY` | ⚠️ | Google Gemini API 키 (AI 챗봇 사용 시) |
 | `COMPOSE_PROJECT_NAME` | 📦 | Docker 프로젝트 이름 |
 | `USER_ID` | 📦 | Docker 컨테이너 이름 prefix |
 

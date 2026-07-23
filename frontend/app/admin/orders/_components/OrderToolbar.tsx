@@ -35,7 +35,7 @@ export default function OrderToolbar({
                     <input
                         className={styles.searchInput}
                         type="text"
-                        placeholder="주문번호, 주문자명, 메뉴명으로 검색..."
+                        placeholder="주문번호, 주문자명, 상품명으로 검색..."
                         value={searchQuery}
                         onChange={(e) => onSearchChange(e.target.value)}
                     />

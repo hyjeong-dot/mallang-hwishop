@@ -12,23 +12,23 @@ export default function DashboardActions() {
         <div className={styles.quickActions}>
             <h2 className={styles.sectionTitle}>빠른 작업</h2>
             <div className={styles.actionsGrid}>
-                <Link href="/admin/menus/new" className={styles.actionCard}>
+                <Link href="/admin/products/new" className={styles.actionCard}>
                     <div className={styles.actionIcon}>
                         <Plus size={22} />
                     </div>
                     <div className={styles.actionText}>
-                        <p className={styles.actionTitle}>새 메뉴 추가</p>
-                        <p className={styles.actionDesc}>메뉴를 등록하세요</p>
+                        <p className={styles.actionTitle}>새 상품 추가</p>
+                        <p className={styles.actionDesc}>상품를 등록하세요</p>
                     </div>
                 </Link>
 
-                <Link href="/admin/menus" className={styles.actionCard}>
+                <Link href="/admin/products" className={styles.actionCard}>
                     <div className={styles.actionIcon}>
                         <UtensilsCrossed size={22} />
                     </div>
                     <div className={styles.actionText}>
-                        <p className={styles.actionTitle}>메뉴 관리</p>
-                        <p className={styles.actionDesc}>메뉴 목록 보기</p>
+                        <p className={styles.actionTitle}>상품 관리</p>
+                        <p className={styles.actionDesc}>상품 목록 보기</p>
                     </div>
                 </Link>
 
@@ -42,15 +42,6 @@ export default function DashboardActions() {
                     </div>
                 </Link>
 
-                <Link href="/admin/rag" className={styles.actionCard}>
-                    <div className={styles.actionIcon}>
-                        <Database size={22} color="#8e44ad" />
-                    </div>
-                    <div className={styles.actionText}>
-                        <p className={styles.actionTitle}>RAG 지식 관리</p>
-                        <p className={styles.actionDesc}>AI의 공부 데이터 관리</p>
-                    </div>
-                </Link>
 
                 <Link href="/admin/settings" className={styles.actionCard}>
                     <div className={styles.actionIcon}>

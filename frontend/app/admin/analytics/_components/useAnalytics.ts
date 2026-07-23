@@ -6,8 +6,8 @@ export interface DailyData {
     orderCount: number;
 }
 
-export interface PopularMenu {
-    menuName: string;
+export interface PopularProduct {
+    productName: string;
     totalQuantity: number;
     totalRevenue: number;
 }
@@ -24,7 +24,7 @@ export interface SalesAnalytics {
     cancelRate: number;
     dailyAverageRevenue: number;
     dailyData: DailyData[];
-    popularMenus: PopularMenu[];
+    popularProducts: PopularProduct[];
     hourlyDistribution: HourlyData[];
 }
 

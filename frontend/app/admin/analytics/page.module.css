@@ -198,7 +198,7 @@
     visibility: hidden;
 }
 
-/* 인기 메뉴 랭킹 */
+/* 인기 상품 랭킹 */
 .rankList {
     display: flex;
     flex-direction: column;

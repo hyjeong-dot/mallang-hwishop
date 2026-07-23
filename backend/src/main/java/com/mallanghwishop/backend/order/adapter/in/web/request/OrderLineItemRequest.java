@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 public class OrderLineItemRequest {
     private Long menuId;
     private int quantity;
-    private Integer unitPrice; // 옵션 포함 단가 (null이면 메뉴 기본가 사용)
+    private Integer unitPrice; // 옵션 포함 단가 (null이면 상품 기본가 사용)
 }

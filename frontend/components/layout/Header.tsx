@@ -100,7 +100,7 @@ export default function Header() {
                     <button 
                         className={styles.mobileMenuBtn} 
                         onClick={toggleMobileMenu}
-                        aria-label="메뉴 열기"
+                        aria-label="상품 열기"
                     >
                         {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
                     </button>

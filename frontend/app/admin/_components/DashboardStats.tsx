@@ -16,8 +16,8 @@ export default function DashboardStats({ stats }: DashboardStatsProps) {
                     <UtensilsCrossed size={24} />
                 </div>
                 <div className={styles.statInfo}>
-                    <p className={styles.statLabel}>등록된 메뉴</p>
-                    <p className={styles.statValue}>{stats.totalMenus}개</p>
+                    <p className={styles.statLabel}>등록된 상품</p>
+                    <p className={styles.statValue}>{stats.totalProducts}개</p>
                 </div>
             </div>
 

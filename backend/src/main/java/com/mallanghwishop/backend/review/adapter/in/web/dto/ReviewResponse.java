@@ -14,7 +14,7 @@ public class ReviewResponse {
     private String content;
     private int rating;
     private String nickname;
-    private String menuNames; // 주문한 메뉴 이름 (쉼표 구분)
+    private String menuNames; // 주문한 상품 이름 (쉼표 구분)
     private LocalDateTime createdAt;
 
     public static ReviewResponse from(Review review, String nickname, String menuNames) {

@@ -18,7 +18,7 @@ export function useOrderFilters(orders: AdminOrder[]) {
                 (o.orderUid && o.orderUid.toLowerCase().includes(q)) ||
                 o.nickname.toLowerCase().includes(q) ||
                 String(o.id).includes(q) ||
-                o.items.some(item => item.menuName.toLowerCase().includes(q))
+                o.items.some(item => item.productName.toLowerCase().includes(q))
             );
         }
 

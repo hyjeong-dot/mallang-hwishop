@@ -23,7 +23,7 @@ public class RemoveCartItemService implements RemoveCartItemUseCase {
                     return cartPersistencePort.save(newCart);
                 });
         
-        // cart_items PK로 삭제 (같은 메뉴라도 옵션이 다르면 각각 삭제 가능)
+        // cart_items PK로 삭제 (같은 상품라도 옵션이 다르면 각각 삭제 가능)
         cart.getItems().removeIf(item -> item.getId().equals(command.getCartItemId()));
         cartPersistencePort.save(cart);
     }

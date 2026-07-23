@@ -55,7 +55,7 @@ public class AnalyticsService {
         // 일별 데이터
         List<DailyData> dailyData = buildDailyData(validOrders, days);
 
-        // 인기 메뉴 Top 5
+        // 인기 상품 Top 5
         List<PopularMenu> popularMenus = buildPopularMenus(validOrders);
 
         // 시간대별 분포

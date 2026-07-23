@@ -4,7 +4,6 @@ import { useEffect, useState, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { CheckCircle, Loader2 } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
-import { fetchAPI } from '@/lib/api';
 import styles from './page.module.css';
 
 export default function PaymentSuccessPage() {
@@ -84,8 +83,8 @@ export default function PaymentSuccessPage() {
                     <div className={styles.errorIcon}>❌</div>
                     <h2 className={styles.title}>결제 실패</h2>
                     <p className={styles.description}>{errorMessage}</p>
-                    <button className={styles.primaryBtn} onClick={() => router.push('/menus')}>
-                        메뉴로 돌아가기
+                    <button className={styles.primaryBtn} onClick={() => router.push('/products')}>
+                        상품로 돌아가기
                     </button>
                 </div>
             </div>
@@ -99,13 +98,13 @@ export default function PaymentSuccessPage() {
                 <h2 className={styles.title}>결제가 완료되었어요! 🎉</h2>
                 <p className={styles.description}>
                     말랑이가 주문을 확인하고<br />
-                    맛있는 메뉴를 준비하고 있어요! 💜
+                    귀여운 상품를 준비하고 있어요! 💜
                 </p>
                 <div className={styles.buttonGroup}>
                     <button className={styles.primaryBtn} onClick={() => router.push('/mypage?tab=orders')}>
                         주문 내역 보기
                     </button>
-                    <button className={styles.secondaryBtn} onClick={() => router.push('/menus')}>
+                    <button className={styles.secondaryBtn} onClick={() => router.push('/products')}>
                         메인으로 가기
                     </button>
                 </div>

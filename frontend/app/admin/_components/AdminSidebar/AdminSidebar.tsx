@@ -53,9 +53,9 @@ export default function AdminSidebar() {
             ],
         },
         {
-            group: '메뉴 관리',
+            group: '상품 관리',
             items: [
-                { href: '/admin/menus', label: '메뉴 목록', icon: UtensilsCrossed },
+                { href: '/admin/products', label: '상품 목록', icon: UtensilsCrossed },
                 { href: '/admin/categories', label: '카테고리 관리', icon: Tags },
             ],
         },
@@ -123,7 +123,7 @@ export default function AdminSidebar() {
                 <button
                     className={styles.hamburger}
                     onClick={() => setIsOpen(true)}
-                    aria-label="메뉴 열기"
+                    aria-label="상품 열기"
                 >
                     <Menu size={24} />
                 </button>
@@ -146,7 +146,7 @@ export default function AdminSidebar() {
                     <button 
                         className={styles.closeButton} 
                         onClick={() => setIsOpen(false)}
-                        aria-label="메뉴 닫기"
+                        aria-label="상품 닫기"
                     >
                         <X size={24} />
                     </button>
@@ -181,9 +181,9 @@ export default function AdminSidebar() {
                         <Home size={18} />
                         <span>홈 화면으로</span>
                     </Link>
-                    <Link href="/menus" className={styles.switchButton}>
+                    <Link href="/products" className={styles.switchButton}>
                         <Coffee size={18} />
-                        <span>메뉴 주문하기</span>
+                        <span>상품 주문하기</span>
                     </Link>
                     <Link href="/mypage" className={styles.switchButton}>
                         <User size={18} />

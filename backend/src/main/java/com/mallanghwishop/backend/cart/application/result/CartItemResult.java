@@ -8,7 +8,7 @@ import java.util.List;
 @Builder
 public class CartItemResult {
     private String id;           // cart_items 테이블의 PK (고유 식별자)
-    private Long menuId;         // 메뉴 ID (메뉴 정보 표시용)
+    private Long menuId;         // 상품 ID (상품 정보 표시용)
     private String korName;
     private String engName;
     private int price;           // 옵션 포함 최종 단가

@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react';
 import { Plus, Pencil, Trash2, X, Check, GripVertical } from 'lucide-react';
-import { useCategories } from '../menus/_components/CategoryTabs/useCategories';
+import { useCategories } from '../products/_components/CategoryTabs/useCategories';
 import styles from './page.module.css';
 import toast from 'react-hot-toast';
 
@@ -51,7 +51,7 @@ export default function CategoriesPage() {
     };
 
     const handleDelete = async (id: number, name: string) => {
-        if (!confirm(`"${name}" 카테고리를 삭제하시겠습니까?\n해당 카테고리에 속한 메뉴는 '카테고리 없음' 상태가 됩니다.`)) return;
+        if (!confirm(`"${name}" 카테고리를 삭제하시겠습니까?\n해당 카테고리에 속한 상품는 '카테고리 없음' 상태가 됩니다.`)) return;
         try {
             await deleteCategory(id);
         } catch (e) {

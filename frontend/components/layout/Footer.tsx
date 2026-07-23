@@ -37,7 +37,7 @@ export default function Footer() {
                             <span>말랑이샵</span>
                         </div>
                         <p className={styles.footerDesc}>
-                            세상에서 가장 귀여운 포켓몬 카페 💜
+                            세상에서 가장 귀여운 수제볼 shop
                             <br />
                             말랑말랑한 행복을 선물합니다.
                         </p>
@@ -57,8 +57,8 @@ export default function Footer() {
                     <div>
                         <h4 className={styles.footerTitle}>말랑이샵</h4>
                         <nav className={styles.footerLinks}>
-                            <Link href="/#about" className={styles.footerLink}>카페 소개</Link>
-                            <Link href="/menus" className={styles.footerLink}>메뉴</Link>
+                            <Link href="/#about" className={styles.footerLink}>샵 소개</Link>
+                            <Link href="/menus" className={styles.footerLink}>상품</Link>
                             <Link href="/#special" className={styles.footerLink}>즐길거리</Link>
                         </nav>
                     </div>

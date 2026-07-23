@@ -2,7 +2,7 @@
 
 > **상호**: 말랑이샵  
 > **도메인**: www.mallanghwishop.com  
-> **비즈니스**: 슬라임, 왁뿌볼 등 핸드메이드 장난감 택배 판매 자사몰  
+> **비즈니스**: 핸드메이드 수제볼 판매 자사몰   
 > **참고 사이트**: [늪지슬라임 (swampylandslime.com)](https://www.swampylandslime.com) — 식스샵 기반  
 > **기술 스택**: Next.js 16 (App Router, CSS Modules) + Spring Boot 4.0 (Hexagonal Architecture) + PostgreSQL 17  
 > **결제**: Toss Payments (기존 유지)
@@ -595,15 +595,15 @@ public enum OrderStatus {
 |------|------|------|
 | 패키지명 | `com.new_cafe.app.backend` | `com.mallanghwishop.backend` |
 | Order 도메인 | JPA 어노테이션 포함 (@Entity 등) | **순수 POJO로 분리** → JPA는 adapter/out/persistence/entity/ |
-| Menu → Product | 카페 메뉴 | 상품 + 재고/예약/배송비 필드 |
+| Menu → Product | 상품 | 상품 + 재고/예약/배송비 필드 |
 | OrderStatus | PENDING/PAID/PREPARING/COMPLETED/CANCELLED | PENDING/PAID/PREPARING/**SHIPPING_READY**/**SHIPPED**/CANCELLED |
 | OrderType | DINE_IN/TAKEOUT | **제거** (배송만 존재) |
 | Category | 카페 카테고리 | 전체/수제볼/기타 |
 | layout.tsx | "메타몽 카페 💜" | "말랑이샵 🎀" |
 | 파비콘 | ditto favicon | favicon-origin.png → favicon.ico |
 | globals.css | 카페 컬러 | 핑크+연두+크림 팔레트 |
-| 푸터 | 카페 정보 | 사업자 정보 + 주의 문구 |
-| 헤더 | 카페 메뉴 | 쇼핑몰 + 인스타/카톡 링크 |
+| 푸터 | 사업자 정보 | 사업자 정보 + 주의 문구 |
+| 헤더 | 쇼핑몰 | 쇼핑몰 + 인스타/카톡 링크 |
 
 ### 🟢 유지
 

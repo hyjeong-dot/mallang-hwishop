@@ -374,7 +374,7 @@ sudo systemctl reload nginx
 - [ ] 컨테이너 상태 확인 (`docker compose ps`)
 - [ ] Backend 로그 확인 ("Started BackendApplication")
 - [ ] 웹사이트 접속 테스트 (502 오류 없음)
-- [ ] API 호출 테스트 (메뉴, 카테고리 등)
+- [ ] API 호출 테스트 (상품, 카테고리 등)
 - [ ] 업로드 이미지 표시 확인
 
 ---

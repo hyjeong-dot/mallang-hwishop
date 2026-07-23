@@ -31,7 +31,7 @@ public class ReviewService {
 
 
     /**
-     * 주문에 포함된 메뉴 이름들을 조회하여 쉼표로 결합
+     * 주문에 포함된 상품 이름들을 조회하여 쉼표로 결합
      */
     private String resolveMenuNames(Order order) {
         if (order == null || order.getItems() == null || order.getItems().isEmpty()) {
@@ -109,7 +109,7 @@ public class ReviewService {
 
 
     /**
-     * 특정 메뉴의 리뷰 목록 (공개 API)
+     * 특정 상품의 리뷰 목록 (공개 API)
      */
     @Transactional(readOnly = true)
     public List<ReviewResponse> getReviewsByMenuId(Long menuId) {

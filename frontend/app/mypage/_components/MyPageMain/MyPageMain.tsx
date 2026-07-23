@@ -81,7 +81,7 @@ export default function MyPageMain() {
                 onClose={() => setIsDeleteModalOpen(false)}
                 onConfirm={handleDeleteAccount}
                 title="정말 탈퇴하시겠어요?"
-                description="탈퇴하시면 찜한 메뉴와 주문 내역이 모두 사라져요 😢"
+                description="탈퇴하시면 찜한 상품와 주문 내역이 모두 사라져요 😢"
                 confirmText="탈퇴하기"
                 cancelText="취소"
                 variant="danger"

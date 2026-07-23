@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Heart } from "lucide-react";
 import { fetchAPI } from "@/lib/api";
 import LoadingDitto from "@/components/common/LoadingDitto/LoadingDitto";
-import MenuCard from "../../../menus/_components/MenuCard/MenuCard";
+import ProductCard from "../../../products/_components/ProductCard/ProductCard";
 import styles from "./MyPageFavorites.module.css";
 
 export default function MyPageFavorites() {
@@ -16,7 +16,7 @@ export default function MyPageFavorites() {
         const fetchFavorites = async () => {
             try {
                 const data = await fetchAPI('/favorites');
-                setFavorites(data?.menus || []);
+                setFavorites(data?.products || []);
             } catch (err) {
                 console.error("Failed to fetch favorites:", err);
             } finally {
@@ -30,7 +30,7 @@ export default function MyPageFavorites() {
     if (isLoading) {
         return (
             <div className={styles.content}>
-                <LoadingDitto message="찜한 메뉴를 가져오고 있어요... 💜" />
+                <LoadingDitto message="찜한 상품를 가져오고 있어요... 💜" />
             </div>
         );
     }
@@ -39,19 +39,19 @@ export default function MyPageFavorites() {
         <div className={styles.content}>
             <h3 className={styles.sectionTitle}>
                 <Heart size={20} fill="#a855f7" stroke="#a855f7" /> 
-                내가 찜한 메뉴
+                내가 찜한 상품
             </h3>
             
             {favorites.length === 0 ? (
                 <div className={styles.emptyState}>
                     <div className={styles.emptyIcon}>💜</div>
-                    <p>아직 찜한 메뉴가 없어요.<br />마음에 드는 메뉴를 하트로 담아보세요!</p>
-                    <Link href="/menus" className={styles.menuLink}>메뉴 보러 가기</Link>
+                    <p>아직 찜한 상품가 없어요.<br />마음에 드는 상품를 하트로 담아보세요!</p>
+                    <Link href="/products" className={styles.productLink}>상품 보러 가기</Link>
                 </div>
             ) : (
                 <div className={styles.grid}>
-                    {favorites.map((menu) => (
-                        <MenuCard key={menu.id} menu={menu} />
+                    {favorites.map((product) => (
+                        <ProductCard key={product.id} product={product} />
                     ))}
                 </div>
             )}

@@ -20,7 +20,7 @@ interface InquiryData {
 }
 
 const CATEGORIES = [
-    { value: 'MENU', label: '메뉴 문의' },
+    { value: 'PRODUCT', label: '상품 문의' },
     { value: 'ORDER', label: '주문·결제' },
     { value: 'STORE', label: '매장 이용' },
     { value: 'OTHER', label: '기타' },
@@ -35,7 +35,7 @@ export default function MyPageInquiries() {
     // 폼 상태
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [category, setCategory] = useState('MENU');
+    const [category, setCategory] = useState('PRODUCT');
 
     const fetchInquiries = async () => {
         try {
@@ -55,7 +55,7 @@ export default function MyPageInquiries() {
                 body: JSON.stringify({ title, content, category }),
             });
             toast.success('문의가 등록되었어요! 💌');
-            setTitle(''); setContent(''); setCategory('MENU'); setShowForm(false);
+            setTitle(''); setContent(''); setCategory('PRODUCT'); setShowForm(false);
             fetchInquiries();
         } catch (e) {
             toast.error('문의 등록에 실패했어요.');

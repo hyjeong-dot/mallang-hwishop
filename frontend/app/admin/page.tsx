@@ -28,7 +28,7 @@ export default function AdminDashboard() {
             {/* 2. 통계 카드 그리드 섹션 */}
             <DashboardStats stats={stats} />
 
-            {/* 3. 단축 메뉴 섹션 */}
+            {/* 3. 단축 상품 섹션 */}
             <DashboardActions />
         </div>
     );

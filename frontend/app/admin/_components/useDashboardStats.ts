@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 
 export interface DashboardStatsData {
-    totalMenus: number;
+    totalProducts: number;
     todayOrders: number;
     todaySales: number;
     todayVisits: number;
@@ -11,7 +11,7 @@ export interface DashboardStatsData {
 
 export function useDashboardStats() {
     const [stats, setStats] = useState<DashboardStatsData>({
-        totalMenus: 0,
+        totalProducts: 0,
         todayOrders: 0,
         todaySales: 0,
         todayVisits: 0

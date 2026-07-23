@@ -19,7 +19,7 @@ export default function AdminHeader({ title }: AdminHeaderProps) {
                     <Search size={18} className={styles.searchIcon} />
                     <input
                         type="text"
-                        placeholder="메뉴, 주문 검색..."
+                        placeholder="상품, 주문 검색..."
                         className={styles.searchInput}
                     />
                 </div>

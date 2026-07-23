@@ -78,7 +78,7 @@ export default function CartDrawer() {
                                     className={styles.browseBtn}
                                     onClick={() => setCartOpen(false)}
                                 >
-                                    메뉴 보러가기 <ArrowRight size={16} />
+                                    상품 보러가기 <ArrowRight size={16} />
                                 </Link>
                             </div>
                         ) : (
@@ -145,7 +145,7 @@ export default function CartDrawer() {
                 isOpen={isLoginModalOpen}
                 onClose={() => setLoginModalOpen(false)}
                 title="로그인이 필요해요 💜"
-                description="말랑이가 사장님을 기다리고 있어요! 로그인하고 맛있는 메뉴를 주문하시겠어요?"
+                description="말랑이가 사장님을 기다리고 있어요! 로그인하고 맛있는 상품를 주문하시겠어요?"
                 confirmText="로그인하러 가기"
                 cancelText="나중에 할게요"
                 onConfirm={() => {

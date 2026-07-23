@@ -23,8 +23,8 @@ export default function PaymentFailPage() {
                     <button className={styles.primaryBtn} onClick={() => router.push('/order')}>
                         다시 주문하기
                     </button>
-                    <button className={styles.secondaryBtn} onClick={() => router.push('/menus')}>
-                        메뉴로 돌아가기
+                    <button className={styles.secondaryBtn} onClick={() => router.push('/products')}>
+                        상품로 돌아가기
                     </button>
                 </div>
             </div>

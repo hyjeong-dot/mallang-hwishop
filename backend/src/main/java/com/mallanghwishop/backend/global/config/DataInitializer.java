@@ -98,7 +98,7 @@ public class DataInitializer implements CommandLineRunner {
 
         private void saveMenu(String korName, String engName, String desc, int price, Long categoryId, int sortOrder,
                         String... imageUrls) {
-                // 이미 존재하는 이름의 메뉴인 경우 건너뛰어 중복 방지 (사용자가 직접 수정한 데이터 보호)
+                // 이미 존재하는 이름의 상품인 경우 건너뛰어 중복 방지 (사용자가 직접 수정한 데이터 보호)
                 if (productRepository.existsByKorName(korName)) {
                         return;
                 }

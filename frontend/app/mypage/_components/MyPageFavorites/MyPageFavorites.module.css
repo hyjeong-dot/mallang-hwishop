@@ -38,7 +38,7 @@
     margin-bottom: 2rem;
 }
 
-.menuLink {
+.productLink {
     display: inline-block;
     padding: 0.8rem 2rem;
     background: linear-gradient(135deg, #d4bbf7, #a855f7);
@@ -50,7 +50,7 @@
     box-shadow: 0 4px 12px rgba(168, 85, 247, 0.2);
 }
 
-.menuLink:hover {
+.productLink:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(168, 85, 247, 0.3);
 }

@@ -10,8 +10,8 @@ import Modal from "@/components/common/Modal/Modal";
 import toast from 'react-hot-toast';
 
 interface OrderLineItem {
-    menuId: number;
-    menuName: string;
+    productId: number;
+    productName: string;
     price: number;
     quantity: number;
 }
@@ -150,7 +150,7 @@ export default function MyPageOrders() {
             {orders.length === 0 ? (
                 <div className={styles.emptyState}>
                     아직 주문하신 내역이 없어요. <br />
-                    <Link href="/menus" className={styles.menuLink}>맛있는 커피 보러 가기 ☕</Link>
+                    <Link href="/products" className={styles.productLink}>맛있는 커피 보러 가기 ☕</Link>
                 </div>
             ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1rem' }}>
@@ -169,12 +169,12 @@ export default function MyPageOrders() {
                                     &nbsp;|&nbsp;
                                     {order.orderType === 'DINE_IN' ? '매장' : '포장'}
                                 </div>
-                                {/* 메뉴 항목 목록 */}
+                                {/* 상품 항목 목록 */}
                                 {order.items && order.items.length > 0 && (
                                     <div style={{ margin: '0.5rem 0', fontSize: '0.95rem' }}>
                                         {order.items.map((item, idx) => (
                                             <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '2px 0' }}>
-                                                <span>{item.menuName} × {item.quantity}</span>
+                                                <span>{item.productName} × {item.quantity}</span>
                                                 <span style={{ color: 'var(--color-text-light)', fontSize: '0.85rem', marginLeft: '1rem' }}>
                                                     {(item.price * item.quantity).toLocaleString()}원
                                                 </span>

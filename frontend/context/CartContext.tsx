@@ -7,7 +7,7 @@ import { fetchAPI } from '../lib/api';
 
 export interface CartItem {
     id: string;           // 로그인: cart_items DB PK, 비로그인: 자동 생성 키
-    menuId?: number;      // 메뉴 ID (서버에서 반환)
+    menuId?: number;      // 상품 ID (서버에서 반환)
     korName: string;
     engName: string;
     price: number;        // 옵션 포함 최종 단가
@@ -33,7 +33,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 
 /**
  * 비회원 장바구니 키 생성: menuId + 옵션 조합으로 유일한 키
- * 같은 메뉴라도 옵션이 다르면 별도 항목
+ * 같은 상품라도 옵션이 다르면 별도 항목
  */
 function generateCartKey(menuId: string | number, optionNames?: string[]): string {
     const base = String(menuId);
@@ -75,7 +75,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                             }
                         }
                         localStorage.removeItem('ncafe-cart');
-                        toast.success('비회원님이 담으셨던 메뉴를 장바구니에 합쳤어몽! 💜');
+                        toast.success('비회원님이 담으셨던 상품를 장바구니에 합쳤어몽! 💜');
                     }
 
                     // 2. 서버 장바구니 동기화
@@ -132,7 +132,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                 console.error("Failed to sync add item to cart API:", e);
             }
         } else {
-            // 비로그인: localStorage 기반, 같은 메뉴+옵션이면 수량 증가
+            // 비로그인: localStorage 기반, 같은 상품+옵션이면 수량 증가
             const cartKey = generateCartKey(menuId, newItem.selectedOptionNames);
             setItems(prev => {
                 const existingItem = prev.find(item => item.id === cartKey);

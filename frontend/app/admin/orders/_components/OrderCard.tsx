@@ -61,7 +61,7 @@ export default function OrderCard({ order, onUpdateStatus }: OrderCardProps) {
                                     className={`${styles.btn} ${styles.btnPrepare}`}
                                     onClick={(e) => { e.stopPropagation(); onUpdateStatus(order.id, 'PREPARING'); }}
                                 >
-                                    🪄 메뉴 준비 시작
+                                    🪄 상품 준비 시작
                                 </button>
                             )}
                             {order.status === 'PREPARING' && (
@@ -92,7 +92,7 @@ export default function OrderCard({ order, onUpdateStatus }: OrderCardProps) {
                                 <div className={styles.sectionLabel}>주문 상품 ({order.items.length})</div>
                                 {order.items.map((item, idx) => (
                                     <div key={idx} className={styles.itemLine}>
-                                        <span className={styles.itemName}>{item.menuName}</span>
+                                        <span className={styles.itemName}>{item.productName}</span>
                                         <span className={styles.itemDetail}>
                                             {item.price.toLocaleString()}원 × {item.quantity}개
                                         </span>
@@ -127,7 +127,7 @@ export default function OrderCard({ order, onUpdateStatus }: OrderCardProps) {
                                         className={`${styles.btn} ${styles.btnPrepare}`}
                                         onClick={() => onUpdateStatus(order.id, 'PREPARING')}
                                     >
-                                        🪄 메뉴 준비 시작
+                                        🪄 상품 준비 시작
                                     </button>
                                 )}
                                 {order.status === 'PREPARING' && (

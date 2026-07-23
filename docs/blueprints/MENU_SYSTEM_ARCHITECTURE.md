@@ -1,4 +1,4 @@
-# NCafe 2026 - 메뉴 및 카테고리 시스템 (헥사고날 아키텍처)
+# NCafe 2026 - 상품 및 카테고리 시스템 (헥사고날 아키텍처)
 
 ## 1. 개요
 기존의 3계층(Controller-Service-Repository) 구조를 도메인 중심의 **헥사고날 아키텍처(Hexagonal Architecture)**로 리팩토링하였습니다. 특히 `Menu`와 `Category`를 독립된 도메인으로 분리하여 유지보수성과 확장성을 극대화했습니다.
@@ -10,7 +10,7 @@
 ### 도메인 분리 및 패키지 구조
 ```
 com.new_cafe.app.backend.
-├── menu/                         # 메뉴 도메인 (독립)
+├── menu/                         # 상품 도메인 (독립)
 │   ├── domain/
 │   │   ├── model/ (Menu, MenuImage)
 │   │   └── exception/ (MenuNotFoundException)
@@ -40,9 +40,9 @@ com.new_cafe.app.backend.
 ## 3. 핵심 설계 포인트
 
 ### A. 관리자 vs 회원 시스템 분리
-동일한 메뉴 데이터를 사용하지만, 접근 권한과 비즈니스 규칙에 따라 Input Port와 Controller를 분리했습니다.
-*   **Admin (관리자)**: 전체 메뉴 조회, 상세 정보 변경, 생성, 삭제 (CUD) 전체 허용.
-*   **Public (회원)**: 판매 가능(`isAvailable=true`)한 메뉴만 필터링하여 노출.
+동일한 상품 데이터를 사용하지만, 접근 권한과 비즈니스 규칙에 따라 Input Port와 Controller를 분리했습니다.
+*   **Admin (관리자)**: 전체 상품 조회, 상세 정보 변경, 생성, 삭제 (CUD) 전체 허용.
+*   **Public (회원)**: 판매 가능(`isAvailable=true`)한 상품만 필터링하여 노출.
 
 ### B. 도메인 간 협력 (Menu → Category)
 `Menu` 도메인은 `Category` 도메인의 내부 구현을 알 필요가 없습니다. 오직 `GetCategoryQuery`(Port) 인터페이스를 통해서만 카테고리 정보를 가져옵니다.
@@ -57,18 +57,18 @@ com.new_cafe.app.backend.
 ### 관리자 API (`/admin/**`)
 | Method | URL | 설명 |
 | :--- | :--- | :--- |
-| GET | `/admin/menus` | 전체 메뉴 목록 (검색/필터 가능) |
-| POST | `/admin/menus` | 새 메뉴 등록 |
-| GET | `/admin/menus/{id}` | 메뉴 상세 정보 조회 |
-| PUT | `/admin/menus/{id}` | 메뉴 정보 수정 |
-| DELETE| `/admin/menus/{id}` | 메뉴 삭제 |
+| GET | `/admin/menus` | 전체 상품 목록 (검색/필터 가능) |
+| POST | `/admin/menus` | 새 상품 등록 |
+| GET | `/admin/menus/{id}` | 상품 상세 정보 조회 |
+| PUT | `/admin/menus/{id}` | 상품 정보 수정 |
+| DELETE| `/admin/menus/{id}` | 상품 삭제 |
 | GET | `/admin/categories` | 전체 카테고리 목록 조회 |
 
 ### 회원 API (`/api/menus/**`)
 | Method | URL | 설명 |
 | :--- | :--- | :--- |
-| GET | `/api/menus` | 판매 중인 메뉴 목록 조회 |
-| GET | `/api/menus/{id}` | 메뉴 상세 조회 (판매중인 것만) |
+| GET | `/api/menus` | 판매 중인 상품 목록 조회 |
+| GET | `/api/menus/{id}` | 상품 상세 조회 (판매중인 것만) |
 | GET | `/api/menus/categories` | 카테고리 목록 조회 |
 
 ---

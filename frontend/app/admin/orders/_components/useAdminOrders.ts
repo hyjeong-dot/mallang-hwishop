@@ -2,8 +2,8 @@ import { useState, useEffect, useCallback } from 'react';
 import toast from 'react-hot-toast';
 
 export interface AdminOrderItem {
-    menuId: number;
-    menuName: string;
+    productId: number;
+    productName: string;
     price: number;
     quantity: number;
 }

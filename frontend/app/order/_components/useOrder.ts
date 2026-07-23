@@ -56,7 +56,7 @@ export function useOrder() {
     const [selectedCouponId, setSelectedCouponId] = useState<number | null>(null);
     const [discountAmount, setDiscountAmount] = useState(0);
 
-    // Redirect to login if unauthenticated or menus if empty cart
+    // Redirect to login if unauthenticated or products if empty cart
     useEffect(() => {
         if (!authLoading && !isSubmitting) {
             if (!user) {
@@ -64,7 +64,7 @@ export function useOrder() {
                 router.replace('/login?redirect=/order');
             } else if (items.length === 0 && !isSuccessModalOpen && cartItems.length === 0 && !sessionStorage.getItem('directOrder')) {
                 toast.error('주문할 상품이 없습니다.');
-                router.replace('/menus');
+                router.replace('/products');
             }
         }
     }, [user, authLoading, items, cartItems, router, isSuccessModalOpen, isSubmitting]);
