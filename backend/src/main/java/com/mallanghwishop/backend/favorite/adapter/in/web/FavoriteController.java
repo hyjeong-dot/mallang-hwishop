@@ -11,7 +11,6 @@ import com.mallanghwishop.backend.favorite.adapter.in.web.dto.ToggleFavoriteRequ
 import com.mallanghwishop.backend.auth.domain.exception.AuthenticationFailedException;
 import com.mallanghwishop.backend.member.application.port.out.LoadMemberPort;
 import com.mallanghwishop.backend.member.domain.model.Member;
-import com.mallanghwishop.backend.menu.domain.model.Menu;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -37,7 +36,7 @@ public class FavoriteController {
             return Optional.empty();
         }
         return loadMemberPort.findByUsername(auth.getName())
-                .map(Member::getId);
+                .map(member -> member.getId());
     }
 
     private UUID getMemberIdOrThrow() {
