@@ -1,6 +1,6 @@
 package com.mallanghwishop.backend.order.application.service;
 
-import com.mallanghwishop.backend.coupon.application.service.CouponService;
+
 
 import com.mallanghwishop.backend.member.application.port.out.LoadMemberPort;
 import com.mallanghwishop.backend.member.domain.model.Member;
@@ -26,7 +26,7 @@ public class CreateOrderService implements CreateOrderUseCase {
     private final OrderPort orderPort;
     private final LoadMenuPort loadMenuPort;
     private final LoadMemberPort loadMemberPort;
-    private final CouponService couponService;
+
     private final com.mallanghwishop.backend.admin.cafe.application.port.in.GetCafeSettingsUseCase getCafeSettingsUseCase;
 
     @Override
@@ -70,32 +70,9 @@ public class CreateOrderService implements CreateOrderUseCase {
 
         order.calculateTotalPrice();
 
-        // 쿠폰 할인 적용
-        if (command.getCouponId() != null) {
-            try {
-                int discount = couponService.calculateAndUseCoupon(
-                        command.getCouponId(), member.getId(), order.getTotalPrice());
-                order.setCouponId(command.getCouponId());
-                order.applyDiscount(discount);
-                log.info("Coupon {} applied, discount: {}원", command.getCouponId(), discount);
-            } catch (Exception e) {
-                log.warn("Coupon apply failed: {}", e.getMessage());
-                // 쿠폰 적용 실패해도 주문은 진행
-            }
-        }
-
+        // Phase 2에서 적립금 적립 로직 추가 예정
         Order savedOrder = orderPort.saveOrder(order);
 
-        // 스탬프 카드 적립 (상품 수량만큼)
-        try {
-            int totalQuantity = savedOrder.getItems().stream()
-                    .mapToInt(item -> item.getQuantity())
-                    .sum();
-            couponService.addStamps(member.getId(), totalQuantity);
-            log.info("Stamps added ({}) for member: {}", totalQuantity, member.getUsername());
-        } catch (Exception e) {
-            log.warn("Failed to add stamps for member: {}", member.getUsername(), e);
-        }
 
         return OrderResult.builder()
                 .orderId(savedOrder.getId())

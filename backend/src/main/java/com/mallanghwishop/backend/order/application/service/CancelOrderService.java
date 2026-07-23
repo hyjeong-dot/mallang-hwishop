@@ -1,6 +1,6 @@
 package com.mallanghwishop.backend.order.application.service;
 
-import com.mallanghwishop.backend.coupon.application.service.CouponService;
+
 import com.mallanghwishop.backend.member.application.port.out.LoadMemberPort;
 import com.mallanghwishop.backend.member.domain.model.Member;
 import com.mallanghwishop.backend.order.application.port.in.CancelOrderUseCase;
@@ -19,7 +19,7 @@ public class CancelOrderService implements CancelOrderUseCase {
 
     private final OrderPort orderPort;
     private final LoadMemberPort loadMemberPort;
-    private final CouponService couponService;
+
 
     @Override
     @Transactional
@@ -41,22 +41,6 @@ public class CancelOrderService implements CancelOrderUseCase {
         order.setStatus(OrderStatus.CANCELLED);
         orderPort.saveOrder(order);
 
-        // 쿠폰 복원 (사용했던 쿠폰 되돌리기)
-        try {
-            couponService.restoreCoupon(order.getCouponId());
-        } catch (Exception e) {
-            log.warn("Coupon restore failed for order {}: {}", orderId, e.getMessage());
-        }
-
-        // 스탬프 차감 (상품 수량만큼 + 보상 쿠폰 회수 확인)
-        try {
-            int totalQuantity = order.getItems().stream()
-                    .mapToInt(item -> item.getQuantity())
-                    .sum();
-            couponService.removeStamps(member.getId(), totalQuantity);
-            log.info("Stamps removed ({}) for cancelled order {} by user {}", totalQuantity, orderId, username);
-        } catch (Exception e) {
-            log.warn("Stamp removal failed for order {}: {}", orderId, e.getMessage());
-        }
+        // Phase 2에서 적립금 차감 로직 추가 예정
     }
 }

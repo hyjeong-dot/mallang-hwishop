@@ -5,7 +5,7 @@ import com.mallanghwishop.backend.admin.order.application.port.in.GetAdminOrderL
 import com.mallanghwishop.backend.admin.order.application.port.in.UpdateOrderStatusUseCase;
 import com.mallanghwishop.backend.admin.order.application.result.AdminOrderLineItemResult;
 import com.mallanghwishop.backend.admin.order.application.result.AdminOrderResult;
-import com.mallanghwishop.backend.coupon.application.service.CouponService;
+
 import com.mallanghwishop.backend.member.adapter.out.persistence.MemberJpaRepository;
 import com.mallanghwishop.backend.order.adapter.out.persistence.repository.OrderRepository;
 import com.mallanghwishop.backend.order.domain.model.Order;
@@ -27,7 +27,7 @@ public class AdminOrderService implements GetAdminOrderListUseCase, UpdateOrderS
     private final OrderRepository orderRepository;
     private final MemberJpaRepository memberRepository;
     private final AdminMenuJpaRepository menuRepository;
-    private final CouponService couponService;
+
 
     @Override
     @Transactional(readOnly = true)
@@ -46,23 +46,7 @@ public class AdminOrderService implements GetAdminOrderListUseCase, UpdateOrderS
         order.setStatus(status);
         orderRepository.save(order);
 
-        // 취소 시 쿠폰 복원 + 스탬프 차감
-        if (status == OrderStatus.CANCELLED) {
-            try {
-                couponService.restoreCoupon(order.getCouponId());
-            } catch (Exception e) {
-                log.warn("Coupon restore failed for order {}: {}", orderId, e.getMessage());
-            }
-            try {
-                int totalQuantity = order.getItems().stream()
-                        .mapToInt(item -> item.getQuantity())
-                        .sum();
-                couponService.removeStamps(order.getMemberId(), totalQuantity);
-                log.info("Stamps removed ({}) for cancelled order {}", totalQuantity, orderId);
-            } catch (Exception e) {
-                log.warn("Stamp removal failed for order {}: {}", orderId, e.getMessage());
-            }
-        }
+        // Phase 2에서 적립금 차감 로직 추가 예정
     }
 
     private AdminOrderResult toResult(Order order) {
