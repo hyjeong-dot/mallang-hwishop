@@ -23,7 +23,7 @@ export default function CategoryFilter({
                     className={`${styles.chip} ${selectedCategory === null ? styles.active : ''}`}
                     onClick={() => onCategoryChange(null)}
                 >
-                    <span className={styles.chipIcon}>🍽️</span>
+                    <span className={styles.chipIcon}>🛍️</span>
                     <span className={styles.chipLabel}>전체</span>
                     <span className={styles.chipCount}>{totalCount}</span>
                 </button>

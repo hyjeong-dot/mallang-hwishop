@@ -20,12 +20,12 @@ export default function CategoriesPage() {
     const [overIdx, setOverIdx] = useState<number | null>(null);
     const dragRef = useRef<number | null>(null);
 
-    const EMOJI_OPTIONS = ['☕', '🥤', '🧁', '🍰', '🧇', '🍵', '🥛', '🫖', '🍹', '🍩', '🧋', '🥐', '🍪', '🎂', '🍦', '🥧', '🫗', '🍫'];
+    const EMOJI_OPTIONS = ['🔮', '🎁', '🎀', '🧸', '🛍️', '💖', '🍀', '🍅', '🍊', '🐢', '🍩', '🎨', '✨', '🫧', '🐾', '🍭', '🌈', '💌'];
 
     const openCreateModal = () => {
         setEditingId(null);
         setInputName('');
-        setInputIcon('☕');
+        setInputIcon('🔮');
         setModalOpen(true);
     };
 
