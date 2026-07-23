@@ -93,24 +93,16 @@ export default function Footer() {
                     </div>
                 </div>
 
-                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>
-                    <Image
-                        src="/images/footer-illustration.png"
-                        alt="Cute Fluffy Character"
-                        width={250}
-                        height={250}
-                        style={{ borderRadius: '20px', objectFit: 'cover', boxShadow: '0 8px 24px rgba(0,0,0,0.1)' }}
-                    />
-                </div>
+
 
                 <div className={styles.footerBottom}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
                         <Image
-                            src="/images/logo.png"
-                            alt="Mallang Icon"
-                            width={16}
-                            height={16}
-                            style={{ opacity: 0.7 }}
+                            src="/images/footer-illustration.png"
+                            alt="Cute Fluffy Character"
+                            width={24}
+                            height={24}
+                            style={{ opacity: 0.9, borderRadius: '50%' }}
                         />
                         <p>&copy; 2026 말랑이샵. All rights reserved.</p>
                     </div>
