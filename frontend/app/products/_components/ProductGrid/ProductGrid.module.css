@@ -110,7 +110,7 @@
 }
 
 .pageButton:hover:not(:disabled) {
-    border-color: #d4bbf7;
+    border-color: var(--color-primary-400);
     background: #f8f4ff;
 }
 
@@ -118,7 +118,7 @@
     background: #a87edb;
     color: #fff;
     border-color: #a87edb;
-    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.2);
+    box-shadow: 0 4px 12px rgba(255, 181, 194, 0.2);
 }
 
 .pageButton:disabled {

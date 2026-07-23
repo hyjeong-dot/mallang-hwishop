@@ -41,15 +41,15 @@
 
 .chip:hover {
     background: #f0e6ff;
-    border-color: #d4bbf7;
+    border-color: var(--color-primary-400);
     transform: translateY(-1px);
 }
 
 .chip.active {
-    background: linear-gradient(135deg, #d4bbf7, #c4a4f0);
+    background: linear-gradient(135deg, var(--color-primary-400), #c4a4f0);
     border-color: #c4a4f0;
     color: #fff;
-    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.2);
+    box-shadow: 0 4px 12px rgba(255, 181, 194, 0.2);
 }
 
 .chipIcon {

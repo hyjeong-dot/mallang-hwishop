@@ -38,7 +38,7 @@ export default function MyPageFavorites() {
     return (
         <div className={styles.content}>
             <h3 className={styles.sectionTitle}>
-                <Heart size={20} fill="#a855f7" stroke="#a855f7" /> 
+                <Heart size={20} fill="#ed4b68" stroke="#ed4b68" /> 
                 내가 찜한 상품
             </h3>
             

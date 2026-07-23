@@ -41,18 +41,18 @@
 .productLink {
     display: inline-block;
     padding: 0.8rem 2rem;
-    background: linear-gradient(135deg, #d4bbf7, #a855f7);
+    background: linear-gradient(135deg, var(--color-primary-400), var(--color-primary-600));
     color: #fff;
     border-radius: 12px;
     font-weight: 700;
     text-decoration: none;
     transition: all 200ms ease;
-    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.2);
+    box-shadow: 0 4px 12px rgba(255, 181, 194, 0.2);
 }
 
 .productLink:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(168, 85, 247, 0.3);
+    box-shadow: 0 6px 16px rgba(255, 181, 194, 0.3);
 }
 
 .grid {

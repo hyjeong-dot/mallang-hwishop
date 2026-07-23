@@ -9,8 +9,8 @@
 
 .card:hover {
     transform: translateY(-6px);
-    box-shadow: 0 16px 35px rgba(168, 85, 247, 0.12);
-    border-color: #d4bbf7;
+    box-shadow: 0 16px 35px rgba(255, 181, 194, 0.12);
+    border-color: var(--color-primary-400);
 }
 
 .card.soldOut {
@@ -42,7 +42,7 @@
     justify-content: center;
     width: 100%;
     height: 100%;
-    color: #d4bbf7;
+    color: var(--color-primary-400);
     gap: 0.5rem;
     font-size: 0.8rem;
     font-weight: 600;

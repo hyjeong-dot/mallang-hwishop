@@ -42,7 +42,7 @@ export default function DashboardStats({ stats }: DashboardStatsProps) {
             </div>
 
             <div className={styles.statCard}>
-                <div className={`${styles.statIconWrapper} ${styles.purple}`}>
+                <div className={`${styles.statIconWrapper} ${styles.pink}`}>
                     <Users size={24} />
                 </div>
                 <div className={styles.statInfo}>

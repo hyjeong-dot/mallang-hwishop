@@ -78,7 +78,7 @@
 
 .logoImage {
   object-fit: contain;
-  filter: drop-shadow(0 2px 4px rgba(168, 85, 247, 0.2));
+  filter: drop-shadow(0 2px 4px rgba(255, 181, 194, 0.2));
 }
 
 .nav {
@@ -168,12 +168,12 @@
   transition: all 200ms ease;
   border: none;
   text-decoration: none;
-  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.2);
+  box-shadow: 0 4px 12px rgba(255, 181, 194, 0.2);
 }
 
 .loginButton:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(168, 85, 247, 0.3);
+  box-shadow: 0 6px 15px rgba(255, 181, 194, 0.3);
 }
 
 /* =============================================
@@ -324,7 +324,7 @@
   align-items: center;
   justify-content: center;
   border: 2px solid #fff;
-  box-shadow: 0 2px 4px rgba(168, 85, 247, 0.2);
+  box-shadow: 0 2px 4px rgba(255, 181, 194, 0.2);
 }
 
 .mobileMenuBtn {
@@ -369,7 +369,7 @@
     padding: 2rem 1.5rem;
     gap: 2rem;
     border-bottom: 2px solid var(--color-primary-200);
-    box-shadow: 0 10px 15px -3px rgba(168, 85, 247, 0.1);
+    box-shadow: 0 10px 15px -3px rgba(255, 181, 194, 0.1);
     align-items: flex-start;
     
     /* Animation settings */
@@ -448,7 +448,7 @@
 .scrollTopButton:hover {
   transform: translateY(-5px) scale(1.1) rotate(5deg);
   border-color: var(--color-primary-400);
-  box-shadow: 0 8px 25px rgba(168, 85, 247, 0.3);
+  box-shadow: 0 8px 25px rgba(255, 181, 194, 0.3);
 }
 
 .scrollTopImage {
@@ -474,7 +474,7 @@
   align-items: center;
   justify-content: center;
   border: 2px solid #fff;
-  box-shadow: 0 2px 4px rgba(168, 85, 247, 0.3);
+  box-shadow: 0 2px 4px rgba(255, 181, 194, 0.3);
 }
 
 .scrollTopButton:hover .scrollTopImage {

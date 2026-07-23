@@ -16,7 +16,7 @@
     max-width: 90vw;
     height: 100%;
     background: #fdfcff;
-    box-shadow: -5px 0 25px rgba(168, 85, 247, 0.1);
+    box-shadow: -5px 0 25px rgba(255, 181, 194, 0.1);
     display: flex;
     flex-direction: column;
     animation: slideIn 300ms ease-out;
@@ -129,7 +129,7 @@
 
 .cartItem:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.05);
+    box-shadow: 0 4px 12px rgba(255, 181, 194, 0.05);
 }
 
 .itemImage {
@@ -177,7 +177,7 @@
 .deleteBtn {
     background: none;
     border: none;
-    color: #d4bbf7;
+    color: var(--color-primary-400);
     cursor: pointer;
     transition: color 200ms ease;
 }
@@ -276,12 +276,12 @@
     font-weight: 800;
     cursor: pointer;
     transition: all 200ms ease;
-    box-shadow: 0 8px 16px rgba(168, 85, 247, 0.2);
+    box-shadow: 0 8px 16px rgba(255, 181, 194, 0.2);
 }
 
 .orderBtn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 12px 20px rgba(168, 85, 247, 0.3);
+    box-shadow: 0 12px 20px rgba(255, 181, 194, 0.3);
 }
 
 @media (max-width: 480px) {
@@ -302,11 +302,11 @@
     align-items: center;
     gap: 0.5rem;
     transition: all 200ms ease;
-    border: 1px solid #d4bbf7;
+    border: 1px solid var(--color-primary-400);
 }
 
 .browseBtn:hover {
-    background: linear-gradient(135deg, #e0ccff, #d4bbf7);
+    background: linear-gradient(135deg, #e0ccff, var(--color-primary-400));
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.1);
+    box-shadow: 0 4px 12px rgba(255, 181, 194, 0.1);
 }

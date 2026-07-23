@@ -12,12 +12,12 @@
     border-radius: 1.5rem;
     padding: 0.8rem 1.2rem;
     transition: all 300ms ease;
-    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.05);
+    box-shadow: 0 4px 15px rgba(255, 181, 194, 0.05);
 }
 
 .searchBar:focus-within {
-    border-color: #d4bbf7;
-    box-shadow: 0 8px 25px rgba(168, 85, 247, 0.1);
+    border-color: var(--color-primary-400);
+    box-shadow: 0 8px 25px rgba(255, 181, 194, 0.1);
     transform: translateY(-2px);
 }
 
@@ -37,7 +37,7 @@
 }
 
 .searchInput::placeholder {
-    color: #d4bbf7;
+    color: var(--color-primary-400);
 }
 
 .kbd {
@@ -55,5 +55,5 @@
     color: #a87edb;
     font-family: monospace;
     line-height: 1;
-    box-shadow: 0 1px 2px rgba(168, 85, 247, 0.1);
+    box-shadow: 0 1px 2px rgba(255, 181, 194, 0.1);
 }
