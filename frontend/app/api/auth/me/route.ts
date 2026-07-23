@@ -19,6 +19,12 @@ export async function GET() {
         });
 
         if (!res.ok) {
+            if (res.status === 401) {
+                session.destroy();
+                const response = NextResponse.json({ success: false, message: '인증이 만료되었습니다.' }, { status: 401 });
+                response.cookies.delete('token');
+                return response;
+            }
             const error = await res.json().catch(() => ({ message: '정보 조회에 실패했습니다.' }));
             return NextResponse.json(error, { status: res.status });
         }
