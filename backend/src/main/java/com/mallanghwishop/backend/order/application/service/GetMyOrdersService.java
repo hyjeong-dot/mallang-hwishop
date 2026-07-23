@@ -2,8 +2,8 @@ package com.mallanghwishop.backend.order.application.service;
 
 import com.mallanghwishop.backend.member.application.port.out.LoadMemberPort;
 import com.mallanghwishop.backend.member.domain.model.Member;
-import com.mallanghwishop.backend.menu.adapter.out.persistence.MenuJpaRepository;
-import com.mallanghwishop.backend.menu.domain.model.Menu;
+import com.mallanghwishop.backend.product.adapter.out.persistence.entity.ProductJpaEntity;
+import com.mallanghwishop.backend.product.adapter.out.persistence.repository.ProductJpaRepository;
 import com.mallanghwishop.backend.order.application.port.in.GetMyOrdersUseCase;
 import com.mallanghwishop.backend.order.application.port.out.OrderPort;
 import com.mallanghwishop.backend.order.application.result.OrderLineItemResult;
@@ -24,7 +24,7 @@ public class GetMyOrdersService implements GetMyOrdersUseCase {
 
     private final OrderPort orderPort;
     private final LoadMemberPort loadMemberPort;
-    private final MenuJpaRepository menuJpaRepository;
+    private final ProductJpaRepository productJpaRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -40,17 +40,17 @@ public class GetMyOrdersService implements GetMyOrdersUseCase {
                 .map(item -> item.getMenuId())
                 .collect(Collectors.toSet());
 
-        Map<Long, Menu> menuMap = menuJpaRepository.findAllById(menuIds).stream()
-                .collect(Collectors.toMap(Menu::getId, m -> m));
+        Map<Long, ProductJpaEntity> productMap = productJpaRepository.findAllById(menuIds).stream()
+                .collect(Collectors.toMap(ProductJpaEntity::getId, m -> m));
 
         return orders.stream()
                 .map(order -> {
                     List<OrderLineItemResult> itemResults = order.getItems().stream()
                             .map(item -> {
-                                Menu menu = menuMap.get(item.getMenuId());
+                                ProductJpaEntity product = productMap.get(item.getMenuId());
                                 return OrderLineItemResult.builder()
                                         .menuId(item.getMenuId())
-                                        .menuName(menu != null ? menu.getKorName() : "삭제된 메뉴")
+                                        .menuName(product != null ? product.getKorName() : "삭제된 상품")
                                         .price(item.getPrice())
                                         .quantity(item.getQuantity())
                                         .build();

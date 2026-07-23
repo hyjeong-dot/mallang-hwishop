@@ -2,7 +2,7 @@ package com.mallanghwishop.backend.admin.analytics.application.service;
 
 import com.mallanghwishop.backend.admin.analytics.application.result.SalesAnalyticsResult;
 import com.mallanghwishop.backend.admin.analytics.application.result.SalesAnalyticsResult.*;
-import com.mallanghwishop.backend.admin.menu.adapter.out.persistence.AdminMenuJpaRepository;
+import com.mallanghwishop.backend.product.adapter.out.persistence.repository.ProductJpaRepository;
 import com.mallanghwishop.backend.order.adapter.out.persistence.repository.OrderRepository;
 import com.mallanghwishop.backend.order.domain.model.Order;
 import com.mallanghwishop.backend.order.domain.model.OrderStatus;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class AnalyticsService {
 
     private final OrderRepository orderRepository;
-    private final AdminMenuJpaRepository menuRepository;
+    private final ProductJpaRepository productRepository;
 
     public SalesAnalyticsResult getSalesAnalytics(int days) {
         List<Order> allOrders;
@@ -125,9 +125,9 @@ public class AnalyticsService {
                 .sorted((a, b) -> Long.compare(b.getValue()[0], a.getValue()[0]))
                 .limit(5)
                 .map(e -> {
-                    String menuName = menuRepository.findById(e.getKey())
+                    String menuName = productRepository.findById(e.getKey())
                             .map(m -> m.getKorName())
-                            .orElse("삭제된 메뉴");
+                            .orElse("삭제된 상품");
                     return PopularMenu.builder()
                             .menuName(menuName)
                             .totalQuantity(e.getValue()[0])

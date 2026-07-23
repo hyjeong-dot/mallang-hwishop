@@ -4,8 +4,8 @@ package com.mallanghwishop.backend.order.application.service;
 
 import com.mallanghwishop.backend.member.application.port.out.LoadMemberPort;
 import com.mallanghwishop.backend.member.domain.model.Member;
-import com.mallanghwishop.backend.menu.application.port.out.LoadMenuPort;
-import com.mallanghwishop.backend.menu.domain.model.Menu;
+import com.mallanghwishop.backend.product.application.port.out.LoadProductPort;
+import com.mallanghwishop.backend.product.domain.model.Product;
 import com.mallanghwishop.backend.order.application.port.in.CreateOrderUseCase;
 import com.mallanghwishop.backend.order.application.port.in.command.CreateOrderCommand;
 import com.mallanghwishop.backend.order.application.port.out.OrderPort;
@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CreateOrderService implements CreateOrderUseCase {
 
     private final OrderPort orderPort;
-    private final LoadMenuPort loadMenuPort;
+    private final LoadProductPort loadProductPort;
     private final LoadMemberPort loadMemberPort;
 
     private final com.mallanghwishop.backend.admin.cafe.application.port.in.GetCafeSettingsUseCase getCafeSettingsUseCase;
@@ -50,17 +50,17 @@ public class CreateOrderService implements CreateOrderUseCase {
                 .build();
 
         command.getItems().forEach(itemCmd -> {
-            Menu menu = loadMenuPort.findAvailableById(itemCmd.getMenuId())
-                    .orElseThrow(() -> new IllegalArgumentException("Menu not found or not available: " + itemCmd.getMenuId()));
+            Product product = loadProductPort.findAvailableById(itemCmd.getMenuId())
+                    .orElseThrow(() -> new IllegalArgumentException("상품을 찾을 수 없습니다: " + itemCmd.getMenuId()));
 
-            // 옵션 포함 단가가 전달되면 사용, 없으면 메뉴 기본가
-            int price = menu.getPrice();
-            if (itemCmd.getUnitPrice() != null && itemCmd.getUnitPrice() >= menu.getPrice()) {
+            // 옵션 포함 단가가 전달되면 사용, 없으면 상품 기본가
+            int price = product.getPrice();
+            if (itemCmd.getUnitPrice() != null && itemCmd.getUnitPrice() >= product.getPrice()) {
                 price = itemCmd.getUnitPrice();
             }
 
             OrderLineItem lineItem = OrderLineItem.builder()
-                    .menuId(menu.getId())
+                    .menuId(product.getId())
                     .price(price)
                     .quantity(itemCmd.getQuantity())
                     .build();

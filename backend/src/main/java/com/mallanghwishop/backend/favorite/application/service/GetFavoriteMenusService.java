@@ -7,10 +7,10 @@ import com.mallanghwishop.backend.favorite.application.port.out.LoadFavoriteList
 import com.mallanghwishop.backend.favorite.application.result.FavoriteMenuListResult;
 import com.mallanghwishop.backend.favorite.application.result.FavoriteMenuResult;
 import com.mallanghwishop.backend.favorite.domain.model.Favorite;
-import com.mallanghwishop.backend.menu.application.port.out.LoadMenuPort;
-import com.mallanghwishop.backend.menu.application.port.out.LoadMenuImagePort;
-import com.mallanghwishop.backend.menu.domain.model.Menu;
-import com.mallanghwishop.backend.menu.domain.model.MenuImage;
+import com.mallanghwishop.backend.product.application.port.out.LoadProductPort;
+import com.mallanghwishop.backend.product.application.port.out.ProductImagePort;
+import com.mallanghwishop.backend.product.domain.model.Product;
+import com.mallanghwishop.backend.product.domain.model.ProductImage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,8 +26,8 @@ import java.util.stream.Collectors;
 public class GetFavoriteMenusService implements GetFavoriteMenusUseCase {
 
     private final LoadFavoriteListPort loadFavoriteListPort;
-    private final LoadMenuPort loadMenuPort;
-    private final LoadMenuImagePort loadMenuImagePort;
+    private final LoadProductPort loadProductPort;
+    private final ProductImagePort productImagePort;
     private final LoadCategoryPort loadCategoryPort;
 
     @Override
@@ -36,15 +36,15 @@ public class GetFavoriteMenusService implements GetFavoriteMenusUseCase {
         List<Category> categories = loadCategoryPort.findAllActive();
         
         List<FavoriteMenuResult> menus = favorites.stream()
-                .map(favorite -> loadMenuPort.findAvailableById(favorite.getMenuId()))
+                .map(favorite -> loadProductPort.findAvailableById(favorite.getMenuId()))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .map(menu -> {
+                .map(product -> {
                     // 카테고리 정보 매핑
                     String categoryName = "";
                     String categoryIcon = "";
                     for (Category cat : categories) {
-                        if (cat.getId().equals(menu.getCategoryId())) {
+                        if (cat.getId().equals(product.getCategoryId())) {
                             categoryName = cat.getName();
                             categoryIcon = cat.getIcon();
                             break;
@@ -52,20 +52,20 @@ public class GetFavoriteMenusService implements GetFavoriteMenusUseCase {
                     }
 
                     // 이미지 (첫 번째)
-                    List<MenuImage> images = loadMenuImagePort.findAllByMenuId(menu.getId());
+                    List<ProductImage> images = productImagePort.findAllByProductId(product.getId());
                     String imageSrc = images.isEmpty() ? "blank.png" : images.get(0).getSrcUrl();
 
                     return FavoriteMenuResult.builder()
-                            .id(menu.getId())
-                            .korName(menu.getKorName())
-                            .engName(menu.getEngName())
-                            .price(menu.getPrice())
-                            .description(menu.getDescription())
-                            .categoryId(menu.getCategoryId())
+                            .id(product.getId())
+                            .korName(product.getKorName())
+                            .engName(product.getEngName())
+                            .price(product.getPrice())
+                            .description(product.getDescription())
+                            .categoryId(product.getCategoryId())
                             .categoryName(categoryName)
                             .categoryIcon(categoryIcon)
                             .imageSrc(imageSrc)
-                            .isSoldOut(Boolean.TRUE.equals(menu.getIsSoldOut()))
+                            .isSoldOut(Boolean.TRUE.equals(product.getIsSoldOut()))
                             .build();
                 })
                 .collect(Collectors.toList());

@@ -1,6 +1,6 @@
 package com.mallanghwishop.backend.admin.order.application.service;
 
-import com.mallanghwishop.backend.admin.menu.adapter.out.persistence.AdminMenuJpaRepository;
+import com.mallanghwishop.backend.product.adapter.out.persistence.repository.ProductJpaRepository;
 import com.mallanghwishop.backend.admin.order.application.port.in.GetAdminOrderListUseCase;
 import com.mallanghwishop.backend.admin.order.application.port.in.UpdateOrderStatusUseCase;
 import com.mallanghwishop.backend.admin.order.application.result.AdminOrderLineItemResult;
@@ -26,7 +26,7 @@ public class AdminOrderService implements GetAdminOrderListUseCase, UpdateOrderS
 
     private final OrderRepository orderRepository;
     private final MemberJpaRepository memberRepository;
-    private final AdminMenuJpaRepository menuRepository;
+    private final ProductJpaRepository productRepository;
 
 
     @Override
@@ -56,9 +56,9 @@ public class AdminOrderService implements GetAdminOrderListUseCase, UpdateOrderS
 
         List<AdminOrderLineItemResult> itemResults = order.getItems().stream()
                 .map(item -> {
-                    String menuName = menuRepository.findById(item.getMenuId())
-                            .map(menu -> menu.getKorName())
-                            .orElse("Deleted Menu");
+                    String menuName = productRepository.findById(item.getMenuId())
+                            .map(p -> p.getKorName())
+                            .orElse("삭제된 상품");
                     
                     return AdminOrderLineItemResult.builder()
                             .menuId(item.getMenuId())

@@ -4,10 +4,10 @@ import com.mallanghwishop.backend.cart.application.port.in.GetCartItemsUseCase;
 import com.mallanghwishop.backend.cart.application.port.out.CartPersistencePort;
 import com.mallanghwishop.backend.cart.application.result.CartItemResult;
 import com.mallanghwishop.backend.cart.domain.model.Cart;
-import com.mallanghwishop.backend.menu.application.port.out.LoadMenuImagePort;
-import com.mallanghwishop.backend.menu.application.port.out.LoadMenuPort;
-import com.mallanghwishop.backend.menu.domain.model.Menu;
-import com.mallanghwishop.backend.menu.domain.model.MenuImage;
+import com.mallanghwishop.backend.product.application.port.out.ProductImagePort;
+import com.mallanghwishop.backend.product.application.port.out.LoadProductPort;
+import com.mallanghwishop.backend.product.domain.model.Product;
+import com.mallanghwishop.backend.product.domain.model.ProductImage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -27,8 +27,8 @@ import java.util.stream.Collectors;
 public class GetCartItemsService implements GetCartItemsUseCase {
 
     private final CartPersistencePort cartPersistencePort;
-    private final LoadMenuPort loadMenuPort;
-    private final LoadMenuImagePort loadMenuImagePort;
+    private final LoadProductPort loadProductPort;
+    private final ProductImagePort productImagePort;
 
     @Override
     @Transactional
@@ -40,11 +40,11 @@ public class GetCartItemsService implements GetCartItemsUseCase {
                 });
         
         return cart.getItems().stream().map(item -> {
-            Optional<Menu> menuOpt = loadMenuPort.findAvailableById(item.getMenuId());
-            if (menuOpt.isEmpty()) return null;
+            Optional<Product> productOpt = loadProductPort.findAvailableById(item.getMenuId());
+            if (productOpt.isEmpty()) return null;
             
-            Menu menu = menuOpt.get();
-            List<MenuImage> images = loadMenuImagePort.findAllByMenuId(menu.getId());
+            Product product = productOpt.get();
+            List<ProductImage> images = productImagePort.findAllByProductId(product.getId());
             String imageUrl = images.isEmpty() ? null : images.get(0).getSrcUrl();
 
             // 옵션 이름 역직렬화 (쉼표 구분)
@@ -53,14 +53,14 @@ public class GetCartItemsService implements GetCartItemsUseCase {
                 optionNames = Arrays.asList(item.getSelectedOptionNames().split(","));
             }
 
-            // 가격: unitPrice가 있으면 사용, 없으면 메뉴 기본 가격
-            int price = item.getUnitPrice() != null ? item.getUnitPrice() : menu.getPrice();
+            // 가격: unitPrice가 있으면 사용, 없으면 상품 기본 가격
+            int price = item.getUnitPrice() != null ? item.getUnitPrice() : product.getPrice();
 
             return CartItemResult.builder()
                     .id(String.valueOf(item.getId()))
-                    .menuId(menu.getId())
-                    .korName(menu.getKorName())
-                    .engName(menu.getEngName())
+                    .menuId(product.getId())
+                    .korName(product.getKorName())
+                    .engName(product.getEngName())
                     .price(price)
                     .quantity(item.getQuantity())
                     .image(imageUrl)

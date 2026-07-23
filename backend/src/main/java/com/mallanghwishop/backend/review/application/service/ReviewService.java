@@ -2,8 +2,8 @@ package com.mallanghwishop.backend.review.application.service;
 
 import com.mallanghwishop.backend.member.application.port.out.LoadMemberPort;
 import com.mallanghwishop.backend.member.domain.model.Member;
-import com.mallanghwishop.backend.menu.application.port.out.LoadMenuPort;
-import com.mallanghwishop.backend.menu.domain.model.Menu;
+import com.mallanghwishop.backend.product.application.port.out.LoadProductPort;
+import com.mallanghwishop.backend.product.domain.model.Product;
 import com.mallanghwishop.backend.order.domain.model.Order;
 import com.mallanghwishop.backend.order.domain.model.OrderLineItem;
 import com.mallanghwishop.backend.order.adapter.out.persistence.repository.OrderRepository;
@@ -27,7 +27,7 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final LoadMemberPort loadMemberPort;
     private final OrderRepository orderRepository;
-    private final LoadMenuPort loadMenuPort;
+    private final LoadProductPort loadProductPort;
 
     private static final int MAX_STICKERS = 5;
 
@@ -41,9 +41,9 @@ public class ReviewService {
         return order.getItems().stream()
                 .map(OrderLineItem::getMenuId)
                 .distinct()
-                .map(menuId -> loadMenuPort.findAvailableById(menuId)
-                        .map(Menu::getKorName)
-                        .orElse("삭제된 메뉴"))
+                .map(menuId -> loadProductPort.findAvailableById(menuId)
+                        .map(Product::getKorName)
+                        .orElse("삭제된 상품"))
                 .collect(Collectors.joining(", "));
     }
 

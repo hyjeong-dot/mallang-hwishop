@@ -3,17 +3,17 @@ package com.mallanghwishop.backend.global.config;
 import com.mallanghwishop.backend.admin.cafe.adapter.out.persistence.CafeSettingsJpaRepository;
 import com.mallanghwishop.backend.admin.cafe.domain.model.CafeSettings;
 import com.mallanghwishop.backend.admin.category.adapter.out.persistence.AdminCategoryJpaRepository;
-import com.mallanghwishop.backend.admin.menu.adapter.out.persistence.AdminMenuImageJpaRepository;
-import com.mallanghwishop.backend.admin.menu.adapter.out.persistence.AdminMenuJpaRepository;
-import com.mallanghwishop.backend.admin.menu.adapter.out.persistence.MenuOptionJpaRepository;
-import com.mallanghwishop.backend.admin.menu.adapter.out.persistence.OptionItemJpaRepository;
+import com.mallanghwishop.backend.product.adapter.out.persistence.entity.ProductImageJpaEntity;
+import com.mallanghwishop.backend.product.adapter.out.persistence.entity.ProductJpaEntity;
+import com.mallanghwishop.backend.product.adapter.out.persistence.entity.ProductOptionJpaEntity;
+import com.mallanghwishop.backend.product.adapter.out.persistence.entity.OptionItemJpaEntity;
+import com.mallanghwishop.backend.product.adapter.out.persistence.repository.ProductImageJpaRepository;
+import com.mallanghwishop.backend.product.adapter.out.persistence.repository.ProductJpaRepository;
+import com.mallanghwishop.backend.product.adapter.out.persistence.repository.ProductOptionJpaRepository;
+import com.mallanghwishop.backend.product.adapter.out.persistence.repository.OptionItemJpaRepository;
 import com.mallanghwishop.backend.member.adapter.out.persistence.MemberJpaRepository;
 import com.mallanghwishop.backend.member.domain.model.Member;
 import com.mallanghwishop.backend.admin.category.domain.model.AdminCategory;
-import com.mallanghwishop.backend.admin.menu.domain.model.Menu;
-import com.mallanghwishop.backend.admin.menu.domain.model.AdminMenuImage;
-import com.mallanghwishop.backend.admin.menu.domain.model.MenuOption;
-import com.mallanghwishop.backend.admin.menu.domain.model.OptionItem;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -28,9 +28,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class DataInitializer implements CommandLineRunner {
 
         private final AdminCategoryJpaRepository categoryRepository;
-        private final AdminMenuJpaRepository menuRepository;
-        private final AdminMenuImageJpaRepository menuImageRepository;
-        private final MenuOptionJpaRepository menuOptionRepository;
+        private final ProductJpaRepository productRepository;
+        private final ProductImageJpaRepository productImageRepository;
+        private final ProductOptionJpaRepository productOptionRepository;
         private final OptionItemJpaRepository optionItemRepository;
         private final MemberJpaRepository memberRepository;
         private final CafeSettingsJpaRepository cafeSettingsRepository;
@@ -146,7 +146,7 @@ public class DataInitializer implements CommandLineRunner {
         // ───────────────────────────────────────────────
         private void initMenuOptions() {
                 // 이미 옵션이 존재하면 건너뜀 (사용자 수정 데이터 보호)
-                if (menuOptionRepository.count() > 0) {
+                if (productOptionRepository.count() > 0) {
                         return;
                 }
 
@@ -277,11 +277,11 @@ public class DataInitializer implements CommandLineRunner {
         //  헬퍼 메서드: 메뉴 이름으로 찾아서 옵션 저장
         // ───────────────────────────────────────────────
         private void initOptionsFor(String menuKorName, OptionDef[] options) {
-                menuRepository.findByKorName(menuKorName).ifPresent(menu -> {
+                productRepository.findByKorName(menuKorName).ifPresent(product -> {
                         for (int i = 0; i < options.length; i++) {
                                 OptionDef def = options[i];
-                                MenuOption saved = menuOptionRepository.save(MenuOption.builder()
-                                                .menuId(menu.getId())
+                                ProductOptionJpaEntity saved = productOptionRepository.save(ProductOptionJpaEntity.builder()
+                                                .productId(product.getId())
                                                 .name(def.name)
                                                 .isRequired(def.isRequired)
                                                 .isMultiSelect(def.isMultiSelect)
@@ -290,7 +290,7 @@ public class DataInitializer implements CommandLineRunner {
 
                                 for (int j = 0; j < def.items.length; j++) {
                                         ItemDef itemDef = def.items[j];
-                                        optionItemRepository.save(OptionItem.builder()
+                                        optionItemRepository.save(OptionItemJpaEntity.builder()
                                                         .optionId(saved.getId())
                                                         .name(itemDef.name)
                                                         .priceDelta(itemDef.priceDelta)
@@ -331,11 +331,11 @@ public class DataInitializer implements CommandLineRunner {
         private void saveMenu(String korName, String engName, String desc, int price, Long categoryId, int sortOrder,
                         String... imageUrls) {
                 // 이미 존재하는 이름의 메뉴인 경우 건너뛰어 중복 방지 (사용자가 직접 수정한 데이터 보호)
-                if (menuRepository.existsByKorName(korName)) {
+                if (productRepository.existsByKorName(korName)) {
                         return;
                 }
 
-                Menu menu = Menu.builder()
+                ProductJpaEntity product = ProductJpaEntity.builder()
                                 .korName(korName)
                                 .engName(engName)
                                 .description(desc)
@@ -345,16 +345,16 @@ public class DataInitializer implements CommandLineRunner {
                                 .isSoldOut(false)
                                 .sortOrder(sortOrder)
                                 .build();
-                menu = menuRepository.save(menu); // 실제 DB에 입력되어 생성된 메뉴를 반환 받음. menu.getId() 로 PK 획득 가능
+                product = productRepository.save(product);
 
                 int imgOrder = 0;
                 for (String url : imageUrls) {
-                        AdminMenuImage image = AdminMenuImage.builder()
-                                        .menuId(menu.getId())
+                        ProductImageJpaEntity image = ProductImageJpaEntity.builder()
+                                        .productId(product.getId())
                                         .srcUrl(url)
                                         .sortOrder(imgOrder++)
                                         .build();
-                        menuImageRepository.save(image);
+                        productImageRepository.save(image);
                 }
         }
 }

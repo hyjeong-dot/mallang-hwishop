@@ -2,7 +2,7 @@ package com.mallanghwishop.backend.admin.dashboard.application.service;
 
 import com.mallanghwishop.backend.admin.dashboard.application.port.in.GetAdminDashboardStatsUseCase;
 import com.mallanghwishop.backend.admin.dashboard.application.result.AdminDashboardStatsResult;
-import com.mallanghwishop.backend.admin.menu.adapter.out.persistence.AdminMenuJpaRepository;
+import com.mallanghwishop.backend.product.adapter.out.persistence.repository.ProductJpaRepository;
 import com.mallanghwishop.backend.order.adapter.out.persistence.repository.OrderRepository;
 import com.mallanghwishop.backend.order.domain.model.Order;
 import com.mallanghwishop.backend.member.adapter.out.persistence.MemberJpaRepository;
@@ -19,7 +19,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class GetAdminDashboardStatsService implements GetAdminDashboardStatsUseCase {
 
-    private final AdminMenuJpaRepository menuRepository;
+    private final ProductJpaRepository productRepository;
     private final OrderRepository orderRepository;
     private final MemberJpaRepository memberRepository;
 
@@ -27,7 +27,7 @@ public class GetAdminDashboardStatsService implements GetAdminDashboardStatsUseC
     public AdminDashboardStatsResult getStats() {
         LocalDateTime todayStart = LocalDateTime.now().with(LocalTime.MIN);
 
-        long totalMenus = menuRepository.count();
+        long totalMenus = productRepository.count();
         
         List<Order> todayOrdersList = orderRepository.findAllByCreatedAtAfter(todayStart);
         long todayOrders = todayOrdersList.size();
