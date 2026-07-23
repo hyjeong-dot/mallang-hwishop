@@ -175,7 +175,7 @@ export default function SignupForm() {
                     <span>회원가입</span>
                 </h1>
                 <div className={styles.subtitle}>
-                    메타몽 바리스타와 친구 맺기 💜
+                    말랑이와 친구 맺기 💜
                 </div>
             </div>
 
@@ -371,7 +371,7 @@ export default function SignupForm() {
                 </form>
 
                 <div className={styles.signupPrompt}>
-                    <span>이미 메타몽과 친구신가요? 🫠</span>
+                    <span>이미 말랑이과 친구신가요? 🫠</span>
                     <Link href="/login" className={styles.signupLink}>
                         로그인하러 가기 →
                     </Link>

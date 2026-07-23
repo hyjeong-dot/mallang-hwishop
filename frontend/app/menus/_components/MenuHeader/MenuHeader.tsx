@@ -14,8 +14,8 @@ export default function MenuHeader() {
                 </Link>
                 <div className={styles.titleArea}>
                     <span className={styles.emoji}>💜</span>
-                    <h1 className={styles.title}>메타몽 카페 메뉴</h1>
-                    <p className={styles.subtitle}>메타몽이 정성껏 준비한 음료와 디저트를 만나보세요! ☕🍰</p>
+                    <h1 className={styles.title}>말랑이샵 상품</h1>
+                    <p className={styles.subtitle}>수제로 만든 다양한 제품을 만나보세요! 🎀</p>
                 </div>
             </div>
         </header>

@@ -12,12 +12,12 @@ export default function LoginPage() {
     return (
         <div className={styles.container}>
             <div className={styles.loginWrapper}>
-                {/* 1. 메타몽 브랜드 이미지 섹션 */}
+                {/* 1. 말랑이 브랜드 이미지 섹션 */}
                 <LoginHero 
                     title="안녕! 반가워요 💜"
                     description={
                         <>
-                            말랑한 메타몽 바리스타가 기다리고 있어요.<br />
+                            말랑한 말랑이가 기다리고 있어요.<br />
                             아이디와 비밀번호를 입력해 주세요! ✨
                         </>
                     }

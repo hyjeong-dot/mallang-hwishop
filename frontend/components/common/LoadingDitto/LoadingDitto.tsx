@@ -8,7 +8,7 @@ interface LoadingDittoProps {
     size?: number;
 }
 
-export default function LoadingDitto({ message = '메타몽이 변신 중...', size = 100 }: LoadingDittoProps) {
+export default function LoadingDitto({ message = '말랑이이 변신 중...', size = 100 }: LoadingDittoProps) {
     return (
         <div className={styles.container}>
             <div className={styles.dittoWrapper}>

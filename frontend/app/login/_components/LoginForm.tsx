@@ -76,7 +76,7 @@ export default function LoginForm() {
                         height={40}
                         className={styles.titleIcon}
                     />
-                    메타몽 카페 로그인
+                    말랑이샵 로그인
                 </h1>
                 <p className={styles.subtitle}>맛있는 커피가 준비되고 있어요! ☕</p>
             </div>
@@ -156,7 +156,7 @@ export default function LoginForm() {
                 </form>
 
                 <div className={styles.signupPrompt}>
-                    <span>아직 메타몽 친구가 아니에요? 🫠</span>
+                    <span>아직 말랑이 친구가 아니에요? 🫠</span>
                     <Link href="/signup" className={styles.signupLink}>
                         변신해서 가입하기 →
                     </Link>

@@ -140,7 +140,7 @@ export default function AdminSidebar() {
                 <div className={styles.logo}>
                     <div className={styles.logoIcon}>💜</div>
                     <div className={styles.logoText}>
-                        메타몽 카페
+                        말랑이샵
                         <span className={styles.logoSubtext}>Admin</span>
                     </div>
                     <button 

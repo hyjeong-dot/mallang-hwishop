@@ -98,7 +98,7 @@ export default function PaymentSuccessPage() {
                 <CheckCircle size={56} className={styles.successIcon} />
                 <h2 className={styles.title}>결제가 완료되었어요! 🎉</h2>
                 <p className={styles.description}>
-                    메타몽 바리스타가 주문을 확인하고<br />
+                    말랑이가 주문을 확인하고<br />
                     맛있는 메뉴를 준비하고 있어요! 💜
                 </p>
                 <div className={styles.buttonGroup}>

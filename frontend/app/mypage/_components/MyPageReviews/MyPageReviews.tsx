@@ -59,7 +59,7 @@ export default function MyPageReviews() {
     return (
         <div className={styles.content}>
             {/* 스티커 컬렉션 */}
-            <h3 className={styles.sectionTitle}>🎨 메타몽 스티커 컬렉션</h3>
+            <h3 className={styles.sectionTitle}>🎨 말랑이 스티커 컬렉션</h3>
             <div className={styles.stickerGrid}>
                 {[1, 2, 3, 4, 5].map(num => {
                     const collected = stickerStatus && num <= stickerStatus.collectedCount;
@@ -68,7 +68,7 @@ export default function MyPageReviews() {
                             {collected ? (
                                 <Image
                                     src={`/stickers/sticker-${num}.png?v=2`}
-                                    alt={`메타몽 스티커 #${num}`}
+                                    alt={`말랑이 스티커 #${num}`}
                                     width={100}
                                     height={100}
                                     className={styles.stickerImg}
@@ -83,12 +83,12 @@ export default function MyPageReviews() {
             </div>
             {stickerStatus?.stickerEnded && (
                 <div className={styles.stickerEndedBanner}>
-                    🎉 축하해요! 메타몽 스티커 5종을 모두 모았어요! 💜
+                    🎉 축하해요! 말랑이 스티커 5종을 모두 모았어요! 💜
                 </div>
             )}
             {stickerStatus && !stickerStatus.stickerEnded && (
                 <div className={styles.stickerProgress}>
-                    리뷰를 작성하면 메타몽 스티커를 받을 수 있어요! ({stickerStatus.collectedCount}/{stickerStatus.maxStickers})
+                    리뷰를 작성하면 말랑이 스티커를 받을 수 있어요! ({stickerStatus.collectedCount}/{stickerStatus.maxStickers})
                 </div>
             )}
 

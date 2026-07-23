@@ -73,7 +73,7 @@ export default function OrderForm({
                 <h3>요청사항 📝</h3>
                 <textarea
                     className={styles.textarea}
-                    placeholder="예: 시럽 빼주세요 메타몽!"
+                    placeholder="예: 시럽 빼주세요 말랑이!"
                     value={requestMemo}
                     onChange={(e) => setRequestMemo(e.target.value)}
                     maxLength={500}

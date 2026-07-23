@@ -26,25 +26,18 @@ export default function Header() {
             <div className={`${styles.container} ${styles.headerInner}`}>
                 <Link href="/" className={styles.logoArea} onClick={closeMobileMenu}>
                     <Image
-                        src="/images/ditto/favicon-ditto.png"
-                        alt="Ditto Logo"
+                        src="/images/logo.png"
+                        alt="Mallang Logo"
                         width={32}
                         height={32}
                         className={styles.logoImage}
                     />
-                    <span>메타몽 카페</span>
+                    <span>말랑이샵</span>
                 </Link>
 
 
 
                 <nav className={`${styles.nav} ${isMobileMenuOpen ? styles.mobileNavOpen : ''}`}>
-                    <div className={styles.infoNav}>
-                        <Link href="/#about" className={styles.navLink} onClick={closeMobileMenu}>카페 소개</Link>
-                        <Link href="/#menu" className={styles.navLink} onClick={closeMobileMenu}>특별 메뉴</Link>
-                        <Link href="/#special" className={styles.navLink} onClick={closeMobileMenu}>즐길거리</Link>
-                        <Link href="/#reviews" className={styles.navLink} onClick={closeMobileMenu}>고객 후기</Link>
-                    </div>
-
                     <div className={styles.actionNav}>
                         <button 
                             className={styles.desktopCartBtn}
@@ -58,7 +51,7 @@ export default function Header() {
                             {totalCount > 0 && <span className={styles.cartBadge}>{totalCount}</span>}
                         </button>
                         
-                        <Link href="/menus" className={styles.navLink} onClick={closeMobileMenu}>전체 메뉴</Link>
+                        <Link href="/menus" className={styles.navLink} onClick={closeMobileMenu}>전체 상품</Link>
 
                         <div className={styles.buttonGroup}>
                             {user ? (

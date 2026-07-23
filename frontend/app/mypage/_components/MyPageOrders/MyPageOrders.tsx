@@ -261,7 +261,7 @@ export default function MyPageOrders() {
                     setOrderToCancel(null);
                 }}
                 title="주문을 취소할까요? 🥺"
-                description={`메타몽 바리스타가 준비를 멈추고 주문을 취소합니다.\n정말 취소하시겠어요?`}
+                description={`말랑이가 준비를 멈추고 주문을 취소합니다.\n정말 취소하시겠어요?`}
                 confirmText="네, 취소할래요"
                 cancelText="아니요 (유지)"
                 onConfirm={handleConfirmCancel}
@@ -298,7 +298,7 @@ export default function MyPageOrders() {
                             <textarea
                                 value={reviewContent}
                                 onChange={e => setReviewContent(e.target.value)}
-                                placeholder="메타몽 카페에서의 경험을 남겨주세요! 💜"
+                                placeholder="말랑이샵에서의 경험을 남겨주세요! 💜"
                                 maxLength={500}
                                 style={{
                                     width: '100%', minHeight: '120px', border: '1px solid #d1d5db', borderRadius: '8px',
@@ -315,7 +315,7 @@ export default function MyPageOrders() {
                             background: '#f5f3ff', borderRadius: '8px', padding: '0.75rem',
                             fontSize: '0.85rem', color: '#6d28d9', marginBottom: '1rem', textAlign: 'center'
                         }}>
-                            🎨 리뷰를 남기면 메타몽 스티커를 받을 수 있어요!
+                            🎨 리뷰를 남기면 말랑이 스티커를 받을 수 있어요!
                         </div>
 
                         {/* 스티커 결과 표시 */}
@@ -328,7 +328,7 @@ export default function MyPageOrders() {
                                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
                                         <Image src={`/stickers/sticker-${lastStickerResult.stickerNumber}.png?v=2`} 
                                             alt="스티커" width={80} height={80} />
-                                        <span style={{ fontWeight: 600 }}>🎉 메타몽 스티커 #{lastStickerResult.stickerNumber} 획득!</span>
+                                        <span style={{ fontWeight: 600 }}>🎉 말랑이 스티커 #{lastStickerResult.stickerNumber} 획득!</span>
                                     </div>
                                 ) : (
                                     <span>스티커 이벤트가 종료되었습니다. 감사합니다! 💜</span>

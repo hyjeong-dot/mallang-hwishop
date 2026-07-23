@@ -6,7 +6,7 @@ export default function MyPageHeader() {
     return (
         <div className={styles.header}>
             <h1 className={styles.title}>내 정보 💜</h1>
-            <p className={styles.subtitle}>메타몽 카페에 오신 것을 환영해요!</p>
+            <p className={styles.subtitle}>말랑이샵에 오신 것을 환영해요!</p>
         </div>
     );
 }

@@ -58,7 +58,7 @@ export default function MenuGrid({ selectedCategory, searchQuery }: MenuGridProp
 
     // 데이터 로딩 중 (이미지 제외 데이터만)
     if (isLoading && !isImagesReady) {
-        return <LoadingDitto message="메타몽이 메뉴를 준비하고 있어요... 💜" />;
+        return <LoadingDitto message="말랑이이 메뉴를 준비하고 있어요... 💜" />;
     }
 
     if (error) {

@@ -34,7 +34,7 @@ export default function Footer() {
                                 height={28}
                                 className={styles.footerLogoImage}
                             />
-                            <span>메타몽 카페</span>
+                            <span>말랑이샵</span>
                         </div>
                         <p className={styles.footerDesc}>
                             세상에서 가장 귀여운 포켓몬 카페 💜
@@ -55,7 +55,7 @@ export default function Footer() {
                     </div>
 
                     <div>
-                        <h4 className={styles.footerTitle}>메타몽 카페</h4>
+                        <h4 className={styles.footerTitle}>말랑이샵</h4>
                         <nav className={styles.footerLinks}>
                             <Link href="/#about" className={styles.footerLink}>카페 소개</Link>
                             <Link href="/menus" className={styles.footerLink}>메뉴</Link>
@@ -102,7 +102,7 @@ export default function Footer() {
                             height={16}
                             style={{ opacity: 0.7 }}
                         />
-                        <p>&copy; 2026 메타몽 카페. All rights reserved.</p>
+                        <p>&copy; 2026 말랑이샵. All rights reserved.</p>
                     </div>
                 </div>
             </div>
