@@ -41,13 +41,13 @@
 .title {
     font-size: 1.5rem;
     font-weight: 800;
-    color: #4a3570;
+    color: var(--text-primary, #333333);
     margin-bottom: 0.8rem;
 }
 
 .description {
     font-size: 1rem;
-    color: #8b62c0;
+    color: var(--color-primary-600, #FF8BA7);
     line-height: 1.7;
     margin-bottom: 2rem;
 }

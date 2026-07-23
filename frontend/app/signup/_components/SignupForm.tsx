@@ -170,7 +170,7 @@ export default function SignupForm() {
             <div className={styles.header}>
                 <h1 className={styles.title}>
                     <div className={styles.titleIcon}>
-                        <UserPlus size={24} color="#a87edb" />
+                        <UserPlus size={24} color="#FF8BA7" />
                     </div>
                     <span>회원가입</span>
                 </h1>
@@ -337,7 +337,7 @@ export default function SignupForm() {
                                 className={styles.hiddenCheckbox}
                             />
                             <div className={styles.customCheckbox}>
-                                {termsAgreed ? <CheckSquare size={20} color="#a87edb" /> : <Square size={20} color="#ddd" />}
+                                {termsAgreed ? <CheckSquare size={20} color="#FF8BA7" /> : <Square size={20} color="#ddd" />}
                             </div>
                             <span className={styles.termsText}>
                                 [필수] 이용약관 및 개인정보 처리방침에 동의합니다.

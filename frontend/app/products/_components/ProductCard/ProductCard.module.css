@@ -1,16 +1,16 @@
 .card {
     background: #ffffff;
-    border-radius: 1.5rem;
+    border-radius: 1.2rem;
     overflow: hidden;
-    border: 2px solid #f0e6ff;
+    border: 2px solid var(--color-primary-100, #FFE4E8);
     transition: all 400ms cubic-bezier(.25, .8, .25, 1);
     cursor: default;
 }
 
 .card:hover {
     transform: translateY(-6px);
-    box-shadow: 0 16px 35px rgba(255, 181, 194, 0.12);
-    border-color: var(--color-primary-400);
+    box-shadow: 0 16px 35px rgba(255, 181, 194, 0.15);
+    border-color: var(--color-primary-300, #FFB5C2);
 }
 
 .card.soldOut {
@@ -23,7 +23,7 @@
     width: 100%;
     aspect-ratio: 1 / 1;
     overflow: hidden;
-    background: linear-gradient(135deg, #f8f4ff, #f0e6ff);
+    background: linear-gradient(135deg, var(--color-primary-50, #FFF8F0), var(--color-primary-100, #FFE4E8));
 }
 
 .image {
@@ -42,7 +42,7 @@
     justify-content: center;
     width: 100%;
     height: 100%;
-    color: var(--color-primary-400);
+    color: var(--color-primary-400, #FFB5C2);
     gap: 0.5rem;
     font-size: 0.8rem;
     font-weight: 600;
@@ -61,7 +61,7 @@
 .soldOutBadge {
     padding: 0.5rem 1.2rem;
     background: rgba(255, 255, 255, 0.95);
-    color: #6e4a9e;
+    color: var(--color-primary-700, #E67A95);
     border-radius: 99px;
     font-weight: 700;
     font-size: 0.9rem;
@@ -77,9 +77,9 @@
     border-radius: 99px;
     font-size: 0.72rem;
     font-weight: 700;
-    color: #6e4a9e;
+    color: var(--color-primary-700, #E67A95);
     z-index: 1;
-    border: 1px solid rgba(228, 212, 252, 0.5);
+    border: 1px solid var(--color-primary-200, #FFD1DB);
 }
 
 /* Content */
@@ -90,20 +90,20 @@
 .korName {
     font-size: 1.05rem;
     font-weight: 700;
-    color: #4a3570;
+    color: var(--text-primary, #333333);
     margin-bottom: 0.15rem;
 }
 
 .engName {
     font-size: 0.78rem;
-    color: #a87edb;
+    color: var(--color-primary-600, #FF8BA7);
     font-weight: 500;
     margin-bottom: 0.5rem;
 }
 
 .description {
     font-size: 0.82rem;
-    color: #8b62c0;
+    color: var(--text-secondary, #888888);
     line-height: 1.5;
     margin-bottom: 0.7rem;
     display: -webkit-box;
@@ -121,7 +121,7 @@
 .price {
     font-size: 1.1rem;
     font-weight: 800;
-    color: #6e4a9e;
+    color: var(--text-primary, #333333);
 }
 
 @media (max-width: 768px) {

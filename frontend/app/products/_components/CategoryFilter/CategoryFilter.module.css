@@ -1,6 +1,6 @@
 .filterBar {
     background: #ffffff;
-    border-bottom: 2px solid #f0e6ff;
+    border-bottom: 2px solid var(--color-primary-100, #FFE4E8);
     position: sticky;
     top: 0;
     z-index: 50;
@@ -27,12 +27,12 @@
     align-items: center;
     gap: 0.4rem;
     padding: 0.55rem 1.1rem;
-    background: #f8f4ff;
-    border: 2px solid #f0e6ff;
+    background: var(--color-primary-50, #FFF8F0);
+    border: 2px solid var(--color-primary-100, #FFE4E8);
     border-radius: 99px;
     font-size: 0.88rem;
     font-weight: 600;
-    color: #8b62c0;
+    color: var(--color-primary-700, #E67A95);
     cursor: pointer;
     white-space: nowrap;
     transition: all 250ms ease;
@@ -40,16 +40,16 @@
 }
 
 .chip:hover {
-    background: #f0e6ff;
-    border-color: var(--color-primary-400);
+    background: var(--color-primary-100, #FFE4E8);
+    border-color: var(--color-primary-300, #FFB5C2);
     transform: translateY(-1px);
 }
 
 .chip.active {
-    background: linear-gradient(135deg, var(--color-primary-400), #c4a4f0);
-    border-color: #c4a4f0;
+    background: linear-gradient(135deg, var(--color-primary-400, #FFB5C2), var(--color-primary-600, #FF8BA7));
+    border-color: var(--color-primary-400, #FFB5C2);
     color: #fff;
-    box-shadow: 0 4px 12px rgba(255, 181, 194, 0.2);
+    box-shadow: 0 4px 12px rgba(255, 181, 194, 0.25);
 }
 
 .chipIcon {

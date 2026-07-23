@@ -17,13 +17,13 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    color: #8b62c0;
+    color: var(--color-primary-600, #FF8BA7);
     font-weight: 700;
     font-size: 0.95rem;
     transition: all 200ms ease;
 }
 
 .backLink:hover {
-    color: #6e4a9e;
+    color: var(--color-primary-700, #E67A95);
     transform: translateX(-3px);
 }

@@ -5,7 +5,7 @@
     min-height: 80vh;
     /* 레이아웃 헤더/푸터 고려 */
     padding: 2rem;
-    background: radial-gradient(circle at top left, #fdfcff, #f0e6ff);
+    background: radial-gradient(circle at top left, var(--bg-primary, #FFF8F0), var(--color-primary-100, #FFE4E8));
 }
 
 .loginWrapper {
@@ -47,7 +47,7 @@
     box-shadow:
         0 10px 20px rgba(255, 181, 194, 0.05),
         0 30px 60px rgba(255, 181, 194, 0.15);
-    border: 2px solid #f8f4ff;
+    border: 2px solid var(--color-primary-50, #FFF8F0);
     transform: rotate(-2deg);
     animation: dittoFloat 4s ease-in-out infinite;
     display: flex;
@@ -90,13 +90,13 @@
 .welcomeTitle {
     font-size: 1.8rem;
     font-weight: 800;
-    color: #6e4a9e;
+    color: var(--color-primary-700, #E67A95);
     /* ditto-800 */
     margin-bottom: 0.5rem;
 }
 
 .welcomeDesc {
-    color: #a87edb;
+    color: var(--color-primary-600, #FF8BA7);
     /* ditto-600 */
     font-size: 1rem;
     line-height: 1.5;
@@ -109,7 +109,7 @@
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 2px solid #f0e6ff;
+    border: 2px solid var(--color-primary-100, #FFE4E8);
     /* ditto-200 */
     border-radius: 2rem;
     box-shadow: 0 20px 50px rgba(255, 181, 194, 0.1);
@@ -128,7 +128,7 @@
     gap: 0.8rem;
     font-size: 1.5rem;
     font-weight: 800;
-    color: #4a3570;
+    color: var(--text-primary, #333333);
     /* ditto-900 */
     margin-bottom: 0.5rem;
 }
@@ -142,7 +142,7 @@
 
 .subtitle {
     font-size: 0.9rem;
-    color: #8b62c0;
+    color: var(--color-primary-600, #FF8BA7);
     /* ditto-700 */
 }
 
@@ -194,7 +194,7 @@
 .label {
     font-size: 0.85rem;
     font-weight: 700;
-    color: #6e4a9e;
+    color: var(--color-primary-700, #E67A95);
     margin-left: 0.2rem;
 }
 
@@ -207,7 +207,7 @@
 .inputIcon {
     position: absolute;
     left: 1rem;
-    color: #c4a4f0;
+    color: var(--color-primary-400, #FFB5C2);
     /* ditto-500 */
     pointer-events: none;
 }
@@ -216,7 +216,7 @@
     width: 100%;
     padding: 0.8rem 1rem 0.8rem 2.8rem;
     background: #fff;
-    border: 2px solid #f8f4ff;
+    border: 2px solid var(--color-primary-50, #FFF8F0);
     /* ditto-100 */
     border-radius: 12px;
     font-size: 0.95rem;
@@ -233,7 +233,7 @@
 .togglePassword {
     position: absolute;
     right: 0.8rem;
-    color: #c4a4f0;
+    color: var(--color-primary-400, #FFB5C2);
     background: none;
     border: none;
     cursor: pointer;
@@ -244,7 +244,7 @@
 .submitButton {
     margin-top: 1rem;
     padding: 1rem;
-    background: linear-gradient(135deg, #a87edb, #6e4a9e);
+    background: linear-gradient(135deg, var(--color-primary-600, #FF8BA7), var(--color-primary-700, #E67A95));
     color: #fff;
     font-weight: 700;
     font-size: 1rem;
@@ -303,18 +303,18 @@
     gap: 0.5rem;
     margin-top: 1.5rem;
     padding-top: 1.5rem;
-    border-top: 1px solid #f0e6ff;
+    border-top: 1px solid var(--color-primary-100, #FFE4E8);
 }
 
 .signupPrompt span {
     font-size: 0.88rem;
-    color: #8b62c0;
+    color: var(--color-primary-600, #FF8BA7);
 }
 
 .signupLink {
     font-size: 0.95rem;
     font-weight: 700;
-    color: #a87edb;
+    color: var(--color-primary-600, #FF8BA7);
     text-decoration: none;
     transition: all 0.2s ease;
     padding: 0.4rem 1rem;
@@ -322,8 +322,8 @@
 }
 
 .signupLink:hover {
-    color: #6e4a9e;
-    background: #f8f4ff;
+    color: var(--color-primary-700, #E67A95);
+    background: var(--color-primary-50, #FFF8F0);
     transform: translateX(4px);
 }
 /* Terms Agreement Styles */
@@ -361,7 +361,7 @@
 .termsText {
     font-size: 0.85rem;
     font-weight: 500;
-    color: #6e4a9e;
+    color: var(--color-primary-700, #E67A95);
     line-height: 1.4;
 }
 
@@ -412,7 +412,7 @@
 .strengthTrack {
     flex: 1;
     height: 4px;
-    background: #f0e6ff;
+    background: var(--color-primary-100, #FFE4E8);
     border-radius: 2px;
     overflow: hidden;
 }

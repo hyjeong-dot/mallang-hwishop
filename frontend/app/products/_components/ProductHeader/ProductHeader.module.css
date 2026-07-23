@@ -1,14 +1,14 @@
 .header {
-    background: var(--color-primary-50);
-    padding: 2rem 0;
+    width: 100%;
+    padding: 0;
     text-align: center;
-    border-bottom: 2px solid var(--color-primary-200);
 }
 
 .inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
     position: relative;
     display: flex;
     justify-content: center;
@@ -20,14 +20,13 @@
 
 .heroBanner {
     width: 100%;
-    height: 300px;
+    height: 320px;
     object-fit: cover;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
+    display: block;
 }
 
 @media (max-width: 768px) {
-    .header {
-        padding: 1rem 0;
+    .heroBanner {
+        height: 200px;
     }
 }

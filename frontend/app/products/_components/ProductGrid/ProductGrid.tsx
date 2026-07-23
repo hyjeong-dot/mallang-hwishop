@@ -58,7 +58,7 @@ export default function ProductGrid({ selectedCategory, searchQuery }: ProductGr
 
     // 데이터 로딩 중 (이미지 제외 데이터만)
     if (isLoading && !isImagesReady) {
-        return <LoadingCharacter message="상품를 준비하고 있어요... 💜" />;
+        return <LoadingCharacter message="상품을 준비하고 있어요... 💖" />;
     }
 
     if (error) {
@@ -86,7 +86,7 @@ export default function ProductGrid({ selectedCategory, searchQuery }: ProductGr
             {/* 이미지가 준비되지 않았을 때만 보여주는 오버레이 로더 */}
             {!isImagesReady && currentProducts.length > 0 && (
                 <div className={styles.overlayLoader}>
-                    <LoadingCharacter message="이미지를 선명하게 다듬고 있어요... 💜" />
+                    <LoadingCharacter message="이미지를 선명하게 다듬고 있어요... 💖" />
                 </div>
             )}
 

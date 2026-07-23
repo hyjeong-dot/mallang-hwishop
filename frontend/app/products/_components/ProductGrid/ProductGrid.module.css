@@ -50,13 +50,13 @@
 .emptyText {
     font-size: 1.1rem;
     font-weight: 700;
-    color: #6e4a9e;
+    color: var(--text-primary, #333333);
     margin-bottom: 0.4rem;
 }
 
 .emptySubText {
     font-size: 0.9rem;
-    color: #a87edb;
+    color: var(--text-secondary, #888888);
 }
 
 /* Responsive */
@@ -101,28 +101,28 @@
     align-items: center;
     justify-content: center;
     border-radius: 12px;
-    border: 2px solid #f8f4ff;
+    border: 2px solid var(--color-primary-100, #FFE4E8);
     background: #fff;
-    color: #8b62c0;
+    color: var(--color-primary-700, #E67A95);
     font-weight: 600;
     transition: all 0.2s ease;
     cursor: pointer;
 }
 
 .pageButton:hover:not(:disabled) {
-    border-color: var(--color-primary-400);
-    background: #f8f4ff;
+    border-color: var(--color-primary-300, #FFB5C2);
+    background: var(--color-primary-50, #FFF8F0);
 }
 
 .pageButton.active {
-    background: #a87edb;
+    background: var(--color-primary-400, #FFB5C2);
     color: #fff;
-    border-color: #a87edb;
-    box-shadow: 0 4px 12px rgba(255, 181, 194, 0.2);
+    border-color: var(--color-primary-400, #FFB5C2);
+    box-shadow: 0 4px 12px rgba(255, 181, 194, 0.25);
 }
 
 .pageButton:disabled {
     opacity: 0.5;
     cursor: not-allowed;
-    background: #fdfcff;
+    background: var(--bg-primary, #FFF8F0);
 }

@@ -9,18 +9,18 @@ export default function ToastProvider() {
             toastOptions={{
                 duration: 3000,
                 style: {
-                    background: '#8b62c0', // ditto-700
+                    background: '#FF8BA7', // ditto-700
                     color: '#fff',
                     borderRadius: '12px',
                 },
                 success: {
                     style: {
-                        background: '#f8f4ff', // ditto-100
-                        color: '#6e4a9e', // ditto-800
-                        border: '1px solid #d4bbf7', // ditto-400
+                        background: '#FFF8F0', // ditto-100
+                        color: '#E67A95', // ditto-800
+                        border: '1px solid #FFB5C2', // ditto-400
                     },
                     iconTheme: {
-                        primary: '#a87edb', // ditto-600
+                        primary: '#FF8BA7', // ditto-600
                         secondary: 'white',
                     },
                 },

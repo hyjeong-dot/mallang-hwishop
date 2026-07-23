@@ -6,8 +6,8 @@
 .categoryBadge {
     display: inline-flex;
     padding: 0.4rem 1rem;
-    background: #f0e6ff;
-    color: #8b62c0;
+    background: var(--color-primary-100, #FFE4E8);
+    color: var(--color-primary-600, #FF8BA7);
     border-radius: 99px;
     font-weight: 700;
     font-size: 0.85rem;
@@ -24,7 +24,7 @@
 .title {
     font-size: 2.2rem;
     font-weight: 800;
-    color: #4a3570;
+    color: var(--text-primary, #333333);
 }
 
 .actionIcons {
@@ -37,18 +37,18 @@
     height: 44px;
     border-radius: 50%;
     background: #fff;
-    border: 2px solid #f0e6ff;
+    border: 2px solid var(--color-primary-100, #FFE4E8);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #a87edb;
+    color: var(--color-primary-600, #FF8BA7);
     transition: all 200ms ease;
 }
 
 .iconBtn:hover {
-    background: #fdfcff;
+    background: var(--bg-primary, #FFF8F0);
     border-color: var(--color-primary-400);
-    color: #8b62c0;
+    color: var(--color-primary-600, #FF8BA7);
 }
 
 .iconBtn:active {
@@ -69,28 +69,28 @@
 
 .engTitle {
     font-size: 1.1rem;
-    color: #a87edb;
+    color: var(--color-primary-600, #FF8BA7);
     font-weight: 500;
     margin-bottom: 1.5rem;
 }
 
 .priceSection {
     margin-bottom: 2rem;
-    background: #fdfcff;
-    border-bottom: 2px dashed #f0e6ff;
+    background: var(--bg-primary, #FFF8F0);
+    border-bottom: 2px dashed var(--color-primary-100, #FFE4E8);
     padding-bottom: 1.5rem;
 }
 
 .price {
     font-size: 1.8rem;
     font-weight: 800;
-    color: #6e4a9e;
+    color: var(--color-primary-700, #E67A95);
 }
 
 .extraPriceNote {
     display: block;
     font-size: 0.8rem;
-    color: #a87edb;
+    color: var(--color-primary-600, #FF8BA7);
     font-weight: 500;
     margin-top: 0.3rem;
 }
@@ -105,13 +105,13 @@
     gap: 0.5rem;
     font-size: 1rem;
     font-weight: 700;
-    color: #8b62c0;
+    color: var(--color-primary-600, #FF8BA7);
     margin-bottom: 0.8rem;
 }
 
 .description {
     font-size: 1.05rem;
-    color: #4a3570;
+    color: var(--text-primary, #333333);
     line-height: 1.8;
 }
 
@@ -121,7 +121,7 @@
     gap: 0.8rem;
     margin-bottom: 2.5rem;
     padding: 1.2rem;
-    background: #f8f4ff;
+    background: var(--color-primary-50, #FFF8F0);
     border-radius: 1.2rem;
 }
 
@@ -130,7 +130,7 @@
     align-items: center;
     gap: 0.7rem;
     font-size: 0.9rem;
-    color: #8b62c0;
+    color: var(--color-primary-600, #FF8BA7);
     font-weight: 600;
 }
 
@@ -148,8 +148,8 @@
     gap: 0.6rem;
     padding: 1.2rem;
     background: #fff;
-    border: 2px solid #f0e6ff;
-    color: #8b62c0;
+    border: 2px solid var(--color-primary-100, #FFE4E8);
+    color: var(--color-primary-600, #FF8BA7);
     border-radius: 1.2rem;
     font-size: 1.1rem;
     font-weight: 700;
@@ -157,7 +157,7 @@
 }
 
 .cartBtn:hover:not(:disabled) {
-    background: #fdfcff;
+    background: var(--bg-primary, #FFF8F0);
     border-color: var(--color-primary-400);
     transform: translateY(-4px);
     box-shadow: 0 10px 20px rgba(255, 181, 194, 0.08);

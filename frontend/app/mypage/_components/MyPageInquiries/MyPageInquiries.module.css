@@ -36,7 +36,7 @@
     background: var(--color-primary-600); color: white; font-weight: 600; cursor: pointer;
     transition: all 150ms;
 }
-.submitBtn:hover:not(:disabled) { background: #7c3aed; }
+.submitBtn:hover:not(:disabled) { background: var(--color-primary-700, #E67A95); }
 .submitBtn:disabled { opacity: 0.5; cursor: not-allowed; }
 
 /* 목록 */
@@ -68,7 +68,7 @@
 .badge-closed { background: #f1f5f9; color: #64748b; }
 .catBadge {
     padding: 2px 6px; border-radius: 4px; font-size: 0.68rem;
-    font-weight: 600; background: #f0e6ff; color: #7c3aed; flex-shrink: 0;
+    font-weight: 600; background: var(--color-primary-100, #FFE4E8); color: var(--color-primary-700, #E67A95); flex-shrink: 0;
 }
 
 .itemBody { padding: 0 16px 16px; animation: fadeIn 200ms; }

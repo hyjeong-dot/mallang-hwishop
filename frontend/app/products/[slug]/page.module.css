@@ -1,6 +1,6 @@
 .page {
     min-height: 100vh;
-    background-color: #fdfcff;
+    background-color: var(--bg-primary, #FFF8F0);
     padding-bottom: 4rem;
 }
 
@@ -26,14 +26,14 @@
     align-items: center;
     justify-content: center;
     gap: 1.5rem;
-    color: #a87edb;
+    color: var(--color-primary-600, #FF8BA7);
     font-weight: 700;
 }
 
 .backButton {
     padding: 0.8rem 1.5rem;
-    background: #f0e6ff;
-    color: #8b62c0;
+    background: var(--color-primary-100, #FFE4E8);
+    color: var(--color-primary-600, #FF8BA7);
     border-radius: 99px;
     font-weight: 700;
     transition: all 200ms ease;
@@ -41,15 +41,15 @@
 }
 
 .backButton:hover {
-    background: #e4d4fc;
+    background: var(--color-primary-200, #FFD1DB);
     transform: translateY(-2px);
 }
 
 .spinner {
     width: 50px;
     height: 50px;
-    border: 5px solid #f0e6ff;
-    border-top-color: #c4a4f0;
+    border: 5px solid var(--color-primary-100, #FFE4E8);
+    border-top-color: var(--color-primary-400, #FFB5C2);
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }

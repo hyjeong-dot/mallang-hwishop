@@ -165,8 +165,8 @@
 }
 
 .editBtn {
-    background: #f0e6ff;
-    color: #7c3aed;
+    background: var(--color-primary-100, #FFE4E8);
+    color: var(--color-primary-700, #E67A95);
 }
 
 .editBtn:hover {
@@ -285,13 +285,13 @@
 }
 
 .emojiBtn:hover {
-    background: #f0e6ff;
+    background: var(--color-primary-100, #FFE4E8);
     border-color: #d4b8ff;
 }
 
 .emojiSelected {
     border-color: var(--color-primary-600);
-    background: #f0e6ff;
+    background: var(--color-primary-100, #FFE4E8);
     box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
 }
 

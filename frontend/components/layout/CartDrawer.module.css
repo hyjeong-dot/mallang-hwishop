@@ -15,7 +15,7 @@
     width: 400px;
     max-width: 90vw;
     height: 100%;
-    background: #fdfcff;
+    background: var(--bg-primary, #FFF8F0);
     box-shadow: -5px 0 25px rgba(255, 181, 194, 0.1);
     display: flex;
     flex-direction: column;
@@ -29,7 +29,7 @@
 
 .header {
     padding: 1.5rem;
-    border-bottom: 2px solid #f0e6ff;
+    border-bottom: 2px solid var(--color-primary-100, #FFE4E8);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -42,26 +42,26 @@
 }
 
 .bagIcon {
-    color: #c4a4f0;
+    color: var(--color-primary-400, #FFB5C2);
 }
 
 .titleInfo h2 {
     font-size: 1.25rem;
     font-weight: 800;
-    color: #4a3570;
+    color: var(--text-primary, #333333);
     margin: 0;
 }
 
 .titleInfo h2 span {
     font-size: 1rem;
-    color: #a87edb;
+    color: var(--color-primary-600, #FF8BA7);
     font-weight: 500;
 }
 
 .closeBtn {
     background: none;
     border: none;
-    color: #8b62c0;
+    color: var(--color-primary-600, #FF8BA7);
     cursor: pointer;
     padding: 0.2rem;
     transition: transform 200ms ease;
@@ -82,10 +82,10 @@
     font-weight: 700;
     font-family: monospace;
     padding: 2px 6px;
-    background: #f8f4ff;
+    background: var(--color-primary-50, #FFF8F0);
     border: 1px solid #e0ccff;
     border-radius: 4px;
-    color: #a87edb;
+    color: var(--color-primary-600, #FF8BA7);
     line-height: 1;
 }
 
@@ -102,7 +102,7 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: #a87edb;
+    color: var(--color-primary-600, #FF8BA7);
 }
 
 .emptyIcon {
@@ -123,7 +123,7 @@
     padding: 1rem;
     background: #fff;
     border-radius: 16px;
-    border: 1px solid #f0e6ff;
+    border: 1px solid var(--color-primary-100, #FFE4E8);
     transition: all 200ms ease;
 }
 
@@ -138,7 +138,7 @@
     height: 60px;
     border-radius: 12px;
     overflow: hidden;
-    background: #f8f4ff;
+    background: var(--color-primary-50, #FFF8F0);
     flex-shrink: 0;
 }
 
@@ -170,7 +170,7 @@
 .itemHeader h3 {
     font-size: 1rem;
     font-weight: 700;
-    color: #4a3570;
+    color: var(--text-primary, #333333);
     margin: 0 0 0.2rem 0;
 }
 
@@ -188,7 +188,7 @@
 
 .optionNames {
     font-size: 0.78rem;
-    color: #a87edb;
+    color: var(--color-primary-600, #FF8BA7);
     margin: 0 0 0.3rem 0;
     line-height: 1.3;
 }
@@ -196,7 +196,7 @@
 .price {
     font-size: 0.95rem;
     font-weight: 600;
-    color: #8b62c0;
+    color: var(--color-primary-600, #FF8BA7);
     margin-bottom: 0.8rem;
 }
 
@@ -204,7 +204,7 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-    background: #f8f4ff;
+    background: var(--color-primary-50, #FFF8F0);
     width: fit-content;
     padding: 0.25rem 0.5rem;
     border-radius: 8px;
@@ -213,7 +213,7 @@
 .quantityControl button {
     background: none;
     border: none;
-    color: #8b62c0;
+    color: var(--color-primary-600, #FF8BA7);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -227,7 +227,7 @@
 
 .quantityControl span {
     font-weight: 700;
-    color: #4a3570;
+    color: var(--text-primary, #333333);
     min-width: 1rem;
     text-align: center;
 }
@@ -235,7 +235,7 @@
 .footer {
     padding: 1.5rem;
     background: #fff;
-    border-top: 2px solid #f0e6ff;
+    border-top: 2px solid var(--color-primary-100, #FFE4E8);
     border-radius: 24px 24px 0 0;
 }
 
@@ -248,18 +248,18 @@
 
 .totalRow span {
     font-weight: 600;
-    color: #a87edb;
+    color: var(--color-primary-600, #FF8BA7);
 }
 
 .totalPrice {
     font-size: 1.5rem;
     font-weight: 800;
-    color: #8b62c0;
+    color: var(--color-primary-600, #FF8BA7);
 }
 
 .countInfo {
     font-size: 0.85rem;
-    color: #a87edb;
+    color: var(--color-primary-600, #FF8BA7);
     font-weight: 500;
     margin-left: 0.4rem;
     opacity: 0.8;
@@ -268,7 +268,7 @@
 .orderBtn {
     width: 100%;
     padding: 1.1rem;
-    background: linear-gradient(135deg, #c4a4f0, #8b62c0);
+    background: linear-gradient(135deg, var(--color-primary-400, #FFB5C2), var(--color-primary-600, #FF8BA7));
     border: none;
     border-radius: 16px;
     color: #fff;
@@ -293,8 +293,8 @@
 .browseBtn {
     margin-top: 1.5rem;
     padding: 0.8rem 1.5rem;
-    background: linear-gradient(135deg, #f0e6ff, #e0ccff);
-    color: #8b62c0;
+    background: linear-gradient(135deg, var(--color-primary-100, #FFE4E8), #e0ccff);
+    color: var(--color-primary-600, #FF8BA7);
     border-radius: 12px;
     font-weight: 700;
     text-decoration: none;
