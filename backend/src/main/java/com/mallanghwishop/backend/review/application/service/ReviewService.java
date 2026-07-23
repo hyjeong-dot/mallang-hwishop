@@ -29,7 +29,6 @@ public class ReviewService {
     private final OrderRepository orderRepository;
     private final LoadProductPort loadProductPort;
 
-    private static final int MAX_STICKERS = 5;
 
     /**
      * 주문에 포함된 메뉴 이름들을 조회하여 쉼표로 결합
@@ -48,7 +47,7 @@ public class ReviewService {
     }
 
     /**
-     * 리뷰 작성 + 스티커 지급
+     * 리뷰 작성
      */
     @Transactional
     public ReviewResponse createReview(String username, ReviewRequest request) {
@@ -63,30 +62,18 @@ public class ReviewService {
         Order order = orderRepository.findById(request.getOrderId())
                 .orElseThrow(() -> new IllegalArgumentException("주문을 찾을 수 없습니다."));
 
-        // 스티커 번호 결정 (1~5번째 리뷰까지만 스티커 지급)
-        long reviewCount = reviewRepository.countByMemberId(member.getId());
-        Integer stickerNumber = null;
-        boolean stickerEnded = false;
-
-        if (reviewCount < MAX_STICKERS) {
-            stickerNumber = (int) (reviewCount + 1);
-        } else {
-            stickerEnded = true;
-        }
-
         Review review = Review.builder()
                 .memberId(member.getId())
                 .order(order)
                 .content(request.getContent())
                 .rating(request.getRating())
-                .stickerNumber(stickerNumber)
                 .build();
 
         Review saved = reviewRepository.save(review);
-        log.info("Review created: orderId={}, sticker={}", request.getOrderId(), stickerNumber);
+        log.info("Review created: orderId={}", request.getOrderId());
 
         String menuNames = resolveMenuNames(order);
-        return ReviewResponse.from(saved, member.getNickname(), stickerEnded, menuNames);
+        return ReviewResponse.from(saved, member.getNickname(), menuNames);
     }
 
     /**
@@ -97,13 +84,10 @@ public class ReviewService {
         Member member = loadMemberPort.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("회원을 찾을 수 없습니다."));
 
-        long reviewCount = reviewRepository.countByMemberId(member.getId());
-        boolean stickerEnded = reviewCount >= MAX_STICKERS;
-
         return reviewRepository.findByMemberIdOrderByCreatedAtDesc(member.getId()).stream()
                 .map(r -> {
                     String menuNames = resolveMenuNames(r.getOrder());
-                    return ReviewResponse.from(r, member.getNickname(), stickerEnded, menuNames);
+                    return ReviewResponse.from(r, member.getNickname(), menuNames);
                 })
                 .collect(Collectors.toList());
     }
@@ -119,28 +103,10 @@ public class ReviewService {
         Review review = reviewRepository.findByOrder_Id(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("리뷰를 찾을 수 없습니다."));
 
-        long reviewCount = reviewRepository.countByMemberId(member.getId());
         String menuNames = resolveMenuNames(review.getOrder());
-        return ReviewResponse.from(review, member.getNickname(), reviewCount >= MAX_STICKERS, menuNames);
+        return ReviewResponse.from(review, member.getNickname(), menuNames);
     }
 
-    /**
-     * 내가 받은 스티커 목록
-     */
-    @Transactional(readOnly = true)
-    public StickerStatusResponse getStickerStatus(String username) {
-        Member member = loadMemberPort.findByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("회원을 찾을 수 없습니다."));
-
-        long reviewCount = reviewRepository.countByMemberId(member.getId());
-        int collected = (int) Math.min(reviewCount, MAX_STICKERS);
-
-        return StickerStatusResponse.builder()
-                .collectedCount(collected)
-                .maxStickers(MAX_STICKERS)
-                .stickerEnded(reviewCount >= MAX_STICKERS)
-                .build();
-    }
 
     /**
      * 특정 메뉴의 리뷰 목록 (공개 API)
@@ -153,7 +119,7 @@ public class ReviewService {
                             .map(Member::getNickname)
                             .orElse("익명");
                     String menuNames = resolveMenuNames(r.getOrder());
-                    return ReviewResponse.from(r, nickname, false, menuNames);
+                    return ReviewResponse.from(r, nickname, menuNames);
                 })
                 .collect(Collectors.toList());
     }

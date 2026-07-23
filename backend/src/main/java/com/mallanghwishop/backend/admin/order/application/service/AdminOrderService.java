@@ -88,9 +88,9 @@ public class AdminOrderService implements GetAdminOrderListUseCase, UpdateOrderS
         switch (status) {
             case PENDING: return "결제 대기";
             case PAID: return "결제 완료";
-            case PREPARING: return "제조 중";
-            case COMPLETED: return "제공 완료";
-            case CANCELLED: return "취소됨";
+            case PREPARING: return "상품 준비 중";
+            case COMPLETED: return "배송 완료";
+            case CANCELLED: return "주문 취소";
             default: return status.name();
         }
     }

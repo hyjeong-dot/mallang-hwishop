@@ -32,9 +32,7 @@ public class Review {
     @Column(nullable = false)
     private int rating; // 1~5
 
-    /** 리뷰 작성 시 받은 스티커 번호 (1~5), null이면 스티커 없음 */
-    @Column(name = "sticker_number")
-    private Integer stickerNumber;
+
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;

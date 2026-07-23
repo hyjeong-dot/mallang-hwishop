@@ -3,7 +3,7 @@ package com.mallanghwishop.backend.review.adapter.in.web;
 import com.mallanghwishop.backend.review.adapter.in.web.dto.ReviewRequest;
 import com.mallanghwishop.backend.review.adapter.in.web.dto.ReviewResponse;
 import com.mallanghwishop.backend.review.application.service.ReviewService;
-import com.mallanghwishop.backend.review.application.service.StickerStatusResponse;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -41,13 +41,7 @@ public class ReviewController {
         return reviewService.getReviewByOrderId(orderId, auth.getName());
     }
 
-    /**
-     * 스티커 현황
-     */
-    @GetMapping("/stickers")
-    public StickerStatusResponse getStickerStatus(Authentication auth) {
-        return reviewService.getStickerStatus(auth.getName());
-    }
+
 
     /**
      * 특정 메뉴의 리뷰 목록 (공개 API - 로그인 불필요)

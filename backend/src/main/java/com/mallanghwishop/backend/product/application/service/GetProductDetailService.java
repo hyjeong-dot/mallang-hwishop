@@ -5,15 +5,10 @@ import com.mallanghwishop.backend.category.domain.model.Category;
 import com.mallanghwishop.backend.product.application.port.in.GetProductDetailUseCase;
 import com.mallanghwishop.backend.product.application.port.out.LoadProductPort;
 import com.mallanghwishop.backend.product.application.port.out.ProductImagePort;
-import com.mallanghwishop.backend.product.application.port.out.ProductOptionPort;
 import com.mallanghwishop.backend.product.application.result.ProductDetailResult;
-import com.mallanghwishop.backend.product.application.result.ProductOptionResult;
-import com.mallanghwishop.backend.product.application.result.OptionItemResult;
 import com.mallanghwishop.backend.product.domain.exception.ProductNotFoundException;
 import com.mallanghwishop.backend.product.domain.model.Product;
 import com.mallanghwishop.backend.product.domain.model.ProductImage;
-import com.mallanghwishop.backend.product.domain.model.ProductOption;
-import com.mallanghwishop.backend.product.domain.model.OptionItem;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +24,6 @@ public class GetProductDetailService implements GetProductDetailUseCase {
     private final LoadProductPort loadProductPort;
     private final ProductImagePort productImagePort;
     private final LoadCategoryPort loadCategoryPort;
-    private final ProductOptionPort productOptionPort;
 
     @Override
     public ProductDetailResult getAvailableProduct(Long id) {
@@ -60,32 +54,6 @@ public class GetProductDetailService implements GetProductDetailUseCase {
         List<ProductImage> images = productImagePort.findAllByProductId(product.getId());
         String imageSrc = images.isEmpty() ? "blank.png" : images.get(0).getSrcUrl();
 
-        List<ProductOption> options = productOptionPort.findAllByProductId(product.getId());
-        List<ProductOptionResult> optionResults = options.stream()
-                .map(opt -> {
-                    List<OptionItem> items = productOptionPort.findAllByOptionId(opt.getId());
-                    List<OptionItemResult> itemResults = items.stream()
-                            .map(item -> OptionItemResult.builder()
-                                    .id(item.getId())
-                                    .optionId(item.getOptionId())
-                                    .name(item.getName())
-                                    .priceDelta(item.getPriceDelta())
-                                    .sortOrder(item.getSortOrder())
-                                    .build())
-                            .collect(Collectors.toList());
-
-                    return ProductOptionResult.builder()
-                            .id(opt.getId())
-                            .productId(opt.getProductId())
-                            .name(opt.getName())
-                            .isRequired(opt.getIsRequired())
-                            .isMultiSelect(opt.getIsMultiSelect())
-                            .sortOrder(opt.getSortOrder())
-                            .items(itemResults)
-                            .build();
-                })
-                .collect(Collectors.toList());
-
         return ProductDetailResult.builder()
                 .id(product.getId())
                 .slug(product.getSlug())
@@ -98,7 +66,6 @@ public class GetProductDetailService implements GetProductDetailUseCase {
                 .imageSrc(imageSrc)
                 .isSoldOut(product.getIsSoldOut())
                 .isAvailable(product.getIsAvailable())
-                .options(optionResults)
                 .createdAt(product.getCreatedAt())
                 .updatedAt(product.getUpdatedAt())
                 .build();

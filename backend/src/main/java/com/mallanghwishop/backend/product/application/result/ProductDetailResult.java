@@ -20,7 +20,6 @@ public class ProductDetailResult {
     private String imageSrc;
     private Boolean isSoldOut;
     private Boolean isAvailable;
-    private List<ProductOptionResult> options;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

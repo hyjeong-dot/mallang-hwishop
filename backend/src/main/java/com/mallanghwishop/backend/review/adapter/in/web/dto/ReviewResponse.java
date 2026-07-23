@@ -13,21 +13,17 @@ public class ReviewResponse {
     private Long orderId;
     private String content;
     private int rating;
-    private Integer stickerNumber; // 1~5 or null
     private String nickname;
-    private boolean stickerEnded; // 선착순 종료 여부
     private String menuNames; // 주문한 메뉴 이름 (쉼표 구분)
     private LocalDateTime createdAt;
 
-    public static ReviewResponse from(Review review, String nickname, boolean stickerEnded, String menuNames) {
+    public static ReviewResponse from(Review review, String nickname, String menuNames) {
         return ReviewResponse.builder()
                 .id(review.getId())
                 .orderId(review.getOrderId())
                 .content(review.getContent())
                 .rating(review.getRating())
-                .stickerNumber(review.getStickerNumber())
                 .nickname(nickname)
-                .stickerEnded(stickerEnded)
                 .menuNames(menuNames)
                 .createdAt(review.getCreatedAt())
                 .build();
