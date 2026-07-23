@@ -24,7 +24,7 @@ export default function Footer() {
         let interval: NodeJS.Timeout;
         if (isHoveringTop) {
             interval = setInterval(() => {
-                setFrame((prev) => (prev % 3) + 1);
+                setFrame((prev) => (prev === 1 ? 2 : 1));
             }, 150); // Change frame every 150ms
         } else {
             setFrame(1);
