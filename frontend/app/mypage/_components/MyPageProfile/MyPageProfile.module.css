@@ -39,7 +39,7 @@
 }
 
 .saveButton {
-    background: var(--ditto-600);
+    background: var(--color-primary-600);
     color: white;
     padding: var(--space-3) var(--space-6);
     border-radius: var(--radius-lg);
@@ -51,7 +51,7 @@
 }
 
 .saveButton:hover {
-    background: var(--ditto-700);
+    background: var(--color-primary-700);
 }
 
 .helperText {

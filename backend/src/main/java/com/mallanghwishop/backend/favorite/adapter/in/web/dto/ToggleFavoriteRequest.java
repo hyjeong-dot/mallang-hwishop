@@ -6,12 +6,12 @@ import java.util.UUID;
 
 @Data
 public class ToggleFavoriteRequest {
-    private Long menuId;
+    private Long productId;
 
     public ToggleFavoriteCommand toCommand(UUID memberId) {
         return ToggleFavoriteCommand.builder()
                 .memberId(memberId)
-                .menuId(menuId)
+                .productId(productId)
                 .build();
     }
 }

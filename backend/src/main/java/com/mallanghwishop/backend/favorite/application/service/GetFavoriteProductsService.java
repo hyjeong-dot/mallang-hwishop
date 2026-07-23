@@ -2,10 +2,10 @@ package com.mallanghwishop.backend.favorite.application.service;
 
 import com.mallanghwishop.backend.category.application.port.out.LoadCategoryPort;
 import com.mallanghwishop.backend.category.domain.model.Category;
-import com.mallanghwishop.backend.favorite.application.port.in.GetFavoriteMenusUseCase;
+import com.mallanghwishop.backend.favorite.application.port.in.GetFavoriteProductsUseCase;
 import com.mallanghwishop.backend.favorite.application.port.out.LoadFavoriteListPort;
-import com.mallanghwishop.backend.favorite.application.result.FavoriteMenuListResult;
-import com.mallanghwishop.backend.favorite.application.result.FavoriteMenuResult;
+import com.mallanghwishop.backend.favorite.application.result.FavoriteProductListResult;
+import com.mallanghwishop.backend.favorite.application.result.FavoriteProductResult;
 import com.mallanghwishop.backend.favorite.domain.model.Favorite;
 import com.mallanghwishop.backend.product.application.port.out.LoadProductPort;
 import com.mallanghwishop.backend.product.application.port.out.ProductImagePort;
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class GetFavoriteMenusService implements GetFavoriteMenusUseCase {
+public class GetFavoriteProductsService implements GetFavoriteProductsUseCase {
 
     private final LoadFavoriteListPort loadFavoriteListPort;
     private final LoadProductPort loadProductPort;
@@ -31,12 +31,12 @@ public class GetFavoriteMenusService implements GetFavoriteMenusUseCase {
     private final LoadCategoryPort loadCategoryPort;
 
     @Override
-    public FavoriteMenuListResult getFavoriteMenus(UUID memberId) {
+    public FavoriteProductListResult getFavoriteProducts(UUID memberId) {
         List<Favorite> favorites = loadFavoriteListPort.findFavoritesByMemberId(memberId);
         List<Category> categories = loadCategoryPort.findAllActive();
         
-        List<FavoriteMenuResult> menus = favorites.stream()
-                .map(favorite -> loadProductPort.findAvailableById(favorite.getMenuId()))
+        List<FavoriteProductResult> menus = favorites.stream()
+                .map(favorite -> loadProductPort.findAvailableById(favorite.getProductId()))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .map(product -> {
@@ -55,7 +55,7 @@ public class GetFavoriteMenusService implements GetFavoriteMenusUseCase {
                     List<ProductImage> images = productImagePort.findAllByProductId(product.getId());
                     String imageSrc = images.isEmpty() ? "blank.png" : images.get(0).getSrcUrl();
 
-                    return FavoriteMenuResult.builder()
+                    return FavoriteProductResult.builder()
                             .id(product.getId())
                             .korName(product.getKorName())
                             .engName(product.getEngName())
@@ -70,6 +70,6 @@ public class GetFavoriteMenusService implements GetFavoriteMenusUseCase {
                 })
                 .collect(Collectors.toList());
                 
-        return FavoriteMenuListResult.builder().menus(menus).build();
+        return FavoriteProductListResult.builder().menus(menus).build();
     }
 }

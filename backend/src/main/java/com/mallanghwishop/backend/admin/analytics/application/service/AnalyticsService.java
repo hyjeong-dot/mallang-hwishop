@@ -112,11 +112,11 @@ public class AnalyticsService {
     }
 
     private List<PopularMenu> buildPopularMenus(List<Order> orders) {
-        Map<Long, long[]> menuStats = new HashMap<>(); // menuId -> [qty, revenue]
+        Map<Long, long[]> menuStats = new HashMap<>(); // productId -> [qty, revenue]
 
         orders.forEach(order -> order.getItems().forEach(item -> {
-            menuStats.computeIfAbsent(item.getMenuId(), k -> new long[]{0, 0});
-            long[] val = menuStats.get(item.getMenuId());
+            menuStats.computeIfAbsent(item.getProductId(), k -> new long[]{0, 0});
+            long[] val = menuStats.get(item.getProductId());
             val[0] += item.getQuantity();
             val[1] += (long) item.getPrice() * item.getQuantity();
         }));

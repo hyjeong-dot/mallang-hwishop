@@ -23,8 +23,8 @@ public class FavoritePersistenceAdapter implements
     private final FavoriteJpaRepository repository;
 
     @Override
-    public Optional<Favorite> findByMemberIdAndMenuId(UUID memberId, Long menuId) {
-        return repository.findByMemberIdAndMenuId(memberId, menuId);
+    public Optional<Favorite> findByMemberIdAndProductId(UUID memberId, Long productId) {
+        return repository.findByMemberIdAndProductId(memberId, productId);
     }
 
     @Override

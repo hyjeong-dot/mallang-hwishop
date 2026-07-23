@@ -22,14 +22,14 @@
 }
 
 .toggleBtn:hover {
-    background: var(--ditto-50);
+    background: var(--color-primary-50);
     color: var(--text-secondary);
 }
 
 .toggleBtn.active {
-    background: var(--ditto-600);
+    background: var(--color-primary-600);
     color: white;
-    border-color: var(--ditto-600);
+    border-color: var(--color-primary-600);
 }
 
 .productCount {
@@ -75,8 +75,8 @@
 }
 
 .dragHandle:hover {
-    background-color: var(--ditto-50);
-    color: var(--ditto-600);
+    background-color: var(--color-primary-50);
+    color: var(--color-primary-600);
 }
 
 .dragHandle:active {
@@ -154,7 +154,7 @@
 
 .loadingIcon {
     animation: spin 1s linear infinite;
-    color: var(--ditto-500);
+    color: var(--color-primary-500);
 }
 
 @keyframes spin {
@@ -201,9 +201,9 @@
 }
 
 .pageButton.active {
-    background-color: var(--ditto-600);
+    background-color: var(--color-primary-600);
     color: white;
-    border-color: var(--ditto-600);
+    border-color: var(--color-primary-600);
     font-weight: var(--font-semibold);
 }
 

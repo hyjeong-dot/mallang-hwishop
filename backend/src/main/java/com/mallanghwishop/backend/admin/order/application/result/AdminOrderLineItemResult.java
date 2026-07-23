@@ -7,7 +7,7 @@ import java.util.List;
 @Getter
 @Builder
 public class AdminOrderLineItemResult {
-    private final Long menuId;
+    private final Long productId;
     private final String menuName;
     private final int price;
     private final int quantity;

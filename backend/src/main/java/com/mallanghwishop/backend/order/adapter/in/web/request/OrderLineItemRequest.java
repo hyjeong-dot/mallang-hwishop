@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class OrderLineItemRequest {
-    private Long menuId;
+    private Long productId;
     private int quantity;
     private Integer unitPrice; // 옵션 포함 단가 (null이면 상품 기본가 사용)
 }

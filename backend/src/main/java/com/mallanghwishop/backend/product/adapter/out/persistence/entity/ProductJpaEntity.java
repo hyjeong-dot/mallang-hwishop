@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  * - 도메인 변환은 toDomain() / fromDomain()
  */
 @Entity
-@Table(name = "menus")
+@Table(name = "products")
 @Getter
 @Setter
 @Builder

@@ -120,14 +120,14 @@
 }
 
 .radioLabel:hover {
-    border-color: var(--ditto-400);
-    background-color: var(--ditto-50);
+    border-color: var(--color-primary-400);
+    background-color: var(--color-primary-50);
 }
 
 .radioLabel.active {
-    border-color: var(--ditto-600);
-    background-color: var(--ditto-100);
-    color: var(--ditto-600);
+    border-color: var(--color-primary-600);
+    background-color: var(--color-primary-100);
+    color: var(--color-primary-600);
 }
 
 .radioLabel input {
@@ -149,5 +149,5 @@
 }
 
 .textarea:focus {
-    border-color: var(--ditto-600);
+    border-color: var(--color-primary-600);
 }

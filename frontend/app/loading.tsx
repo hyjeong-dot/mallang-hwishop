@@ -1,4 +1,4 @@
-import LoadingDitto from '@/components/common/LoadingDitto/LoadingDitto';
+import LoadingCharacter from '@/components/common/LoadingCharacter/LoadingCharacter';
 
 export default function Loading() {
     return (
@@ -8,8 +8,8 @@ export default function Loading() {
             justifyContent: 'center',
             minHeight: '80vh'
         }}>
-            <LoadingDitto
-                message="말랑이이 카페를 준비하고 있어요... 💜"
+            <LoadingCharacter
+                message="귀여운 상품들을 준비하고 있어요... 💜"
                 size={320}
             />
         </div>

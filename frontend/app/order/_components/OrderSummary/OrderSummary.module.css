@@ -98,7 +98,7 @@
     align-items: center;
     padding-top: 1rem;
     margin-top: 0.5rem;
-    border-top: 2px solid var(--ditto-600);
+    border-top: 2px solid var(--color-primary-600);
     margin-bottom: 2rem;
 }
 
@@ -110,7 +110,7 @@
 .totalPrice {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--ditto-600);
+    color: var(--color-primary-600);
 }
 
 /* 쿠폰 선택 */
@@ -142,7 +142,7 @@
 }
 
 .couponSelect:focus {
-    border-color: var(--ditto-600);
+    border-color: var(--color-primary-600);
 }
 
 .discountInfo {
@@ -155,7 +155,7 @@
 .submitBtn {
     width: 100%;
     padding: 1rem;
-    background-color: var(--ditto-600);
+    background-color: var(--color-primary-600);
     color: var(--text-inverse);
     border: none;
     border-radius: var(--radius-md);
@@ -170,7 +170,7 @@
 }
 
 .submitBtn:hover:not(:disabled) {
-    background-color: var(--ditto-700);
+    background-color: var(--color-primary-700);
 }
 
 .submitBtn:disabled {

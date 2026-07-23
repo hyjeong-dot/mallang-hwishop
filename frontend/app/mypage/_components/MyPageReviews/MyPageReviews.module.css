@@ -32,7 +32,7 @@
 
 .collected {
     background: linear-gradient(135deg, #f3e8ff, #e9d5ff);
-    border: 2px solid var(--ditto-400);
+    border: 2px solid var(--color-primary-400);
     box-shadow: 0 2px 12px rgba(139, 92, 246, 0.15);
 }
 
@@ -168,7 +168,7 @@
     gap: 0.4rem;
     font-size: 0.8rem;
     font-weight: 600;
-    color: var(--ditto-600);
+    color: var(--color-primary-600);
 }
 
 .stickerBadge img {

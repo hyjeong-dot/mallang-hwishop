@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
  * 상품 이미지 JPA 엔티티
  */
 @Entity
-@Table(name = "menu_images")
+@Table(name = "product_images")
 @Getter
 @Setter
 @Builder
@@ -21,7 +21,7 @@ public class ProductImageJpaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "menu_id", nullable = false)
+    @Column(name = "product_id", nullable = false)
     private Long productId;
 
     @Column(name = "src_url", nullable = false)

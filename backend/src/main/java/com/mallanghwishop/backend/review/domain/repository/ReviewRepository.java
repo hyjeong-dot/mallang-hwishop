@@ -19,6 +19,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     long countByMemberId(UUID memberId);
 
     /** 특정 상품가 포함된 주문의 리뷰 조회 (JPA 파생 쿼리) */
-    List<Review> findByOrder_Items_MenuIdOrderByCreatedAtDesc(Long menuId);
+    List<Review> findByOrder_Items_ProductIdOrderByCreatedAtDesc(Long productId);
 }
 

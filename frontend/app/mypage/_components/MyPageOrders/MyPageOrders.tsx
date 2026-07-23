@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "./MyPageOrders.module.css";
 import { fetchAPI } from "@/lib/api";
-import LoadingDitto from "@/components/common/LoadingDitto/LoadingDitto";
+import LoadingCharacter from "@/components/common/LoadingCharacter/LoadingCharacter";
 import Modal from "@/components/common/Modal/Modal";
 import toast from 'react-hot-toast';
 
@@ -36,11 +36,11 @@ const getStatusBadge = (status: string) => {
         case 'PAID':
             return <span style={{ color: 'var(--color-secondary)' }}>결제 완료</span>;
         case 'PREPARING':
-            return <span style={{ color: 'var(--color-warning)' }}>제조 중</span>;
+            return <span style={{ color: 'var(--color-warning)' }}>배송 준비 중</span>;
         case 'COMPLETED':
-            return <span style={{ color: 'var(--color-success)' }}>제공 완료</span>;
+            return <span style={{ color: 'var(--color-success)' }}>배송 완료</span>;
         case 'CANCELLED':
-            return <span style={{ color: 'var(--color-error)' }}>취소됨</span>;
+            return <span style={{ color: 'var(--color-error)' }}>주문 취소</span>;
         default:
             return <span>{status}</span>;
     }
@@ -138,7 +138,7 @@ export default function MyPageOrders() {
     if (isLoading) {
         return (
             <div className={styles.content}>
-                 <LoadingDitto message="주문 내역을 불러오는 중..." size={150} />
+                 <LoadingCharacter message="주문 내역을 불러오는 중..." size={150} />
             </div>
         );
     }

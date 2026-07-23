@@ -6,6 +6,6 @@ import java.util.List;
 
 @Getter
 @Builder
-public class FavoriteMenuListResult {
-    private final List<FavoriteMenuResult> menus;
+public class FavoriteProductListResult {
+    private final List<FavoriteProductResult> menus;
 }

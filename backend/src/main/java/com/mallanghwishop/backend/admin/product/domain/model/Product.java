@@ -1,59 +1,43 @@
 package com.mallanghwishop.backend.admin.product.domain.model;
 
-import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
 
 /**
- * 관리자 전용 상품 도메인 모델 및 엔티티
+ * 관리자 전용 상품 도메인 모델 (순수 POJO)
  * - 관리자 활동(등록, 수정, 삭제)에 필요한 모든 필드와 로직을 포함합니다.
  */
-@Entity(name = "AdminProduct")
-@Table(name = "products")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Product {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "kor_name", nullable = false)
     private String korName;
 
-    @Column(name = "eng_name")
     private String engName;
 
-    @Column(unique = true)
     private String slug;
 
     private String description;
 
-    @Column(nullable = false)
     private int price;
 
-    @Column(name = "category_id")
     private Long categoryId;
 
-    @Column(name = "is_available")
     private Boolean isAvailable;
 
-    @Column(name = "is_sold_out")
     private Boolean isSoldOut;
 
-    @Column(name = "sort_order")
     private Integer sortOrder;
 
-    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @PrePersist
-    protected void onCreate() {
+    public void initialize() {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
         if (this.isAvailable == null) this.isAvailable = true;
@@ -64,8 +48,7 @@ public class Product {
         }
     }
 
-    @PreUpdate
-    protected void onUpdate() {
+    public void update() {
         this.updatedAt = LocalDateTime.now();
     }
 

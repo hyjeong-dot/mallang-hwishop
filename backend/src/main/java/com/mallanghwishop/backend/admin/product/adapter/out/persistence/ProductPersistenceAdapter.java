@@ -4,10 +4,12 @@ import com.mallanghwishop.backend.admin.product.application.port.out.DeleteProdu
 import com.mallanghwishop.backend.admin.product.application.port.out.LoadProductPort;
 import com.mallanghwishop.backend.admin.product.application.port.out.SaveProductPort;
 import com.mallanghwishop.backend.admin.product.domain.model.Product;
+import com.mallanghwishop.backend.product.adapter.out.persistence.entity.ProductJpaEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component("adminProductPersistenceAdapter")
 @RequiredArgsConstructor
@@ -15,30 +17,68 @@ public class ProductPersistenceAdapter implements SaveProductPort, LoadProductPo
 
     private final AdminProductJpaRepository productJpaRepository;
 
+    private ProductJpaEntity toEntity(Product product) {
+        return ProductJpaEntity.builder()
+                .id(product.getId())
+                .korName(product.getKorName())
+                .engName(product.getEngName())
+                .slug(product.getSlug())
+                .description(product.getDescription())
+                .price(product.getPrice())
+                .categoryId(product.getCategoryId())
+                .isAvailable(product.getIsAvailable())
+                .isSoldOut(product.getIsSoldOut())
+                .sortOrder(product.getSortOrder())
+                .createdAt(product.getCreatedAt())
+                .updatedAt(product.getUpdatedAt())
+                .build();
+    }
+
+    private Product toDomain(ProductJpaEntity entity) {
+        return Product.builder()
+                .id(entity.getId())
+                .korName(entity.getKorName())
+                .engName(entity.getEngName())
+                .slug(entity.getSlug())
+                .description(entity.getDescription())
+                .price(entity.getPrice())
+                .categoryId(entity.getCategoryId())
+                .isAvailable(entity.getIsAvailable())
+                .isSoldOut(entity.getIsSoldOut())
+                .sortOrder(entity.getSortOrder())
+                .createdAt(entity.getCreatedAt())
+                .updatedAt(entity.getUpdatedAt())
+                .build();
+    }
+
     @Override
     public Long save(Product product) {
-        return productJpaRepository.save(product).getId();
+        ProductJpaEntity entity = toEntity(product);
+        return productJpaRepository.save(entity).getId();
     }
 
     @Override
     public List<Product> findAll(Long categoryId, String searchQuery) {
         boolean hasCategory = categoryId != null;
         boolean hasSearch = searchQuery != null && !searchQuery.isBlank();
+        List<ProductJpaEntity> entities;
 
         if (hasCategory && hasSearch) {
-            return productJpaRepository.findAllByCategoryIdAndKorNameContainingIgnoreCaseOrCategoryIdAndEngNameContainingIgnoreCaseOrderBySortOrderAsc(categoryId, searchQuery, categoryId, searchQuery);
+            entities = productJpaRepository.findAllByCategoryIdAndKorNameContainingIgnoreCaseOrCategoryIdAndEngNameContainingIgnoreCaseOrderBySortOrderAsc(categoryId, searchQuery, categoryId, searchQuery);
         } else if (hasCategory) {
-            return productJpaRepository.findAllByCategoryIdOrderBySortOrderAsc(categoryId);
+            entities = productJpaRepository.findAllByCategoryIdOrderBySortOrderAsc(categoryId);
         } else if (hasSearch) {
-            return productJpaRepository.findAllByKorNameContainingIgnoreCaseOrEngNameContainingIgnoreCaseOrderBySortOrderAsc(searchQuery, searchQuery);
+            entities = productJpaRepository.findAllByKorNameContainingIgnoreCaseOrEngNameContainingIgnoreCaseOrderBySortOrderAsc(searchQuery, searchQuery);
         } else {
-            return productJpaRepository.findAllByOrderBySortOrderAsc();
+            entities = productJpaRepository.findAllByOrderBySortOrderAsc();
         }
+        
+        return entities.stream().map(this::toDomain).collect(Collectors.toList());
     }
 
     @Override
     public Optional<Product> findById(Long id) {
-        return productJpaRepository.findById(id);
+        return productJpaRepository.findById(id).map(this::toDomain);
     }
 
     @Override
@@ -53,7 +93,7 @@ public class ProductPersistenceAdapter implements SaveProductPort, LoadProductPo
 
     @Override
     public List<Product> findAllBySlugIsNull() {
-        return productJpaRepository.findAllBySlugIsNull();
+        return productJpaRepository.findAllBySlugIsNull().stream().map(this::toDomain).collect(Collectors.toList());
     }
 
     @Override

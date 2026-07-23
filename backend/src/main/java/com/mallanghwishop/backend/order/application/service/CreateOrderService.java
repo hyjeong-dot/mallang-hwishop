@@ -50,8 +50,8 @@ public class CreateOrderService implements CreateOrderUseCase {
                 .build();
 
         command.getItems().forEach(itemCmd -> {
-            Product product = loadProductPort.findAvailableById(itemCmd.getMenuId())
-                    .orElseThrow(() -> new IllegalArgumentException("상품을 찾을 수 없습니다: " + itemCmd.getMenuId()));
+            Product product = loadProductPort.findAvailableById(itemCmd.getProductId())
+                    .orElseThrow(() -> new IllegalArgumentException("상품을 찾을 수 없습니다: " + itemCmd.getProductId()));
 
             // 옵션 포함 단가가 전달되면 사용, 없으면 상품 기본가
             int price = product.getPrice();
@@ -60,7 +60,7 @@ public class CreateOrderService implements CreateOrderUseCase {
             }
 
             OrderLineItem lineItem = OrderLineItem.builder()
-                    .menuId(product.getId())
+                    .productId(product.getId())
                     .price(price)
                     .quantity(itemCmd.getQuantity())
                     .build();

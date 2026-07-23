@@ -26,7 +26,7 @@ public class CreateOrderRequest {
                 .couponId(this.couponId)
                 .items(this.items.stream()
                         .map(item -> OrderLineItemCommand.builder()
-                                .menuId(item.getMenuId())
+                                .productId(item.getProductId())
                                 .quantity(item.getQuantity())
                                 .unitPrice(item.getUnitPrice())
                                 .build())

@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "member_favorites", 
-       uniqueConstraints = @UniqueConstraint(columnNames = {"member_id", "menu_id"}))
+       uniqueConstraints = @UniqueConstraint(columnNames = {"member_id", "product_id"}))
 @Data
 @Builder
 @NoArgsConstructor
@@ -21,8 +21,8 @@ public class Favorite {
     @Column(name = "member_id", nullable = false)
     private UUID memberId;
 
-    @Column(name = "menu_id", nullable = false)
-    private Long menuId;
+    @Column(name = "product_id", nullable = false)
+    private Long productId;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;

@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class FavoriteMenuResult {
+public class FavoriteProductResult {
     private final Long id;
     private final String korName;
     private final String engName;

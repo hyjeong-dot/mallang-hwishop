@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  * - /menus 경로 유지 (프론트엔드 호환)
  */
 @RestController
-@RequestMapping("/menus")
+@RequestMapping("/products")
 @RequiredArgsConstructor
 public class ProductController {
 

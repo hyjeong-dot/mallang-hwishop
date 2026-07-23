@@ -33,14 +33,14 @@ public class ReviewService {
     /**
      * 주문에 포함된 상품 이름들을 조회하여 쉼표로 결합
      */
-    private String resolveMenuNames(Order order) {
+    private String resolveProductNames(Order order) {
         if (order == null || order.getItems() == null || order.getItems().isEmpty()) {
             return null;
         }
         return order.getItems().stream()
-                .map(OrderLineItem::getMenuId)
+                .map(OrderLineItem::getProductId)
                 .distinct()
-                .map(menuId -> loadProductPort.findAvailableById(menuId)
+                .map(productId -> loadProductPort.findAvailableById(productId)
                         .map(Product::getKorName)
                         .orElse("삭제된 상품"))
                 .collect(Collectors.joining(", "));
@@ -72,8 +72,8 @@ public class ReviewService {
         Review saved = reviewRepository.save(review);
         log.info("Review created: orderId={}", request.getOrderId());
 
-        String menuNames = resolveMenuNames(order);
-        return ReviewResponse.from(saved, member.getNickname(), menuNames);
+        String productNames = resolveProductNames(order);
+        return ReviewResponse.from(saved, member.getNickname(), productNames);
     }
 
     /**
@@ -86,8 +86,8 @@ public class ReviewService {
 
         return reviewRepository.findByMemberIdOrderByCreatedAtDesc(member.getId()).stream()
                 .map(r -> {
-                    String menuNames = resolveMenuNames(r.getOrder());
-                    return ReviewResponse.from(r, member.getNickname(), menuNames);
+                    String productNames = resolveProductNames(r.getOrder());
+                    return ReviewResponse.from(r, member.getNickname(), productNames);
                 })
                 .collect(Collectors.toList());
     }
@@ -103,8 +103,8 @@ public class ReviewService {
         Review review = reviewRepository.findByOrder_Id(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("리뷰를 찾을 수 없습니다."));
 
-        String menuNames = resolveMenuNames(review.getOrder());
-        return ReviewResponse.from(review, member.getNickname(), menuNames);
+        String productNames = resolveProductNames(review.getOrder());
+        return ReviewResponse.from(review, member.getNickname(), productNames);
     }
 
 
@@ -112,14 +112,14 @@ public class ReviewService {
      * 특정 상품의 리뷰 목록 (공개 API)
      */
     @Transactional(readOnly = true)
-    public List<ReviewResponse> getReviewsByMenuId(Long menuId) {
-        return reviewRepository.findByOrder_Items_MenuIdOrderByCreatedAtDesc(menuId).stream()
+    public List<ReviewResponse> getReviewsByProductId(Long productId) {
+        return reviewRepository.findByOrder_Items_ProductIdOrderByCreatedAtDesc(productId).stream()
                 .map(r -> {
                     String nickname = loadMemberPort.findById(r.getMemberId())
                             .map(Member::getNickname)
                             .orElse("익명");
-                    String menuNames = resolveMenuNames(r.getOrder());
-                    return ReviewResponse.from(r, nickname, menuNames);
+                    String productNames = resolveProductNames(r.getOrder());
+                    return ReviewResponse.from(r, nickname, productNames);
                 })
                 .collect(Collectors.toList());
     }

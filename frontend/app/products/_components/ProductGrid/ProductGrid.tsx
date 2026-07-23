@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import styles from './ProductGrid.module.css';
 import ProductCard from '../ProductCard/ProductCard';
 import { useProducts } from './useProducts';
-import LoadingDitto from '@/components/common/LoadingDitto/LoadingDitto';
+import LoadingCharacter from '@/components/common/LoadingCharacter/LoadingCharacter';
 
 interface ProductGridProps {
     selectedCategory: number | null;
@@ -58,7 +58,7 @@ export default function ProductGrid({ selectedCategory, searchQuery }: ProductGr
 
     // 데이터 로딩 중 (이미지 제외 데이터만)
     if (isLoading && !isImagesReady) {
-        return <LoadingDitto message="말랑이이 상품를 준비하고 있어요... 💜" />;
+        return <LoadingCharacter message="상품를 준비하고 있어요... 💜" />;
     }
 
     if (error) {
@@ -86,7 +86,7 @@ export default function ProductGrid({ selectedCategory, searchQuery }: ProductGr
             {/* 이미지가 준비되지 않았을 때만 보여주는 오버레이 로더 */}
             {!isImagesReady && currentProducts.length > 0 && (
                 <div className={styles.overlayLoader}>
-                    <LoadingDitto message="이미지를 선명하게 다듬고 있어요... 💜" />
+                    <LoadingCharacter message="이미지를 선명하게 다듬고 있어요... 💜" />
                 </div>
             )}
 

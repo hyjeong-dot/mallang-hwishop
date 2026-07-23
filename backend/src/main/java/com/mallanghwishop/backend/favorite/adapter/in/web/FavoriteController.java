@@ -1,11 +1,11 @@
 package com.mallanghwishop.backend.favorite.adapter.in.web;
 
 import com.mallanghwishop.backend.favorite.application.port.in.CheckFavoriteUseCase;
-import com.mallanghwishop.backend.favorite.application.port.in.GetFavoriteMenusUseCase;
+import com.mallanghwishop.backend.favorite.application.port.in.GetFavoriteProductsUseCase;
 import com.mallanghwishop.backend.favorite.application.port.in.ToggleFavoriteUseCase;
 import com.mallanghwishop.backend.favorite.application.command.CheckFavoriteCommand;
 import com.mallanghwishop.backend.favorite.application.result.CheckFavoriteResult;
-import com.mallanghwishop.backend.favorite.application.result.FavoriteMenuListResult;
+import com.mallanghwishop.backend.favorite.application.result.FavoriteProductListResult;
 import com.mallanghwishop.backend.favorite.application.result.ToggleFavoriteResult;
 import com.mallanghwishop.backend.favorite.adapter.in.web.dto.ToggleFavoriteRequest;
 import com.mallanghwishop.backend.auth.domain.exception.AuthenticationFailedException;
@@ -26,7 +26,7 @@ import java.util.Optional;
 public class FavoriteController {
 
     private final ToggleFavoriteUseCase toggleFavoriteUseCase;
-    private final GetFavoriteMenusUseCase getFavoriteMenusUseCase;
+    private final GetFavoriteProductsUseCase getFavoriteProductsUseCase;
     private final CheckFavoriteUseCase checkFavoriteUseCase;
     private final LoadMemberPort loadMemberPort;
 
@@ -49,17 +49,17 @@ public class FavoriteController {
     }
 
     @GetMapping
-    public FavoriteMenuListResult getMyFavorites() {
-        return getFavoriteMenusUseCase.getFavoriteMenus(getMemberIdOrThrow());
+    public FavoriteProductListResult getMyFavorites() {
+        return getFavoriteProductsUseCase.getFavoriteProducts(getMemberIdOrThrow());
     }
 
-    @GetMapping("/{menuId}/check")
-    public CheckFavoriteResult checkIfFavorite(@PathVariable Long menuId) {
+    @GetMapping("/{productId}/check")
+    public CheckFavoriteResult checkIfFavorite(@PathVariable Long productId) {
         return getMemberId()
                 .map(memberId -> {
                     CheckFavoriteCommand command = CheckFavoriteCommand.builder()
                             .memberId(memberId)
-                            .menuId(menuId)
+                            .productId(productId)
                             .build();
                     return checkFavoriteUseCase.isFavorite(command);
                 })

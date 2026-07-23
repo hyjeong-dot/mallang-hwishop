@@ -8,5 +8,5 @@ public interface LoadFavoritePort {
     /**
      * 특정 회원과 상품의 찜 정보 단건 조회
      */
-    Optional<Favorite> findByMemberIdAndMenuId(UUID memberId, Long menuId);
+    Optional<Favorite> findByMemberIdAndProductId(UUID memberId, Long productId);
 }

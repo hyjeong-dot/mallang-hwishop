@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import styles from './ProductDetailImage.module.css';
 import { useProductImages } from './useProductImages';
-import LoadingDitto from '@/components/common/LoadingDitto/LoadingDitto';
+import LoadingCharacter from '@/components/common/LoadingCharacter/LoadingCharacter';
 import { useProductDetail } from '../ProductDetailInfo/useProductDetail';
 import { getImageSrc } from '@/lib/api';
 
@@ -19,14 +19,14 @@ export default function ProductDetailImage({ slug }: ProductDetailImageProps) {
     const [isImageReady, setIsImageReady] = useState(false);
 
     // 데이터 로딩 중일 때 표시
-    if (isDataLoading) return <LoadingDitto message="이미지를 불러오는 중..." />;
+    if (isDataLoading) return <LoadingCharacter message="이미지를 불러오는 중..." />;
 
     const rawMainImage = images.length > 0 ? images[selectedIndex].srcUrl : product?.imageSrc;
     const mainImageSrc = getImageSrc(rawMainImage);
 
     return (
         <div className={styles.gallery}>
-            {!isImageReady && <LoadingDitto message="이미지를 준비하고 있어요... 💜" />}
+            {!isImageReady && <LoadingCharacter message="이미지를 준비하고 있어요... 💜" />}
             <div className={`${styles.mainImageWrapper} ${!isImageReady ? styles.hidden : styles.fadeIn}`}>
                 <Image
                     src={mainImageSrc}

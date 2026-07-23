@@ -18,7 +18,7 @@
 }
 
 .productLink {
-    color: var(--ditto-600);
+    color: var(--color-primary-600);
     font-weight: var(--font-bold);
     text-decoration: none;
 }

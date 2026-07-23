@@ -6,7 +6,7 @@ import { useCategories } from '../../../_components/CategoryTabs/useCategories';
 import { useProductDetail, ProductImageDetail, ProductOptionDetail } from '../../_components/ProductDetailInfo/useProductDetail';
 import ProductForm, { ProductFormData, ImageItem, OptionFormData } from '../../../_components/ProductForm/ProductForm';
 import { useProductSubmit } from '../../../_components/ProductForm/useProductSubmit';
-import LoadingDitto from '@/components/common/LoadingDitto/LoadingDitto';
+import LoadingCharacter from '@/components/common/LoadingCharacter/LoadingCharacter';
 import { getImageSrc } from '@/lib/api';
 import styles from '../page.module.css';
 
@@ -88,7 +88,7 @@ export default function ProductEditContainer({ productId }: ProductEditContainer
     if (isProductLoading) {
         return (
             <div className={styles.loadingWrapper}>
-                <LoadingDitto message="상품 정보를 불러오는 중..." />
+                <LoadingCharacter message="상품 정보를 불러오는 중..." />
             </div>
         );
     }

@@ -10,7 +10,7 @@ import java.util.UUID;
  */
 @Data
 public class CartItemRequest {
-    private Long menuId;
+    private Long productId;
     private int quantity;
     private Integer unitPrice;
     private List<String> selectedOptionNames;
@@ -18,7 +18,7 @@ public class CartItemRequest {
     public AddCartItemCommand toCommand(UUID memberId) {
         return AddCartItemCommand.builder()
                 .memberId(memberId)
-                .menuId(menuId)
+                .productId(productId)
                 .quantity(quantity)
                 .unitPrice(unitPrice)
                 .selectedOptionNames(selectedOptionNames)

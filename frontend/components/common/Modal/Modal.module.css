@@ -38,7 +38,7 @@
 .title {
     font-size: var(--text-xl);
     font-weight: var(--font-bold);
-    color: var(--ditto-700);
+    color: var(--color-primary-700);
     margin-bottom: var(--space-3);
 }
 
@@ -75,25 +75,25 @@
 }
 
 .confirmButton {
-    background: linear-gradient(135deg, var(--ditto-500), var(--ditto-600));
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-600));
     color: white;
     border: none;
 }
 
 .confirmButton:hover {
-    background: linear-gradient(135deg, var(--ditto-600), var(--ditto-700));
+    background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-700));
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(168, 85, 247, 0.2);
 }
 
 .dittoButton {
-    background: var(--ditto-100);
-    color: var(--ditto-700);
-    border: 1px solid var(--ditto-200);
+    background: var(--color-primary-100);
+    color: var(--color-primary-700);
+    border: 1px solid var(--color-primary-200);
 }
 
 .dittoButton:hover {
-    background: var(--ditto-200);
+    background: var(--color-primary-200);
 }
 
 .dangerButton {

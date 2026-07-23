@@ -5,7 +5,7 @@ import ProductCard from '../ProductCard/ProductCard';
 import ProductTable from '../ProductTable/ProductTable';
 import styles from './ProductGrid.module.css';
 import { useProducts } from './useProducts';
-import LoadingDitto from '@/components/common/LoadingDitto/LoadingDitto';
+import LoadingCharacter from '@/components/common/LoadingCharacter/LoadingCharacter';
 
 interface ProductGridProps {
     selectedCategory?: number | null;
@@ -53,7 +53,7 @@ export default function ProductGrid({ selectedCategory = null, searchQuery = '' 
     };
 
     if (isLoading) {
-        return <LoadingDitto message="상품 정보를 불러오는 중..." />;
+        return <LoadingCharacter message="상품 정보를 불러오는 중..." />;
     }
 
     return (

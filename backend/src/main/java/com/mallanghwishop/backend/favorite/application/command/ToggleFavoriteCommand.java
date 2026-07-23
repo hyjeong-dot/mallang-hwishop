@@ -8,5 +8,5 @@ import java.util.UUID;
 @Builder
 public class ToggleFavoriteCommand {
     private final UUID memberId;
-    private final Long menuId;
+    private final Long productId;
 }

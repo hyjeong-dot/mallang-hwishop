@@ -57,7 +57,7 @@
 
 .backBtn {
     padding: var(--space-2) var(--space-6);
-    background-color: var(--ditto-500);
+    background-color: var(--color-primary-500);
     color: white;
     border-radius: var(--radius-md);
     font-weight: var(--font-medium);
@@ -65,7 +65,7 @@
 }
 
 .backBtn:hover {
-    background-color: var(--ditto-600);
+    background-color: var(--color-primary-600);
     transform: translateY(-1px);
 }
 

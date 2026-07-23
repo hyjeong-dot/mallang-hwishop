@@ -17,7 +17,7 @@ public class CheckFavoriteService implements CheckFavoriteUseCase {
 
     @Override
     public CheckFavoriteResult isFavorite(CheckFavoriteCommand command) {
-        boolean isFavorite = loadFavoritePort.findByMemberIdAndMenuId(command.getMemberId(), command.getMenuId()).isPresent();
+        boolean isFavorite = loadFavoritePort.findByMemberIdAndProductId(command.getMemberId(), command.getProductId()).isPresent();
         return CheckFavoriteResult.builder().isFavorite(isFavorite).build();
     }
 }

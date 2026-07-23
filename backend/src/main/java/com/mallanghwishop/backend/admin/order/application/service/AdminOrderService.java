@@ -56,12 +56,12 @@ public class AdminOrderService implements GetAdminOrderListUseCase, UpdateOrderS
 
         List<AdminOrderLineItemResult> itemResults = order.getItems().stream()
                 .map(item -> {
-                    String menuName = productRepository.findById(item.getMenuId())
+                    String menuName = productRepository.findById(item.getProductId())
                             .map(p -> p.getKorName())
                             .orElse("삭제된 상품");
                     
                     return AdminOrderLineItemResult.builder()
-                            .menuId(item.getMenuId())
+                            .productId(item.getProductId())
                             .menuName(menuName)
                             .price(item.getPrice())
                             .quantity(item.getQuantity())
@@ -88,7 +88,7 @@ public class AdminOrderService implements GetAdminOrderListUseCase, UpdateOrderS
         switch (status) {
             case PENDING: return "결제 대기";
             case PAID: return "결제 완료";
-            case PREPARING: return "상품 준비 중";
+            case PREPARING: return "배송 준비 중";
             case COMPLETED: return "배송 완료";
             case CANCELLED: return "주문 취소";
             default: return status.name();

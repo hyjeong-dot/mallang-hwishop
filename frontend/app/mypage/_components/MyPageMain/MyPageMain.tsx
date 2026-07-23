@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "./MyPageMain.module.css";
-import LoadingDitto from "@/components/common/LoadingDitto/LoadingDitto";
+import LoadingCharacter from "@/components/common/LoadingCharacter/LoadingCharacter";
 import Modal from "@/components/common/Modal/Modal";
 import { useMyPage } from "./useMyPage";
 
@@ -33,7 +33,7 @@ export default function MyPageMain() {
         return (
             <div className={styles.container}>
                 <div className={styles.placeholder}>
-                    <LoadingDitto message="내 정보를 불러오는 중..." size={200} />
+                    <LoadingCharacter message="내 정보를 불러오는 중..." size={200} />
                 </div>
             </div>
         );
@@ -69,7 +69,7 @@ export default function MyPageMain() {
                         }}>
                             <h3 style={{ fontSize: 'var(--text-xl)', fontWeight: 'bold' }}>준비 중인 서비스</h3>
                             <p style={{ color: 'var(--text-muted)', marginTop: 'var(--space-4)' }}>
-                                말랑이이 열심히 변신하며 준비하고 있어요! 💜
+                                열심히 준비하고 있어요! 💜
                             </p>
                         </div>
                     )}

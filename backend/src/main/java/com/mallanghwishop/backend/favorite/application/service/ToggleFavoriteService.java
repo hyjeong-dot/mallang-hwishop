@@ -24,7 +24,7 @@ public class ToggleFavoriteService implements ToggleFavoriteUseCase {
     @Override
     @Transactional
     public ToggleFavoriteResult toggleFavorite(ToggleFavoriteCommand command) {
-        Optional<Favorite> existing = loadFavoritePort.findByMemberIdAndMenuId(command.getMemberId(), command.getMenuId());
+        Optional<Favorite> existing = loadFavoritePort.findByMemberIdAndProductId(command.getMemberId(), command.getProductId());
         
         if (existing.isPresent()) {
             deleteFavoritePort.delete(existing.get());
@@ -32,7 +32,7 @@ public class ToggleFavoriteService implements ToggleFavoriteUseCase {
         } else {
             Favorite newFavorite = Favorite.builder()
                     .memberId(command.getMemberId())
-                    .menuId(command.getMenuId())
+                    .productId(command.getProductId())
                     .build();
             saveFavoritePort.save(newFavorite);
             return ToggleFavoriteResult.builder().isFavorite(true).build();

@@ -40,7 +40,7 @@ public class GetCartItemsService implements GetCartItemsUseCase {
                 });
         
         return cart.getItems().stream().map(item -> {
-            Optional<Product> productOpt = loadProductPort.findAvailableById(item.getMenuId());
+            Optional<Product> productOpt = loadProductPort.findAvailableById(item.getProductId());
             if (productOpt.isEmpty()) return null;
             
             Product product = productOpt.get();
@@ -58,7 +58,7 @@ public class GetCartItemsService implements GetCartItemsUseCase {
 
             return CartItemResult.builder()
                     .id(String.valueOf(item.getId()))
-                    .menuId(product.getId())
+                    .productId(product.getId())
                     .korName(product.getKorName())
                     .engName(product.getEngName())
                     .price(price)

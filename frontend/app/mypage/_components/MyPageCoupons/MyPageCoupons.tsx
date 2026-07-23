@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import styles from "./MyPageCoupons.module.css";
 import { fetchAPI } from "@/lib/api";
-import LoadingDitto from "@/components/common/LoadingDitto/LoadingDitto";
+import LoadingCharacter from "@/components/common/LoadingCharacter/LoadingCharacter";
 import CouponCard from "./CouponCard";
 import StampCard from "./StampCard";
 
@@ -53,7 +53,7 @@ export default function MyPageCoupons() {
     if (isLoading) {
         return (
             <div className={styles.content}>
-                <LoadingDitto message="쿠폰을 불러오는 중..." size={150} />
+                <LoadingCharacter message="쿠폰을 불러오는 중..." size={150} />
             </div>
         );
     }

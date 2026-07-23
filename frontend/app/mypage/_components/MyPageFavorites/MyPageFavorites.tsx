@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Heart } from "lucide-react";
 import { fetchAPI } from "@/lib/api";
-import LoadingDitto from "@/components/common/LoadingDitto/LoadingDitto";
+import LoadingCharacter from "@/components/common/LoadingCharacter/LoadingCharacter";
 import ProductCard from "../../../products/_components/ProductCard/ProductCard";
 import styles from "./MyPageFavorites.module.css";
 
@@ -30,7 +30,7 @@ export default function MyPageFavorites() {
     if (isLoading) {
         return (
             <div className={styles.content}>
-                <LoadingDitto message="찜한 상품를 가져오고 있어요... 💜" />
+                <LoadingCharacter message="찜한 상품를 가져오고 있어요... 💜" />
             </div>
         );
     }

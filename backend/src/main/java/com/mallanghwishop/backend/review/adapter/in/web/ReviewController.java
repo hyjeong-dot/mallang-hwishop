@@ -46,8 +46,8 @@ public class ReviewController {
     /**
      * 특정 상품의 리뷰 목록 (공개 API - 로그인 불필요)
      */
-    @GetMapping("/menu/{menuId}")
-    public List<ReviewResponse> getReviewsByMenu(@PathVariable Long menuId) {
-        return reviewService.getReviewsByMenuId(menuId);
+    @GetMapping("/menu/{productId}")
+    public List<ReviewResponse> getReviewsByProduct(@PathVariable Long productId) {
+        return reviewService.getReviewsByProductId(productId);
     }
 }

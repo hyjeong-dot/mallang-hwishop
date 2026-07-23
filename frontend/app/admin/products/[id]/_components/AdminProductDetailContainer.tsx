@@ -8,7 +8,7 @@ import Modal from '@/components/common/Modal/Modal';
 import ProductDetailHeader from './ProductDetailHeader/ProductDetailHeader';
 import ProductDetailImage from './ProductDetailImage/ProductDetailImage';
 import ProductDetailInfo from './ProductDetailInfo/ProductDetailInfo';
-import ProductDetailOptions from './ProductDetailOptions/ProductDetailOptions';
+
 
 interface AdminProductDetailContainerProps {
     id: number;
@@ -54,7 +54,6 @@ export default function AdminProductDetailContainer({ id }: AdminProductDetailCo
                 {/* Right Column: Info & Options */}
                 <div className={styles.infoSection}>
                     <ProductDetailInfo id={id} />
-                    <ProductDetailOptions productId={id} />
                 </div>
             </main>
 

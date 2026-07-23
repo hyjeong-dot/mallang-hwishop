@@ -38,7 +38,7 @@ public class AddCartItemService implements AddCartItemUseCase {
         // 같은 상품 + 같은 옵션 조합인 경우에만 수량 증가
         final String finalOptionNamesStr = optionNamesStr;
         Optional<CartItem> existingItem = cart.getItems().stream()
-                .filter(item -> item.getMenuId().equals(command.getMenuId())
+                .filter(item -> item.getProductId().equals(command.getProductId())
                         && Objects.equals(item.getSelectedOptionNames(), finalOptionNamesStr))
                 .findFirst();
 
@@ -48,7 +48,7 @@ public class AddCartItemService implements AddCartItemUseCase {
         } else {
             CartItem newItem = CartItem.builder()
                     .cart(cart)
-                    .menuId(command.getMenuId())
+                    .productId(command.getProductId())
                     .quantity(command.getQuantity())
                     .unitPrice(command.getUnitPrice())
                     .selectedOptionNames(optionNamesStr)

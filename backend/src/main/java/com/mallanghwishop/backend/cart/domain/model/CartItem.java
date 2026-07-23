@@ -21,8 +21,8 @@ public class CartItem {
     @ToString.Exclude
     private Cart cart;
 
-    @Column(name = "menu_id", nullable = false)
-    private Long menuId;
+    @Column(name = "product_id", nullable = false)
+    private Long productId;
 
     @Column(nullable = false)
     private int quantity;

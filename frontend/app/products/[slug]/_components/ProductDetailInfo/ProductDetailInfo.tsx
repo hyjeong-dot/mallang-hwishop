@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import type { SelectedOptions } from '../ProductDetailOptions/ProductDetailOptions';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { Heart, Share2, Info, ShoppingBag } from 'lucide-react';
@@ -11,17 +10,13 @@ import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
 import { fetchAPI } from '@/lib/api';
 import Modal from '@/components/common/Modal/Modal';
-import LoadingDitto from '@/components/common/LoadingDitto/LoadingDitto';
+import LoadingCharacter from '@/components/common/LoadingCharacter/LoadingCharacter';
 
 interface ProductDetailInfoProps {
     slug: string;
-    selectedOptions?: SelectedOptions;
-    extraPrice?: number;
-    selectedOptionNames?: string[];
-    allRequiredSelected?: boolean;
 }
 
-export default function ProductDetailInfo({ slug, selectedOptions = {}, extraPrice = 0, selectedOptionNames = [], allRequiredSelected = true }: ProductDetailInfoProps) {
+export default function ProductDetailInfo({ slug }: ProductDetailInfoProps) {
     const { product, isLoading, error } = useProductDetail(slug);
     const { user } = useAuth();
     const { addItem, setCartOpen } = useCart();
@@ -61,7 +56,7 @@ export default function ProductDetailInfo({ slug, selectedOptions = {}, extraPri
         try {
             const result = await fetchAPI(`/favorites`, {
                 method: 'POST',
-                body: JSON.stringify({ menuId: product?.id })
+                body: JSON.stringify({ productId: product?.id })
             });
 
             // 결과값 체크 (isFavorite 필드 혹은 불리언)
@@ -95,7 +90,7 @@ export default function ProductDetailInfo({ slug, selectedOptions = {}, extraPri
         action();
     };
 
-    if (isLoading) return <LoadingDitto message="정보를 불러오는 중..." />;
+    if (isLoading) return <LoadingCharacter message="정보를 불러오는 중..." />;
     if (error || !product) return null;
 
     return (
@@ -128,12 +123,7 @@ export default function ProductDetailInfo({ slug, selectedOptions = {}, extraPri
             <p className={styles.engTitle}>{product.engName}</p>
 
             <div className={styles.priceSection}>
-                <span className={styles.price}>₩{formatPrice(product.price + extraPrice)}</span>
-                {extraPrice > 0 && (
-                    <span className={styles.extraPriceNote}>
-                        (기본 ₩{formatPrice(product.price)} + 옵션 ₩{formatPrice(extraPrice)})
-                    </span>
-                )}
+                <span className={styles.price}>₩{formatPrice(product.price)}</span>
             </div>
 
             <div className={styles.descSection}>
@@ -146,18 +136,13 @@ export default function ProductDetailInfo({ slug, selectedOptions = {}, extraPri
                     className={styles.cartBtn}
                     disabled={product.isSoldOut}
                     onClick={() => {
-                        if (!allRequiredSelected) {
-                            toast.error('필수 옵션을 모두 선택해주세요! 💜');
-                            return;
-                        }
                         addItem({
-                            menuId: product.id,
+                            productId: product.id,
                             korName: product.korName,
                             engName: product.engName,
-                            price: product.price + extraPrice,
+                            price: product.price,
                             image: product.imageSrc,
-                            imageSrc: product.imageSrc,
-                            selectedOptionNames: selectedOptionNames.length > 0 ? selectedOptionNames : undefined
+                            imageSrc: product.imageSrc
                         });
                         setIsCartConfirmModalOpen(true);
                     }}
@@ -169,10 +154,6 @@ export default function ProductDetailInfo({ slug, selectedOptions = {}, extraPri
                     className={styles.mainCta}
                     disabled={product.isSoldOut}
                     onClick={() => handleAction(() => {
-                        if (!allRequiredSelected) {
-                            toast.error('필수 옵션을 모두 선택해주세요! 💜');
-                            return;
-                        }
                         setIsOrderModalOpen(true);
                     })}
                 >
@@ -207,14 +188,13 @@ export default function ProductDetailInfo({ slug, selectedOptions = {}, extraPri
                     // 옵션: 장바구니에 담지 않고 SessionStorage를 활용하여 단건 결제 데이터만 넘김
                     sessionStorage.setItem('directOrder', JSON.stringify([{
                         id: product.id.toString(),
-                        menuId: product.id,
+                        productId: product.id,
                         korName: product.korName,
                         engName: product.engName,
-                        price: product.price + extraPrice,
+                        price: product.price,
                         quantity: 1,
                         image: product.imageSrc,
-                        imageSrc: product.imageSrc,
-                        selectedOptionNames: selectedOptionNames.length > 0 ? selectedOptionNames : undefined
+                        imageSrc: product.imageSrc
                     }]));
                     router.push('/order');
                 }}

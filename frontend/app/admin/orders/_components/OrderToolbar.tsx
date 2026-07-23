@@ -7,9 +7,9 @@ const STATUS_FILTERS = [
     { value: '', label: '모든 상태' },
     { value: 'PENDING', label: '결제 대기' },
     { value: 'PAID', label: '결제 완료' },
-    { value: 'PREPARING', label: '준비 중' },
-    { value: 'COMPLETED', label: '수령 완료' },
-    { value: 'CANCELLED', label: '취소됨' },
+    { value: 'PREPARING', label: '배송 준비 중' },
+    { value: 'COMPLETED', label: '배송 완료' },
+    { value: 'CANCELLED', label: '주문 취소' },
 ];
 
 interface OrderToolbarProps {

@@ -35,21 +35,21 @@ public class GetMyOrdersService implements GetMyOrdersUseCase {
         List<Order> orders = orderPort.findAllByMemberIdOrderByCreatedAtDesc(member.getId());
 
         // 모든 주문의 상품 ID를 모아서 한번에 조회 (N+1 방지)
-        Set<Long> menuIds = orders.stream()
+        Set<Long> productIds = orders.stream()
                 .flatMap(o -> o.getItems().stream())
-                .map(item -> item.getMenuId())
+                .map(item -> item.getProductId())
                 .collect(Collectors.toSet());
 
-        Map<Long, ProductJpaEntity> productMap = productJpaRepository.findAllById(menuIds).stream()
+        Map<Long, ProductJpaEntity> productMap = productJpaRepository.findAllById(productIds).stream()
                 .collect(Collectors.toMap(ProductJpaEntity::getId, m -> m));
 
         return orders.stream()
                 .map(order -> {
                     List<OrderLineItemResult> itemResults = order.getItems().stream()
                             .map(item -> {
-                                ProductJpaEntity product = productMap.get(item.getMenuId());
+                                ProductJpaEntity product = productMap.get(item.getProductId());
                                 return OrderLineItemResult.builder()
-                                        .menuId(item.getMenuId())
+                                        .productId(item.getProductId())
                                         .menuName(product != null ? product.getKorName() : "삭제된 상품")
                                         .price(item.getPrice())
                                         .quantity(item.getQuantity())

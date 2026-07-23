@@ -7,7 +7,7 @@ import { fetchAPI } from '../lib/api';
 
 export interface CartItem {
     id: string;           // 로그인: cart_items DB PK, 비로그인: 자동 생성 키
-    menuId?: number;      // 상품 ID (서버에서 반환)
+    productId?: number;      // 상품 ID (서버에서 반환)
     korName: string;
     engName: string;
     price: number;        // 옵션 포함 최종 단가
@@ -19,7 +19,7 @@ export interface CartItem {
 
 interface CartContextType {
     items: CartItem[];
-    addItem: (item: Omit<CartItem, 'quantity' | 'id'> & { id?: string; menuId?: number }) => Promise<void>;
+    addItem: (item: Omit<CartItem, 'quantity' | 'id'> & { id?: string; productId?: number }) => Promise<void>;
     removeItem: (id: string) => Promise<void>;
     updateQuantity: (id: string, quantity: number) => Promise<void>;
     clearCart: () => Promise<void>;
@@ -32,11 +32,11 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 /**
- * 비회원 장바구니 키 생성: menuId + 옵션 조합으로 유일한 키
+ * 비회원 장바구니 키 생성: productId + 옵션 조합으로 유일한 키
  * 같은 상품라도 옵션이 다르면 별도 항목
  */
-function generateCartKey(menuId: string | number, optionNames?: string[]): string {
-    const base = String(menuId);
+function generateCartKey(productId: string | number, optionNames?: string[]): string {
+    const base = String(productId);
     if (!optionNames || optionNames.length === 0) return `local-${base}`;
     const optionKey = [...optionNames].sort().join('|');
     return `local-${base}-${optionKey}`;
@@ -61,12 +61,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                         const guestItems: CartItem[] = JSON.parse(savedCart);
                         if (guestItems.length > 0) {
                             for (const item of guestItems) {
-                                const menuId = item.menuId || parseInt(item.id);
+                                const productId = item.productId || parseInt(item.id);
                                 await fetchAPI('/cart/items', {
                                     method: 'POST',
                                     headers: { 'Content-Type': 'application/json' },
                                     body: JSON.stringify({ 
-                                        menuId, 
+                                        productId, 
                                         quantity: item.quantity,
                                         unitPrice: item.price,
                                         selectedOptionNames: item.selectedOptionNames || null
@@ -75,7 +75,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                             }
                         }
                         localStorage.removeItem('ncafe-cart');
-                        toast.success('비회원님이 담으셨던 상품를 장바구니에 합쳤어몽! 💜');
+                        toast.success('비회원님이 담으셨던 상품를 장바구니에 합쳤어요! 💜');
                     }
 
                     // 2. 서버 장바구니 동기화
@@ -109,8 +109,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         }
     }, [items, user, isCartLoaded]);
 
-    const addItem = async (newItem: Omit<CartItem, 'quantity' | 'id'> & { id?: string; menuId?: number }) => {
-        const menuId = newItem.menuId || parseInt(newItem.id || '0');
+    const addItem = async (newItem: Omit<CartItem, 'quantity' | 'id'> & { id?: string; productId?: number }) => {
+        const productId = newItem.productId || parseInt(newItem.id || '0');
 
         if (user) {
             // 로그인 상태: 서버에 추가 후 전체 동기화
@@ -119,7 +119,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 
-                        menuId, 
+                        productId, 
                         quantity: 1,
                         unitPrice: newItem.price,
                         selectedOptionNames: newItem.selectedOptionNames || null
@@ -133,7 +133,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
             }
         } else {
             // 비로그인: localStorage 기반, 같은 상품+옵션이면 수량 증가
-            const cartKey = generateCartKey(menuId, newItem.selectedOptionNames);
+            const cartKey = generateCartKey(productId, newItem.selectedOptionNames);
             setItems(prev => {
                 const existingItem = prev.find(item => item.id === cartKey);
                 if (existingItem) {
@@ -146,7 +146,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                 return [...prev, { 
                     ...newItem, 
                     id: cartKey,
-                    menuId,
+                    productId,
                     quantity: 1 
                 }];
             });
