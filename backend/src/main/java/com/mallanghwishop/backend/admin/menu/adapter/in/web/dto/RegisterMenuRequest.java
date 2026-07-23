@@ -1,0 +1,27 @@
+package com.mallanghwishop.backend.admin.menu.adapter.in.web.dto;
+
+import com.mallanghwishop.backend.admin.menu.application.command.RegisterMenuCommand;
+import lombok.Data;
+
+@Data
+public class RegisterMenuRequest {
+    private String korName;
+    private String engName;
+    private String description;
+    private int price;
+    private Long categoryId;
+    private Boolean isAvailable;
+    private Integer sortOrder;
+
+    public RegisterMenuCommand toCommand() {
+        return RegisterMenuCommand.builder()
+                .korName(korName)
+                .engName(engName)
+                .description(description)
+                .price(price)
+                .categoryId(categoryId)
+                .isAvailable(isAvailable)
+                .sortOrder(sortOrder)
+                .build();
+    }
+}

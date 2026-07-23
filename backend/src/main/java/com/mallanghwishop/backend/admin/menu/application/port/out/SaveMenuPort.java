@@ -1,0 +1,10 @@
+package com.mallanghwishop.backend.admin.menu.application.port.out;
+
+import com.mallanghwishop.backend.admin.menu.domain.model.Menu;
+
+/**
+ * 메뉴 저장 포트 (영속성 계층 호출 인터페이스)
+ */
+public interface SaveMenuPort {
+    Long save(Menu menu);
+}
