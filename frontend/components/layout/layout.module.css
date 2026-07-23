@@ -451,7 +451,7 @@
 }
 
 .scrollTopButton:hover {
-  animation: jumpBlink 0.4s infinite ease-in-out;
+  animation: jumpBlink 0.5s infinite ease-in-out;
   border-color: var(--color-primary-400);
   box-shadow: 0 8px 25px rgba(255, 181, 194, 0.3);
 }
