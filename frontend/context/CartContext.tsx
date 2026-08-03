@@ -77,7 +77,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                             }
                         }
                         localStorage.removeItem('ncafe-cart');
-                        toast.success('비회원님이 담으셨던 상품를 장바구니에 합쳤어요! 💜');
+                        toast.success('비회원님이 담으셨던 상품를 장바구니에 합쳤어요! 🎀');
                     }
 
                     // 2. 서버 장바구니 동기화
@@ -165,7 +165,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
             });
         }
 
-        toast.success(`${newItem.korName}을(를) 담았어요! 💜`);
+        toast.success(`${newItem.korName}을(를) 담았어요! 🎀`);
     };
 
     const removeItem = async (id: string) => {

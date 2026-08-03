@@ -26,6 +26,8 @@ public class Product {
 
     private int price;
 
+    private Integer discountPrice;
+
     private Long categoryId;
 
     private Boolean isAvailable;
@@ -66,9 +68,10 @@ public class Product {
 
     // --- 관리용 비즈니스 로직 ---
     
-    public void updatePrice(int newPrice) {
+    public void updatePrice(int newPrice, Integer discountPrice) {
         if (newPrice < 0) throw new IllegalArgumentException("가격은 0원 이상이어야 합니다.");
         this.price = newPrice;
+        this.discountPrice = discountPrice;
     }
 
     /**

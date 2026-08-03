@@ -32,8 +32,8 @@ public class UpdateProfileService implements UpdateProfileUseCase {
                     return new AuthenticationFailedException();
                 });
 
-        if (command.getNickname() != null && !command.getNickname().isBlank()) {
-            member.setNickname(command.getNickname());
+        if (command.getName() != null && !command.getName().isBlank()) {
+            member.setName(command.getName());
         }
         
         if (command.getEmail() != null) {
@@ -42,6 +42,25 @@ public class UpdateProfileService implements UpdateProfileUseCase {
         
         if (command.getPhoneNumber() != null) {
             member.setPhoneNumber(command.getPhoneNumber());
+        }
+        
+        if (command.getZipcode() != null) {
+            member.setZipcode(command.getZipcode());
+        }
+        if (command.getAddress() != null) {
+            member.setAddress(command.getAddress());
+        }
+        if (command.getDetailAddress() != null) {
+            member.setDetailAddress(command.getDetailAddress());
+        }
+        if (command.getRefundBank() != null) {
+            member.setRefundBank(command.getRefundBank());
+        }
+        if (command.getRefundAccount() != null) {
+            member.setRefundAccount(command.getRefundAccount());
+        }
+        if (command.getRefundHolder() != null) {
+            member.setRefundHolder(command.getRefundHolder());
         }
 
         if (command.getPassword() != null && !command.getPassword().isBlank()) {

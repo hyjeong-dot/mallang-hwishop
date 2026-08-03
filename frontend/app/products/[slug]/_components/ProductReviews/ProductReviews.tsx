@@ -9,7 +9,7 @@ interface ReviewData {
     content: string;
     rating: number;
     stickerNumber: number | null;
-    nickname: string;
+    name: string;
     createdAt: string;
 }
 
@@ -67,7 +67,7 @@ export default function ProductReviews({ productId }: ProductReviewsProps) {
                     <div key={review.id} className={styles.card}>
                         <div className={styles.cardHeader}>
                             <div className={styles.reviewer}>
-                                <span className={styles.nickname}>{review.nickname}</span>
+                                <span className={styles.nickname}>{review.name}</span>
                                 <div className={styles.stars}>{renderStars(review.rating)}</div>
                             </div>
                             <span className={styles.date}>

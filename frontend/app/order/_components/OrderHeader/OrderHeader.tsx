@@ -13,7 +13,7 @@ export default function OrderHeader() {
                 <ArrowLeft size={20} />
                 <span>돌아가기</span>
             </button>
-            <h1>주문/결제 💜</h1>
+            <h1>주문/결제 🎀</h1>
             <p>말랑이가 맛있게 만들어 드릴게요!</p>
         </div>
     );

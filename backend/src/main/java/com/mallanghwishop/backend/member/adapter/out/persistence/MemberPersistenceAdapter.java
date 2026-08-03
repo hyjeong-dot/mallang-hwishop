@@ -17,11 +17,6 @@ public class MemberPersistenceAdapter implements LoadMemberPort, SaveMemberPort,
     private final MemberJpaRepository memberJpaRepository;
 
     @Override
-    public Optional<Member> findByNickname(String nickname) {
-        return memberJpaRepository.findByNickname(nickname).map(MemberJpaEntity::toDomain);
-    }
-
-    @Override
     public Optional<Member> findByUsername(String username) {
         return memberJpaRepository.findByUsername(username).map(MemberJpaEntity::toDomain);
     }
@@ -38,18 +33,8 @@ public class MemberPersistenceAdapter implements LoadMemberPort, SaveMemberPort,
     }
 
     @Override
-    public boolean existsByNickname(String nickname) {
-        return memberJpaRepository.existsByNickname(nickname);
-    }
-
-    @Override
     public boolean existsByUsername(String username) {
         return memberJpaRepository.existsByUsername(username);
-    }
-
-    @Override
-    public void deleteByNickname(String nickname) {
-        memberJpaRepository.deleteByNickname(nickname);
     }
 
     @Override

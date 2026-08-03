@@ -82,7 +82,14 @@ export default function ProductDetailInfo({ id }: { id: number }) {
 
             <div className={styles.priceArea}>
                 <span className={styles.priceLabel}>판매가</span>
-                <span className={styles.price}>{formatPrice(product.price)}원</span>
+                {product.discountPrice && product.discountPrice > 0 ? (
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                        <span style={{ textDecoration: 'line-through', color: '#999', fontSize: '0.9em' }}>{formatPrice(product.price)}원</span>
+                        <span className={styles.price}>{formatPrice(product.discountPrice)}원</span>
+                    </div>
+                ) : (
+                    <span className={styles.price}>{formatPrice(product.price)}원</span>
+                )}
             </div>
 
             <div className={styles.description}>

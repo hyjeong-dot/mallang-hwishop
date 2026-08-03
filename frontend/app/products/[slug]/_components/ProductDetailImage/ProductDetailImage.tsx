@@ -26,7 +26,7 @@ export default function ProductDetailImage({ slug }: ProductDetailImageProps) {
 
     return (
         <div className={styles.gallery}>
-            {!isImageReady && <LoadingCharacter message="이미지를 준비하고 있어요... 💜" />}
+            {!isImageReady && <LoadingCharacter message="이미지를 준비하고 있어요... 🎀" />}
             <div className={`${styles.mainImageWrapper} ${!isImageReady ? styles.hidden : styles.fadeIn}`}>
                 <Image
                     src={mainImageSrc}

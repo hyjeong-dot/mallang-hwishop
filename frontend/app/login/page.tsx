@@ -14,7 +14,7 @@ export default function LoginPage() {
             <div className={styles.loginWrapper}>
                 {/* 1. 말랑이 브랜드 이미지 섹션 */}
                 <LoginHero 
-                    title="안녕! 반가워요 💜"
+                    title="안녕! 반가워요 🎀"
                     description={
                         <>
                             말랑한 말랑이가 기다리고 있어요.<br />

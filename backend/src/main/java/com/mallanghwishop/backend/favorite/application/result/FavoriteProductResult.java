@@ -16,4 +16,5 @@ public class FavoriteProductResult {
     private final String categoryIcon;
     private final String imageSrc;
     private final boolean isSoldOut;
+    private final Integer discountPrice;
 }

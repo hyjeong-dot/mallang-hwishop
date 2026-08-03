@@ -28,7 +28,7 @@ export function useMyPage() {
 
     useEffect(() => {
         if (!isLoading && !user) {
-            toast.error("로그인이 필요한 서비스예요. 💜");
+            toast.error("로그인이 필요한 서비스예요. 🎀");
             router.replace("/login?redirect=/mypage");
         }
     }, [user, isLoading, router]);
@@ -52,7 +52,7 @@ export function useMyPage() {
             const data = await response.json();
 
             if (response.ok) {
-                toast.success('회원 탈퇴가 완료되었습니다. 다음에 다시 만나요! 💜');
+                toast.success('회원 탈퇴가 완료되었습니다. 다음에 다시 만나요! 🎀');
                 logout();
                 router.push('/');
             } else {

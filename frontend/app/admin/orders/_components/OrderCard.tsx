@@ -104,7 +104,7 @@ export default function OrderCard({ order, onUpdateStatus }: OrderCardProps) {
                                 <div className={styles.sectionLabel}>고객 정보</div>
                                 <div className={styles.infoGroup}>
                                     <span className={styles.infoLabel}>👤 주문자</span>
-                                    <div className={styles.infoValue}>{order.nickname}</div>
+                                    <div className={styles.infoValue}>{order.name}</div>
                                 </div>
                                 {order.requestMemo && (
                                     <div className={styles.infoGroup}>

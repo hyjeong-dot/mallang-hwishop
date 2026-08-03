@@ -82,7 +82,7 @@ export default function AdminSidebar() {
         const timer = setTimeout(() => {
             if (!user || user.role !== 'ROLE_ADMIN') {
                 if (user) {
-                    toast.error("접근 권한이 없어요! 💜");
+                    toast.error("접근 권한이 없어요! 🎀");
                 }
                 router.replace('/');
             }
@@ -138,7 +138,7 @@ export default function AdminSidebar() {
 
             <aside className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}>
                 <div className={styles.logo}>
-                    <div className={styles.logoIcon}>💜</div>
+                    <div className={styles.logoIcon}>🎀</div>
                     <div className={styles.logoText}>
                         말랑이샵
                         <span className={styles.logoSubtext}>Admin</span>

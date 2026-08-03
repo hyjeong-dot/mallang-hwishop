@@ -12,7 +12,7 @@ interface ReviewData {
     content: string;
     rating: number;
     stickerNumber: number | null;
-    nickname: string;
+    name: string;
     stickerEnded: boolean;
     productNames: string | null;
     createdAt: string;
@@ -83,7 +83,7 @@ export default function MyPageReviews() {
             </div>
             {stickerStatus?.stickerEnded && (
                 <div className={styles.stickerEndedBanner}>
-                    🎉 축하해요! 말랑이 스티커 5종을 모두 모았어요! 💜
+                    🎉 축하해요! 말랑이 스티커 5종을 모두 모았어요! 🎀
                 </div>
             )}
             {stickerStatus && !stickerStatus.stickerEnded && (

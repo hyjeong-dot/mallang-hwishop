@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -29,11 +30,18 @@ public class SignupService implements SignupUseCase {
         }
 
         Member newMember = Member.builder()
+                .id(UUID.randomUUID())
                 .username(command.getUsername())
                 .password(passwordEncoder.encode(command.getPassword()))
-                .nickname(command.getNickname())
+                .name(command.getName())
                 .email(command.getEmail())
                 .phoneNumber(command.getPhoneNumber())
+                .zipcode(command.getZipcode())
+                .address(command.getAddress())
+                .detailAddress(command.getDetailAddress())
+                .refundBank(command.getRefundBank())
+                .refundAccount(command.getRefundAccount())
+                .refundHolder(command.getRefundHolder())
                 .role("ROLE_USER")
                 .build();
         

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import styles from "./MyPageProfile.module.css";
 import { useAuth } from "@/context/AuthContext";
 import { toast } from "react-hot-toast";
-import { User, Mail, Phone, Lock, Save, AlertCircle } from "lucide-react";
+import { User, Mail, Phone, Lock, Save, AlertCircle, MapPin, Building, CreditCard } from "lucide-react";
 
 interface UserData {
     id: string;
@@ -11,14 +11,29 @@ interface UserData {
     email: string;
     phoneNumber: string;
     role: string;
+    zipcode?: string;
+    address?: string;
+    detailAddress?: string;
+    refundBank?: string;
+    refundAccount?: string;
+    refundHolder?: string;
 }
 
 export default function MyPageProfile() {
     const { updateUser } = useAuth();
     const [fullUser, setFullUser] = useState<UserData | null>(null);
-    const [nickname, setNickname] = useState('');
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
+    
+    const [zipcode, setZipcode] = useState('');
+    const [address, setAddress] = useState('');
+    const [detailAddress, setDetailAddress] = useState('');
+    
+    const [refundBank, setRefundBank] = useState('');
+    const [refundAccount, setRefundAccount] = useState('');
+    const [refundHolder, setRefundHolder] = useState('');
+
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [isSaving, setIsSaving] = useState(false);
@@ -31,9 +46,15 @@ export default function MyPageProfile() {
                 if (result.success && result.data) {
                     const data = result.data;
                     setFullUser(data);
-                    setNickname(data.name || '');
+                    setName(data.name || '');
                     setEmail(data.email || '');
                     setPhoneNumber(data.phoneNumber || '');
+                    setZipcode(data.zipcode || '');
+                    setAddress(data.address || '');
+                    setDetailAddress(data.detailAddress || '');
+                    setRefundBank(data.refundBank || '');
+                    setRefundAccount(data.refundAccount || '');
+                    setRefundHolder(data.refundHolder || '');
                 }
             } catch (err) {
                 console.error("Failed to fetch user profile", err);
@@ -52,9 +73,9 @@ export default function MyPageProfile() {
     };
 
     const handleSave = async () => {
-        // 닉네임 검증
-        if (nickname.trim().length < 2) {
-            toast.error("닉네임은 2자 이상 입력해주세요! 💜");
+        // 이름 검증
+        if (name.trim().length < 2) {
+            toast.error("이름은 2자 이상 입력해주세요! 🎀");
             return;
         }
 
@@ -62,7 +83,7 @@ export default function MyPageProfile() {
         if (email.trim()) {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
-                toast.error("올바른 이메일 형식을 입력해주세요! 💜");
+                toast.error("올바른 이메일 형식을 입력해주세요! 🎀");
                 return;
             }
         }
@@ -71,7 +92,7 @@ export default function MyPageProfile() {
         if (phoneNumber.trim()) {
             const phoneRegex = /^010-\d{4}-\d{4}$/;
             if (!phoneRegex.test(phoneNumber)) {
-                toast.error("전화번호를 올바르게 입력해주세요! (010-0000-0000) 💜");
+                toast.error("전화번호를 올바르게 입력해주세요! (010-0000-0000) 🎀");
                 return;
             }
         }
@@ -79,7 +100,7 @@ export default function MyPageProfile() {
         // 비밀번호 검증 (입력한 경우만)
         if (password) {
             if (password.length < 6) {
-                toast.error("비밀번호는 6자 이상이어야 해요! 💜");
+                toast.error("비밀번호는 6자 이상이어야 해요! 🎀");
                 return;
             }
             if (password !== confirmPassword) {
@@ -94,16 +115,22 @@ export default function MyPageProfile() {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    nickname,
+                    name,
                     email,
                     phoneNumber,
+                    zipcode,
+                    address,
+                    detailAddress,
+                    refundBank,
+                    refundAccount,
+                    refundHolder,
                     password: password || undefined
                 })
             });
 
             const result = await res.json();
             if (result.success) {
-                toast.success("내 정보가 귀엽게 수정되었어요! 💜");
+                toast.success("내 정보가 귀엽게 수정되었어요! 🎀");
                 updateUser(result.data);
                 setPassword('');
                 setConfirmPassword('');
@@ -147,15 +174,15 @@ export default function MyPageProfile() {
                     <label className={styles.label}>
                         <div className={styles.labelWrapper}>
                             <User size={16} />
-                            <span>닉네임</span>
+                            <span>이름</span>
                         </div>
                     </label>
                     <input
                         className={styles.input}
                         type="text"
-                        value={nickname}
-                        onChange={(e) => setNickname(e.target.value)}
-                        placeholder="사용하실 이름을 알려주세요!"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="이름을 입력해주세요!"
                     />
                 </div>
 
@@ -192,6 +219,104 @@ export default function MyPageProfile() {
                     />
                 </div>
 
+                <div style={{ marginTop: '20px', marginBottom: '10px', fontSize: '14px', fontWeight: 'bold', color: 'var(--gray-700)' }}>
+                    배송지 주소 (선택)
+                </div>
+                <div className={styles.inputGroup}>
+                    <label className={styles.label}>
+                        <div className={styles.labelWrapper}>
+                            <MapPin size={16} />
+                            <span>우편번호</span>
+                        </div>
+                    </label>
+                    <input
+                        className={styles.input}
+                        type="text"
+                        value={zipcode}
+                        onChange={(e) => setZipcode(e.target.value)}
+                        placeholder="우편번호"
+                    />
+                </div>
+                <div className={styles.inputGroup}>
+                    <label className={styles.label}>
+                        <div className={styles.labelWrapper}>
+                            <MapPin size={16} />
+                            <span>기본 주소</span>
+                        </div>
+                    </label>
+                    <input
+                        className={styles.input}
+                        type="text"
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                        placeholder="기본 주소"
+                    />
+                </div>
+                <div className={styles.inputGroup}>
+                    <label className={styles.label}>
+                        <div className={styles.labelWrapper}>
+                            <MapPin size={16} />
+                            <span>상세 주소</span>
+                        </div>
+                    </label>
+                    <input
+                        className={styles.input}
+                        type="text"
+                        value={detailAddress}
+                        onChange={(e) => setDetailAddress(e.target.value)}
+                        placeholder="상세 주소"
+                    />
+                </div>
+
+                <div style={{ marginTop: '20px', marginBottom: '10px', fontSize: '14px', fontWeight: 'bold', color: 'var(--gray-700)' }}>
+                    환불 계좌 정보 (선택)
+                </div>
+                <div className={styles.inputGroup}>
+                    <label className={styles.label}>
+                        <div className={styles.labelWrapper}>
+                            <Building size={16} />
+                            <span>은행명</span>
+                        </div>
+                    </label>
+                    <input
+                        className={styles.input}
+                        type="text"
+                        value={refundBank}
+                        onChange={(e) => setRefundBank(e.target.value)}
+                        placeholder="은행명"
+                    />
+                </div>
+                <div className={styles.inputGroup}>
+                    <label className={styles.label}>
+                        <div className={styles.labelWrapper}>
+                            <CreditCard size={16} />
+                            <span>계좌번호</span>
+                        </div>
+                    </label>
+                    <input
+                        className={styles.input}
+                        type="text"
+                        value={refundAccount}
+                        onChange={(e) => setRefundAccount(e.target.value)}
+                        placeholder="계좌번호"
+                    />
+                </div>
+                <div className={styles.inputGroup}>
+                    <label className={styles.label}>
+                        <div className={styles.labelWrapper}>
+                            <User size={16} />
+                            <span>예금주</span>
+                        </div>
+                    </label>
+                    <input
+                        className={styles.input}
+                        type="text"
+                        value={refundHolder}
+                        onChange={(e) => setRefundHolder(e.target.value)}
+                        placeholder="예금주"
+                    />
+                </div>
+
                 <div className={styles.inputGroup}>
                     <label className={styles.label}>
                         <div className={styles.labelWrapper}>
@@ -223,11 +348,11 @@ export default function MyPageProfile() {
                 >
                     <div className={styles.labelWrapper}>
                         {isSaving ? (
-                            <span>변경하는 중... 💜</span>
+                            <span>변경하는 중... 🎀</span>
                         ) : (
                             <>
                                 <Save size={18} />
-                                <span>변경내용 저장할까요? 💜</span>
+                                <span>변경내용 저장할까요? 🎀</span>
                             </>
                         )}
                     </div>

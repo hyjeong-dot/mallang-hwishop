@@ -134,7 +134,7 @@ export default function CartDrawer() {
                                 <span className={styles.totalPrice}>{totalPrice.toLocaleString()}원</span>
                             </div>
                             <div className={styles.actionBtns}>
-                                <button className={styles.orderBtn} onClick={handleOrder}>주문하기 💜</button>
+                                <button className={styles.orderBtn} onClick={handleOrder}>주문하기 🎀</button>
                             </div>
                         </div>
                     )}
@@ -144,7 +144,7 @@ export default function CartDrawer() {
             <Modal
                 isOpen={isLoginModalOpen}
                 onClose={() => setLoginModalOpen(false)}
-                title="로그인이 필요해요 💜"
+                title="로그인이 필요해요 🎀"
                 description="말랑이가 사장님을 기다리고 있어요! 로그인하고 맛있는 상품를 주문하시겠어요?"
                 confirmText="로그인하러 가기"
                 cancelText="나중에 할게요"

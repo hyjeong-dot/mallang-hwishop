@@ -52,6 +52,7 @@ public class GetProductListService implements GetProductListUseCase {
                         .engName(product.getEngName())
                         .description(product.getDescription())
                         .price(product.getPrice())
+                        .discountPrice(product.getDiscountPrice())
                         .isAvailable(product.getIsAvailable())
                         .isSoldOut(product.getIsSoldOut())
                         .sortOrder(product.getSortOrder())

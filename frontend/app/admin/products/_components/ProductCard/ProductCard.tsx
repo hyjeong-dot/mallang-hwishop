@@ -63,7 +63,14 @@ export default function ProductCard({ product, onToggleSoldOut, onDelete }: Prod
                         <h3 className={styles.korName}>{product.korName}</h3>
                         <p className={styles.engName}>{product.engName}</p>
                     </div>
-                    <span className={styles.price}>₩{formatPrice(product.price)}</span>
+                    {product.discountPrice && product.discountPrice > 0 ? (
+                        <div className={styles.priceContainer}>
+                            <span className={styles.originalPrice}>₩{formatPrice(product.price)}</span>
+                            <span className={styles.discountPrice}>₩{formatPrice(product.discountPrice)}</span>
+                        </div>
+                    ) : (
+                        <span className={styles.price}>₩{formatPrice(product.price)}</span>
+                    )}
                 </div>
 
                 <p className={styles.description}>{product.description}</p>

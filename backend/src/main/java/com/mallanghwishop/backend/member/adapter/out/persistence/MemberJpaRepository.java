@@ -6,10 +6,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface MemberJpaRepository extends JpaRepository<MemberJpaEntity, UUID> {
-    Optional<MemberJpaEntity> findByNickname(String nickname);
-    boolean existsByNickname(String nickname);
-    void deleteByNickname(String nickname);
-
     Optional<MemberJpaEntity> findByUsername(String username);
     boolean existsByUsername(String username);
     void deleteByUsername(String username);

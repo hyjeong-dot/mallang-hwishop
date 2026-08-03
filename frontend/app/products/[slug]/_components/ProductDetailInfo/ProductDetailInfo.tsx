@@ -43,7 +43,7 @@ export default function ProductDetailInfo({ slug }: ProductDetailInfoProps) {
     const handleShare = () => {
         if (typeof window !== 'undefined') {
             navigator.clipboard.writeText(window.location.href);
-            toast.success("주소가 복사되었어요! 💜");
+            toast.success("주소가 복사되었어요! 🎀");
         }
     };
 
@@ -65,7 +65,7 @@ export default function ProductDetailInfo({ slug }: ProductDetailInfoProps) {
 
             if (newLikedState) {
                 toast.success("찜 목록에 담았어요! 마이페이지에서 확인해 보세요 🍮", {
-                    icon: '💜',
+                    icon: '🎀',
                 });
             } else {
                 toast("찜 목록에서 제외했습니다.", {
@@ -173,7 +173,14 @@ export default function ProductDetailInfo({ slug }: ProductDetailInfoProps) {
             <p className={styles.engTitle}>{product.engName}</p>
 
             <div className={styles.priceSection}>
-                <span className={styles.price}>₩{formatPrice(product.price)}</span>
+                {product.discountPrice && product.discountPrice > 0 ? (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span style={{ textDecoration: 'line-through', color: '#999', fontSize: '1.2rem' }}>₩{formatPrice(product.price)}</span>
+                        <span className={styles.price} style={{ color: '#e53e3e' }}>₩{formatPrice(product.discountPrice)}</span>
+                    </div>
+                ) : (
+                    <span className={styles.price}>₩{formatPrice(product.price)}</span>
+                )}
             </div>
 
             {isUpcoming && (
@@ -197,7 +204,7 @@ export default function ProductDetailInfo({ slug }: ProductDetailInfoProps) {
                             productId: product.id,
                             korName: product.korName,
                             engName: product.engName,
-                            price: product.price,
+                            price: product.discountPrice && product.discountPrice > 0 ? product.discountPrice : product.price,
                             image: product.imageSrc,
                             imageSrc: product.imageSrc,
                             stock: product.stock,
@@ -216,7 +223,7 @@ export default function ProductDetailInfo({ slug }: ProductDetailInfoProps) {
                         setIsOrderModalOpen(true);
                     })}
                 >
-                    {isUpcoming ? '오픈 대기 중' : product.isSoldOut ? '현재 준비 중입니다' : '주문하기 💜'}
+                    {isUpcoming ? '오픈 대기 중' : product.isSoldOut ? '현재 준비 중입니다' : '주문하기 🎀'}
                 </button>
             </div>
 
@@ -224,7 +231,7 @@ export default function ProductDetailInfo({ slug }: ProductDetailInfoProps) {
             <Modal
                 isOpen={isLoginModalOpen}
                 onClose={() => setIsLoginModalOpen(false)}
-                title="로그인이 필요해요 💜"
+                title="로그인이 필요해요 🎀"
                 description="말랑이가 사장님을 기다리고 있어요! 로그인하고 맛있는 상품를 주문하시겠어요?"
                 confirmText="로그인하러 가기"
                 cancelText="나중에 할게요"
@@ -250,7 +257,7 @@ export default function ProductDetailInfo({ slug }: ProductDetailInfoProps) {
                         productId: product.id,
                         korName: product.korName,
                         engName: product.engName,
-                        price: product.price,
+                        price: product.discountPrice && product.discountPrice > 0 ? product.discountPrice : product.price,
                         quantity: 1,
                         image: product.imageSrc,
                         imageSrc: product.imageSrc
@@ -264,7 +271,7 @@ export default function ProductDetailInfo({ slug }: ProductDetailInfoProps) {
             <Modal
                 isOpen={isCartConfirmModalOpen}
                 onClose={() => setIsCartConfirmModalOpen(false)}
-                title="장바구니에 담았어요! 💜"
+                title="장바구니에 담았어요! 🎀"
                 description={`${product.korName}을(를) 장바구니에 담았습니다. 바로 확인해 보시겠어요?`}
                 confirmText="장바구니 가기"
                 cancelText="계속 쇼핑하기"

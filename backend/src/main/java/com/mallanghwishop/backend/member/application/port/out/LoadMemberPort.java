@@ -9,7 +9,6 @@ import java.util.UUID;
  */
 public interface LoadMemberPort {
 
-    Optional<Member> findByNickname(String nickname);
     Optional<Member> findByUsername(String username);
     Optional<Member> findById(UUID memberId);
 }

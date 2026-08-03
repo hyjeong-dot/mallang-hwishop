@@ -10,7 +10,15 @@ import lombok.NoArgsConstructor;
 public class SignupCommand {
     private String username;
     private String password;
-    private String nickname;
+    private String name;
     private String email;
     private String phoneNumber;
+
+    private String zipcode;
+    private String address;
+    private String detailAddress;
+    
+    private String refundBank;
+    private String refundAccount;
+    private String refundHolder;
 }

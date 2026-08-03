@@ -11,7 +11,7 @@ export interface AdminOrderItem {
 export interface AdminOrder {
     id: number;
     orderUid: string;
-    nickname: string;
+    name: string;
     totalPrice: number;
     status: string;
     statusLabel: string;

@@ -38,6 +38,9 @@ public class ProductJpaEntity {
     @Column(nullable = false)
     private int price;
 
+    @Column(name = "discount_price")
+    private Integer discountPrice;
+
     @Column(name = "category_id")
     private Long categoryId;
 
@@ -103,6 +106,7 @@ public class ProductJpaEntity {
                 .slug(slug)
                 .description(description)
                 .price(price)
+                .discountPrice(discountPrice)
                 .categoryId(categoryId)
                 .isAvailable(isAvailable)
                 .isSoldOut(isSoldOut)
@@ -124,6 +128,7 @@ public class ProductJpaEntity {
                 .slug(product.getSlug())
                 .description(product.getDescription())
                 .price(product.getPrice())
+                .discountPrice(product.getDiscountPrice())
                 .categoryId(product.getCategoryId())
                 .isAvailable(product.getIsAvailable())
                 .isSoldOut(product.getIsSoldOut())

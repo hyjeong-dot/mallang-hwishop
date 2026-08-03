@@ -147,7 +147,7 @@ export default function MyPageInquiries() {
 
                                     {inq.answer && (
                                         <div className={styles.answerBox}>
-                                            <div className={styles.answerLabel}>💜 관리자 답변</div>
+                                            <div className={styles.answerLabel}>🎀 관리자 답변</div>
                                             <p>{inq.answer}</p>
                                             {inq.answeredAt && <span className={styles.answerDate}>{formatDate(inq.answeredAt)}</span>}
                                         </div>

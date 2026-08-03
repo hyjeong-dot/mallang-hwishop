@@ -18,7 +18,7 @@ public class DeleteAccountService implements DeleteAccountUseCase {
     @Transactional
     public void deleteAccount(String username) {
         log.info("Deleting account for user: {}", username);
-        deleteMemberPort.deleteByNickname(username);
+        deleteMemberPort.deleteByUsername(username);
         log.info("Account deleted successfully for user: {}", username);
     }
 }

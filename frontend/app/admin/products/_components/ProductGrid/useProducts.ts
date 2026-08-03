@@ -7,6 +7,7 @@ export interface ProductResponse {
     engName: string;
     description: string;
     price: number;
+    discountPrice?: number;
     categoryName: string;
     categoryIcon: string;
     imageSrc: string;

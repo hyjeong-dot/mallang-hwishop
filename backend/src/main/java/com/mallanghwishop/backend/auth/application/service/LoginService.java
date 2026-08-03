@@ -43,7 +43,7 @@ public class LoginService implements LoginUseCase {
         return LoginResult.builder()
                 .memberId(member.getId())
                 .username(member.getUsername())
-                .name(member.getNickname())
+                .name(member.getName())
                 .role(member.getRole())
                 .build();
     }

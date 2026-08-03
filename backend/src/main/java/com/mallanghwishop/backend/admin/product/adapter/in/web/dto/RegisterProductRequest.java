@@ -9,6 +9,7 @@ public class RegisterProductRequest {
     private String engName;
     private String description;
     private int price;
+    private Integer discountPrice;
     private Long categoryId;
     private Boolean isAvailable;
     private Integer sortOrder;
@@ -22,6 +23,7 @@ public class RegisterProductRequest {
                 .engName(engName)
                 .description(description)
                 .price(price)
+                .discountPrice(discountPrice)
                 .categoryId(categoryId)
                 .isAvailable(isAvailable)
                 .sortOrder(sortOrder)

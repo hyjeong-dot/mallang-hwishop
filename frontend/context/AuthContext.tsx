@@ -62,7 +62,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         try {
             await fetch('/api/auth/logout', { method: 'POST' });
             setUser(null);
-            toast.success("로그아웃 되었습니다. 다음에 또 오세요! 💜", { id: 'logout-toast' });
+            toast.success("로그아웃 되었습니다. 다음에 또 오세요! 🎀", { id: 'logout-toast' });
             // Next.js App router 캐시(레이아웃 등) 초기화를 위해 강제 이동 
             window.location.href = '/';
         } catch (error) {

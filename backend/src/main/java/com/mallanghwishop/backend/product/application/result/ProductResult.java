@@ -13,6 +13,7 @@ public class ProductResult {
     private String engName;
     private String description;
     private int price;
+    private Integer discountPrice;
     private String categoryName;
     private String categoryIcon;
     private String imageSrc;

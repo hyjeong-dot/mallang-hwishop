@@ -86,10 +86,16 @@ public class AuthController {
         return MeResponse.builder()
                 .memberId(member.getId())
                 .username(member.getUsername())
-                .name(member.getNickname())
+                .name(member.getName())
                 .role(role)
                 .email(member.getEmail())
                 .phoneNumber(member.getPhoneNumber())
+                .zipcode(member.getZipcode())
+                .address(member.getAddress())
+                .detailAddress(member.getDetailAddress())
+                .refundBank(member.getRefundBank())
+                .refundAccount(member.getRefundAccount())
+                .refundHolder(member.getRefundHolder())
                 .build();
     }
 

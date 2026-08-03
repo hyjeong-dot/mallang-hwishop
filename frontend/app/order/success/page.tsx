@@ -98,7 +98,7 @@ export default function PaymentSuccessPage() {
                 <h2 className={styles.title}>결제가 완료되었어요! 🎉</h2>
                 <p className={styles.description}>
                     말랑이가 주문을 확인하고<br />
-                    귀여운 상품를 준비하고 있어요! 💜
+                    귀여운 상품를 준비하고 있어요! 🎀
                 </p>
                 <div className={styles.buttonGroup}>
                     <button className={styles.primaryBtn} onClick={() => router.push('/mypage?tab=orders')}>

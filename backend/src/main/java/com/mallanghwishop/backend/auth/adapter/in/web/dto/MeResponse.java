@@ -17,4 +17,12 @@ public class MeResponse {
     private String role;
     private String email;
     private String phoneNumber;
+    
+    private String zipcode;
+    private String address;
+    private String detailAddress;
+    
+    private String refundBank;
+    private String refundAccount;
+    private String refundHolder;
 }

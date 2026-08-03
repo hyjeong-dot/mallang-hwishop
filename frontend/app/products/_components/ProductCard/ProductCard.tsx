@@ -103,7 +103,16 @@ export default function ProductCard({ product, onLoad }: ProductCardProps) {
                     <p className={styles.description}>{product.description}</p>
                 )}
                 <div className={styles.priceRow}>
-                    <span className={styles.price}>₩{product.price?.toLocaleString()}</span>
+                    {product.discountPrice && product.discountPrice > 0 ? (
+                        <>
+                            <span className={styles.originalPrice} style={{ textDecoration: 'line-through', color: '#999', fontSize: '0.8em', marginRight: '4px' }}>
+                                ₩{product.price?.toLocaleString()}
+                            </span>
+                            <span className={styles.price}>₩{product.discountPrice.toLocaleString()}</span>
+                        </>
+                    ) : (
+                        <span className={styles.price}>₩{product.price?.toLocaleString()}</span>
+                    )}
                 </div>
             </div>
         </Link>

@@ -109,6 +109,7 @@ export function useProductSubmit() {
                     engName: formData.engName.trim(),
                     description: formData.description.trim(),
                     price: Number(formData.price),
+                    discountPrice: formData.discountPrice ? Number(formData.discountPrice) : 0,
                     categoryId: Number(formData.categoryId),
                     isAvailable: formData.isAvailable,
                     sortOrder: 0,
@@ -133,7 +134,7 @@ export function useProductSubmit() {
                 await saveOptions(productId, options);
             }
 
-            toast.success('새 상품가 등록되었습니다! 💜');
+            toast.success('새 상품가 등록되었습니다! 🎀');
             return productId;
         } catch (error) {
             toast.error('상품 등록에 실패했습니다.');
@@ -154,6 +155,7 @@ export function useProductSubmit() {
                     engName: formData.engName.trim(),
                     description: formData.description.trim(),
                     price: Number(formData.price),
+                    discountPrice: formData.discountPrice ? Number(formData.discountPrice) : 0,
                     categoryId: Number(formData.categoryId),
                     isAvailable: formData.isAvailable,
                     isSoldOut: formData.isSoldOut,
@@ -195,7 +197,7 @@ export function useProductSubmit() {
                 await saveOptions(productId, options);
             }
 
-            toast.success('상품 정보가 수정되었습니다! 💜');
+            toast.success('상품 정보가 수정되었습니다! 🎀');
             return true;
         } catch (error) {
             toast.error('상품 수정에 실패했습니다.');

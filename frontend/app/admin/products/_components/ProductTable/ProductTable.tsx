@@ -62,7 +62,16 @@ export default function ProductTable({ products, onToggleSoldOut, onDelete }: Pr
                                     {product.categoryIcon} {product.categoryName}
                                 </span>
                             </td>
-                            <td className={styles.price}>₩{formatPrice(product.price)}</td>
+                            <td className={styles.price}>
+                                {product.discountPrice && product.discountPrice > 0 ? (
+                                    <>
+                                        <span style={{ textDecoration: 'line-through', color: '#999', fontSize: '0.9em', display: 'block' }}>₩{formatPrice(product.price)}</span>
+                                        <span style={{ color: '#e53e3e', fontWeight: 'bold' }}>₩{formatPrice(product.discountPrice)}</span>
+                                    </>
+                                ) : (
+                                    <span>₩{formatPrice(product.price)}</span>
+                                )}
+                            </td>
                             <td className={styles.status}>
                                 <button
                                     className={`${styles.statusBadge} ${product.isSoldOut ? styles.soldOut : styles.available}`}

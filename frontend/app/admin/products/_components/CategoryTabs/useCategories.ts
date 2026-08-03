@@ -42,7 +42,7 @@ export function useCategories() {
             body: JSON.stringify({ name, icon, sortOrder: categories.length }),
         });
         if (!res.ok) throw new Error('카테고리 생성 실패');
-        toast.success('카테고리가 추가되었어요! 💜');
+        toast.success('카테고리가 추가되었어요! 🎀');
         await fetchCategories();
     };
 

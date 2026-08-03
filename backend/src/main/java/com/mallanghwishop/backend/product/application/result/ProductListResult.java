@@ -10,4 +10,5 @@ import java.util.List;
 public class ProductListResult {
     private List<ProductResult> products;
     private int productCount;
+
 }

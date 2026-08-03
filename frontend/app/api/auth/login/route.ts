@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
         session.user = {
             id: String(result.memberId || result.id || ''),
             username: String(result.username || ''),
-            name: String(result.name || result.nickname || ''),
+            name: String(result.name || ''),
             role: String(result.role || 'ROLE_USER')
         };
 

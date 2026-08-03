@@ -12,9 +12,10 @@ public class ProductResult {
     private final String slug;
     private final String korName;
     private final String engName;
-    private final String description;
-    private final int price;
-    private final String categoryName;
+    private String description;
+    private int price;
+    private Integer discountPrice;
+    private String categoryName;
     private final String categoryIcon;
     private final String imageSrc;
     private final List<ProductImageResult> images;

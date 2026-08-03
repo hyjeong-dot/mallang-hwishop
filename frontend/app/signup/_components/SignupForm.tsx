@@ -4,7 +4,7 @@ import { useState, FormEvent, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { UserPlus, User, Lock, Eye, EyeOff, AlertCircle, Mail, Phone, Smile, CheckSquare, Square, Check, X } from 'lucide-react';
+import { UserPlus, User, Lock, Eye, EyeOff, AlertCircle, Mail, Phone, Smile, CheckSquare, Square, Check, X, MapPin, Building, CreditCard } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import toast from 'react-hot-toast';
 import styles from '@/app/login/login.module.css';
@@ -43,9 +43,18 @@ export default function SignupForm() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [nickname, setNickname] = useState('');
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
+    
+    // 추가정보 (주소 및 환불계좌)
+    const [zipcode, setZipcode] = useState('');
+    const [address, setAddress] = useState('');
+    const [detailAddress, setDetailAddress] = useState('');
+    const [refundBank, setRefundBank] = useState('');
+    const [refundAccount, setRefundAccount] = useState('');
+    const [refundHolder, setRefundHolder] = useState('');
+
     const [showPassword, setShowPassword] = useState(false);
     const [termsAgreed, setTermsAgreed] = useState(false);
     const [error, setError] = useState('');
@@ -77,9 +86,9 @@ export default function SignupForm() {
     ];
     const confirmValid = confirmPassword.length > 0 && password === confirmPassword;
 
-    const nicknameValid = nickname.trim().length >= 2;
-    const nicknameHints = [
-        { label: '2자 이상', pass: nickname.trim().length >= 2 },
+    const nameValid = name.trim().length >= 2;
+    const nameHints = [
+        { label: '2자 이상', pass: name.trim().length >= 2 },
     ];
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -109,17 +118,22 @@ export default function SignupForm() {
         setPhoneNumber(formattedValue);
     };
 
-    const allValid = usernameValid && passwordValid && confirmValid && nicknameValid && emailValid && phoneValid && termsAgreed;
+    const addressValid = zipcode.trim().length > 0 && address.trim().length > 0;
+    const refundValid = refundBank.trim().length > 0 && refundAccount.trim().length > 0 && refundHolder.trim().length > 0;
+
+    const allValid = usernameValid && passwordValid && confirmValid && nameValid && emailValid && phoneValid && addressValid && refundValid && termsAgreed;
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         setError('');
 
-        // 모든 필드 touched 처리
-        setTouched({ username: true, password: true, confirmPassword: true, nickname: true, email: true, phoneNumber: true });
+        // 모든 필수 필드 touched 처리
+        setTouched({ username: true, password: true, confirmPassword: true, name: true, email: true, phoneNumber: true, address: true, refundBank: true, refundAccount: true, refundHolder: true });
 
         if (!allValid) {
             if (!termsAgreed) setError('이용약관 및 개인정보 처리방침에 동의해주세요.');
+            else if (!addressValid) setError('주소를 입력해주세요. (주소 검색 버튼을 눌러주세요)');
+            else if (!refundValid) setError('환불 계좌 정보를 모두 입력해주세요.');
             else setError('입력 항목을 다시 확인해주세요.');
             return;
         }
@@ -131,7 +145,11 @@ export default function SignupForm() {
             const signupRes = await fetch('/api/auth/signup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password, nickname, email, phoneNumber }),
+                body: JSON.stringify({ 
+                    username, password, name, email, phoneNumber,
+                    zipcode, address, detailAddress,
+                    refundBank, refundAccount, refundHolder
+                }),
             });
 
             if (!signupRes.ok) {
@@ -152,11 +170,11 @@ export default function SignupForm() {
 
             if (loginRes.ok && loginResult.success) {
                 login(loginResult.data);
-                toast.success('회원가입 완료! 환영해요 💜');
+                toast.success('회원가입 완료! 환영해요 🎀');
                 window.location.href = '/';
             } else {
                 // 가입은 됐지만 로그인 실패 시 로그인 페이지로
-                toast.success('회원가입 완료! 로그인해주세요 💜');
+                toast.success('회원가입 완료! 로그인해주세요 🎀');
                 router.push('/login');
             }
         } catch (err) {
@@ -175,7 +193,7 @@ export default function SignupForm() {
                     <span>회원가입</span>
                 </h1>
                 <div className={styles.subtitle}>
-                    말랑이와 친구 맺기 💜
+                    말랑이와 친구 맺기 🎀
                 </div>
             </div>
 
@@ -269,23 +287,23 @@ export default function SignupForm() {
                         {touched.confirmPassword && confirmPassword.length > 0 && <ValidationHints hints={confirmHints} />}
                     </div>
 
-                    {/* 닉네임 */}
+                    {/* 이름 */}
                     <div className={styles.inputGroup}>
-                        <label htmlFor="nickname" className={styles.label}>닉네임</label>
-                        <div className={`${styles.inputWrapper} ${getFieldClass('nickname', nicknameValid, nickname)}`}>
+                        <label htmlFor="name" className={styles.label}>이름</label>
+                        <div className={`${styles.inputWrapper} ${getFieldClass('name', nameValid, name)}`}>
                             <Smile size={18} className={styles.inputIcon} />
                             <input
                                 type="text"
-                                id="nickname"
-                                value={nickname}
-                                onChange={(e) => setNickname(e.target.value)}
-                                onBlur={() => markTouched('nickname')}
+                                id="name"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                onBlur={() => markTouched('name')}
                                 className={styles.input}
-                                placeholder="사용할 닉네임을 입력하세요"
+                                placeholder="이름을 입력하세요"
                                 required
                             />
                         </div>
-                        {touched.nickname && nickname.length > 0 && <ValidationHints hints={nicknameHints} />}
+                        {touched.name && name.length > 0 && <ValidationHints hints={nameHints} />}
                     </div>
 
                     {/* 이메일 */}
@@ -327,6 +345,137 @@ export default function SignupForm() {
                         {touched.phoneNumber && phoneNumber.length > 0 && <ValidationHints hints={phoneHints} />}
                     </div>
 
+                    <div style={{ marginTop: '20px', marginBottom: '10px', fontSize: '14px', fontWeight: 'bold', color: 'var(--gray-700)' }}>
+                        주소 입력 <span style={{ color: '#e53e3e', fontWeight: 'bold' }}>*</span>
+                    </div>
+                    <div className={styles.inputGroup}>
+                        <label htmlFor="zipcode" className={styles.label}>우편번호 <span style={{ color: '#e53e3e' }}>*</span></label>
+                        <div style={{ display: 'flex', gap: '8px' }}>
+                            <div className={styles.inputWrapper} style={{ flex: 1 }}>
+                                <MapPin size={18} className={styles.inputIcon} />
+                                <input
+                                    type="text"
+                                    id="zipcode"
+                                    value={zipcode}
+                                    readOnly
+                                    className={styles.input}
+                                    placeholder="주소 검색을 눌러주세요"
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    if (typeof window !== 'undefined' && (window as any).daum?.Postcode) {
+                                        new (window as any).daum.Postcode({
+                                            oncomplete: (data: any) => {
+                                                setZipcode(data.zonecode);
+                                                setAddress(data.roadAddress || data.jibunAddress);
+                                                // 상세주소로 포커스
+                                                document.getElementById('detailAddress')?.focus();
+                                            }
+                                        }).open();
+                                    } else {
+                                        toast.error('주소 검색 서비스를 로드하는 중입니다...');
+                                    }
+                                }}
+                                style={{
+                                    padding: '10px 16px',
+                                    background: 'var(--primary)',
+                                    color: '#fff',
+                                    border: 'none',
+                                    borderRadius: '10px',
+                                    fontSize: '13px',
+                                    fontWeight: '600',
+                                    cursor: 'pointer',
+                                    whiteSpace: 'nowrap',
+                                }}
+                            >
+                                주소 검색
+                            </button>
+                        </div>
+                    </div>
+                    <div className={styles.inputGroup}>
+                        <label htmlFor="address" className={styles.label}>기본 주소 <span style={{ color: '#e53e3e' }}>*</span></label>
+                        <div className={styles.inputWrapper}>
+                            <MapPin size={18} className={styles.inputIcon} />
+                            <input
+                                type="text"
+                                id="address"
+                                value={address}
+                                readOnly
+                                className={styles.input}
+                                placeholder="주소 검색을 눌러주세요"
+                            />
+                        </div>
+                    </div>
+                    {/* 상세 주소 */}
+                    <div className={styles.inputGroup}>
+                        <label htmlFor="detailAddress" className={styles.label}>상세 주소</label>
+                        <div className={styles.inputWrapper}>
+                            <MapPin size={18} className={styles.inputIcon} />
+                            <input
+                                type="text"
+                                id="detailAddress"
+                                value={detailAddress}
+                                onChange={(e) => setDetailAddress(e.target.value)}
+                                className={styles.input}
+                                placeholder="상세 주소"
+                            />
+                        </div>
+                    </div>
+
+                    <div style={{ marginTop: '20px', marginBottom: '10px', fontSize: '14px', fontWeight: 'bold', color: 'var(--gray-700)' }}>
+                        환불 계좌 정보 <span style={{ color: '#e53e3e', fontWeight: 'bold' }}>*</span>
+                    </div>
+                    {/* 은행 */}
+                    <div className={styles.inputGroup}>
+                        <label htmlFor="refundBank" className={styles.label}>은행명 <span style={{ color: '#e53e3e' }}>*</span></label>
+                        <div className={styles.inputWrapper}>
+                            <Building size={18} className={styles.inputIcon} />
+                            <input
+                                type="text"
+                                id="refundBank"
+                                value={refundBank}
+                                onChange={(e) => setRefundBank(e.target.value)}
+                                className={styles.input}
+                                placeholder="예: 국민은행"
+                                required
+                            />
+                        </div>
+                    </div>
+                    {/* 계좌번호 */}
+                    <div className={styles.inputGroup}>
+                        <label htmlFor="refundAccount" className={styles.label}>계좌번호 <span style={{ color: '#e53e3e' }}>*</span></label>
+                        <div className={styles.inputWrapper}>
+                            <CreditCard size={18} className={styles.inputIcon} />
+                            <input
+                                type="text"
+                                id="refundAccount"
+                                value={refundAccount}
+                                onChange={(e) => setRefundAccount(e.target.value)}
+                                className={styles.input}
+                                placeholder="- 없이 입력"
+                                required
+                            />
+                        </div>
+                    </div>
+                    {/* 예금주 */}
+                    <div className={styles.inputGroup}>
+                        <label htmlFor="refundHolder" className={styles.label}>예금주 <span style={{ color: '#e53e3e' }}>*</span></label>
+                        <div className={styles.inputWrapper}>
+                            <User size={18} className={styles.inputIcon} />
+                            <input
+                                type="text"
+                                id="refundHolder"
+                                value={refundHolder}
+                                onChange={(e) => setRefundHolder(e.target.value)}
+                                className={styles.input}
+                                placeholder="예금주"
+                                required
+                            />
+                        </div>
+                    </div>
+
                     {/* 약관 동의 */}
                     <div className={styles.termsGroup}>
                         <label className={styles.termsLabel}>
@@ -353,25 +502,25 @@ export default function SignupForm() {
                         {isLoading ? (
                             <>
                                 <Image
-                                    src="/images/ditto/ditto-activities.png"
+                                    src="/images/logo.png"
                                     alt="Loading..."
                                     width={24}
                                     height={24}
                                     className={styles.loadingDitto}
                                 />
-                                <span>변신중... 💜</span>
+                                <span>가입 중... 🎀</span>
                             </>
                         ) : (
                             <>
                                 <UserPlus size={20} />
-                                가입하기 💜
+                                가입하기 🎀
                             </>
                         )}
                     </button>
                 </form>
 
                 <div className={styles.signupPrompt}>
-                    <span>이미 말랑이과 친구신가요? 🫠</span>
+                    <span>이미 회원이신가요? 🫠</span>
                     <Link href="/login" className={styles.signupLink}>
                         로그인하러 가기 →
                     </Link>

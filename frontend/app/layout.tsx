@@ -36,7 +36,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ko">
+      <head>
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js" async></script>
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <AuthProvider>
           <CartProvider>

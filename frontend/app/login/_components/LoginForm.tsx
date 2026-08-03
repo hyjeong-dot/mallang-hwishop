@@ -52,7 +52,7 @@ export default function LoginForm() {
                 let redirectTo = searchParams.get('redirect') || '/';
 
                 if (redirectTo.startsWith('/admin')) {
-                    toast.error("어드민 권한이 없어요! 💜");
+                    toast.error("어드민 권한이 없어요! 🎀");
                     redirectTo = '/';
                 }
 
@@ -70,15 +70,15 @@ export default function LoginForm() {
             <div className={styles.header}>
                 <h1 className={styles.title}>
                     <Image
-                        src="/images/ditto/favicon-ditto.png"
-                        alt="Ditto"
+                        src="/images/logo.png"
+                        alt="말랑이샵"
                         width={40}
                         height={40}
                         className={styles.titleIcon}
                     />
                     말랑이샵 로그인
                 </h1>
-                <p className={styles.subtitle}>맛있는 커피가 준비되고 있어요! ☕</p>
+                <p className={styles.subtitle}>말랑말랑한 행복이 기다리고 있어요! 🎀</p>
             </div>
 
             <div className={styles.body}>
@@ -138,27 +138,27 @@ export default function LoginForm() {
                         {isLoading ? (
                             <>
                                 <Image
-                                    src="/images/ditto/ditto-activities.png"
+                                    src="/images/logo.png"
                                     alt="Loading..."
                                     width={24}
                                     height={24}
                                     className={styles.loadingDitto}
                                 />
-                                <span>변신중... 💜</span>
+                                <span>로그인 중... 🎀</span>
                             </>
                         ) : (
                             <>
                                 <LogIn size={20} />
-                                로그인 할까요? 💜
+                                로그인 할까요? 🎀
                             </>
                         )}
                     </button>
                 </form>
 
                 <div className={styles.signupPrompt}>
-                    <span>아직 말랑이 친구가 아니에요? 🫠</span>
+                    <span>아직 회원이 아니에요? 🫠</span>
                     <Link href="/signup" className={styles.signupLink}>
-                        변신해서 가입하기 →
+                        회원가입하러 가기 →
                     </Link>
                 </div>
             </div>

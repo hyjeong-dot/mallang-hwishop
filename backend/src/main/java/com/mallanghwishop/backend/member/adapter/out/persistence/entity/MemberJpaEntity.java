@@ -20,8 +20,8 @@ public class MemberJpaEntity {
     @Column(name = "username", nullable = false, unique = true)
     private String username;
 
-    @Column(name = "nickname", nullable = false)
-    private String nickname;
+    @Column(name = "name")
+    private String name;
 
     @Column(nullable = false)
     private String password;
@@ -31,6 +31,18 @@ public class MemberJpaEntity {
 
     @Column(name = "phone_number")
     private String phoneNumber;
+
+    private String zipcode;
+    private String address;
+    @Column(name = "detail_address")
+    private String detailAddress;
+
+    @Column(name = "refund_bank")
+    private String refundBank;
+    @Column(name = "refund_account")
+    private String refundAccount;
+    @Column(name = "refund_holder")
+    private String refundHolder;
 
     private String role; // "ROLE_ADMIN", "ROLE_USER"
 
@@ -46,10 +58,16 @@ public class MemberJpaEntity {
         return MemberJpaEntity.builder()
                 .id(member.getId())
                 .username(member.getUsername())
-                .nickname(member.getNickname())
+                .name(member.getName())
                 .password(member.getPassword())
                 .email(member.getEmail())
                 .phoneNumber(member.getPhoneNumber())
+                .zipcode(member.getZipcode())
+                .address(member.getAddress())
+                .detailAddress(member.getDetailAddress())
+                .refundBank(member.getRefundBank())
+                .refundAccount(member.getRefundAccount())
+                .refundHolder(member.getRefundHolder())
                 .role(member.getRole())
                 .createdAt(member.getCreatedAt())
                 .build();
@@ -59,10 +77,16 @@ public class MemberJpaEntity {
         return Member.builder()
                 .id(this.id)
                 .username(this.username)
-                .nickname(this.nickname)
+                .name(this.name)
                 .password(this.password)
                 .email(this.email)
                 .phoneNumber(this.phoneNumber)
+                .zipcode(this.zipcode)
+                .address(this.address)
+                .detailAddress(this.detailAddress)
+                .refundBank(this.refundBank)
+                .refundAccount(this.refundAccount)
+                .refundHolder(this.refundHolder)
                 .role(this.role)
                 .createdAt(this.createdAt)
                 .build();

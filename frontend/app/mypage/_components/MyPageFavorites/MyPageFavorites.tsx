@@ -30,7 +30,7 @@ export default function MyPageFavorites() {
     if (isLoading) {
         return (
             <div className={styles.content}>
-                <LoadingCharacter message="찜한 상품를 가져오고 있어요... 💜" />
+                <LoadingCharacter message="찜한 상품를 가져오고 있어요... 🎀" />
             </div>
         );
     }
@@ -44,7 +44,7 @@ export default function MyPageFavorites() {
             
             {favorites.length === 0 ? (
                 <div className={styles.emptyState}>
-                    <div className={styles.emptyIcon}>💜</div>
+                    <div className={styles.emptyIcon}>🎀</div>
                     <p>아직 찜한 상품가 없어요.<br />마음에 드는 상품를 하트로 담아보세요!</p>
                     <Link href="/products" className={styles.productLink}>상품 보러 가기</Link>
                 </div>

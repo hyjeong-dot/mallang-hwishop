@@ -67,7 +67,7 @@ export default function MyPageMain() {
                         }}>
                             <h3 style={{ fontSize: 'var(--text-xl)', fontWeight: 'bold' }}>준비 중인 서비스</h3>
                             <p style={{ color: 'var(--text-muted)', marginTop: 'var(--space-4)' }}>
-                                열심히 준비하고 있어요! 💜
+                                열심히 준비하고 있어요! 🎀
                             </p>
                         </div>
                     )}

@@ -52,8 +52,8 @@ public class AdminOrderService implements GetAdminOrderListUseCase, UpdateOrderS
     }
 
     private AdminOrderResult toResult(Order order) {
-        String nickname = memberRepository.findById(order.getMemberId())
-                .map(member -> member.getNickname())
+        String name = memberRepository.findById(order.getMemberId())
+                .map(member -> member.getName())
                 .orElse("Unknown");
 
         List<AdminOrderLineItemResult> itemResults = order.getItems().stream()
@@ -75,7 +75,7 @@ public class AdminOrderService implements GetAdminOrderListUseCase, UpdateOrderS
                 .id(order.getId())
                 .orderUid(order.getOrderUid())
                 .memberId(order.getMemberId())
-                .nickname(nickname)
+                .name(name)
                 .totalPrice(order.getTotalPrice())
                 .status(order.getStatus().name())
                 .statusLabel(getStatusLabel(order.getStatus()))

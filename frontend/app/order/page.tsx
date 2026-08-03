@@ -60,7 +60,7 @@ export default function OrderPage() {
                 isOpen={isSuccessModalOpen}
                 onClose={handleSuccessConfirm}
                 title="주문이 완료되었습니다! 🎉"
-                description={`말랑이가 주문을 확인하고 귀여운 상품를 준비하고 있어요!\n잠시만 기다려주세요 💜`}
+                description={`말랑이가 주문을 확인하고 귀여운 상품를 준비하고 있어요!\n잠시만 기다려주세요 🎀`}
                 confirmText="주문 내역 보기"
                 cancelText="메인으로 가기"
                 onConfirm={handleSuccessConfirm}

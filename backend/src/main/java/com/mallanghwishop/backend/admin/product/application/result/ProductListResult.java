@@ -8,5 +8,6 @@ import java.util.List;
 @Builder
 public class ProductListResult {
     private final List<ProductResult> products;
+
     private final int productCount;
 }

@@ -16,7 +16,7 @@ export function useOrderFilters(orders: AdminOrder[]) {
             const q = searchQuery.toLowerCase();
             result = result.filter(o =>
                 (o.orderUid && o.orderUid.toLowerCase().includes(q)) ||
-                o.nickname.toLowerCase().includes(q) ||
+                o.name.toLowerCase().includes(q) ||
                 String(o.id).includes(q) ||
                 o.items.some(item => item.productName.toLowerCase().includes(q))
             );

@@ -20,6 +20,7 @@ export interface ProductFormData {
     engName: string;
     description: string;
     price: string;
+    discountPrice: string;
     categoryId: string;
     isAvailable: boolean;
     isSoldOut: boolean;
@@ -74,6 +75,7 @@ export default function ProductForm({
         engName: initialFormData?.engName || '',
         description: initialFormData?.description || '',
         price: initialFormData?.price || '',
+        discountPrice: initialFormData?.discountPrice || '',
         categoryId: initialFormData?.categoryId || '',
         isAvailable: initialFormData?.isAvailable !== undefined ? initialFormData.isAvailable : true,
         isSoldOut: initialFormData?.isSoldOut !== undefined ? initialFormData.isSoldOut : false,
@@ -91,6 +93,7 @@ export default function ProductForm({
                 ...initialFormData,
                 // Ensure values are correct types for inputs
                 price: initialFormData.price !== undefined ? String(initialFormData.price) : prev.price,
+                discountPrice: initialFormData.discountPrice !== undefined ? String(initialFormData.discountPrice) : prev.discountPrice,
                 categoryId: initialFormData.categoryId !== undefined ? String(initialFormData.categoryId) : prev.categoryId,
             }));
         }
@@ -137,6 +140,13 @@ export default function ProductForm({
                 setErrors((prev) => ({ ...prev, price: '가격은 1,000원 이상 50,000원 이하로 설정해주세요.' }));
             } else {
                 setErrors((prev) => ({ ...prev, price: '' }));
+            }
+        } else if (name === 'discountPrice') {
+            const numDiscount = Number(value);
+            if (value && numDiscount < 0) {
+                setErrors((prev) => ({ ...prev, discountPrice: '할인가격은 0원 이상이어야 합니다.' }));
+            } else {
+                setErrors((prev) => ({ ...prev, discountPrice: '' }));
             }
         } else if (errors[name]) {
             setErrors((prev) => ({ ...prev, [name]: '' }));
@@ -288,6 +298,9 @@ export default function ProductForm({
         if (!formData.price || numPrice < 1000 || numPrice > 50000) {
             newErrors.price = '가격은 1,000원 이상 50,000원 이하로 설정해주세요.';
         }
+        if (formData.discountPrice && Number(formData.discountPrice) < 0) {
+            newErrors.discountPrice = '할인가격은 0원 이상이어야 합니다.';
+        }
         if (!formData.categoryId) {
             newErrors.categoryId = '카테고리를 선택해주세요';
         }
@@ -373,6 +386,28 @@ export default function ProductForm({
                         </div>
                         {errors.price && (
                             <span className={styles.errorText}>{errors.price}</span>
+                        )}
+                    </div>
+
+                    <div className={styles.formGroup}>
+                        <label htmlFor="discountPrice" className={styles.label}>
+                            할인가격
+                        </label>
+                        <div className={styles.priceInput}>
+                            <input
+                                type="number"
+                                id="discountPrice"
+                                name="discountPrice"
+                                value={formData.discountPrice}
+                                onChange={handleChange}
+                                className={`${styles.input} ${errors.discountPrice ? styles.inputError : ''}`}
+                                placeholder="할인 없을 시 0"
+                                min="0"
+                            />
+                            <span className={styles.priceSuffix}>원</span>
+                        </div>
+                        {errors.discountPrice && (
+                            <span className={styles.errorText}>{errors.discountPrice}</span>
                         )}
                     </div>
 

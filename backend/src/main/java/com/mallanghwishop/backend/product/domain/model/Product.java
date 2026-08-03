@@ -20,6 +20,7 @@ public class Product {
     private String slug;
     private String description;
     private int price;
+    private Integer discountPrice;
     private Long categoryId;
     private Boolean isAvailable;
     private Boolean isSoldOut;
@@ -46,9 +47,10 @@ public class Product {
         return true;
     }
 
-    public void updatePrice(int newPrice) {
+    public void updatePrice(int newPrice, Integer discountPrice) {
         if (newPrice < 0) throw new IllegalArgumentException("가격은 0원 이상이어야 합니다.");
         this.price = newPrice;
+        this.discountPrice = discountPrice;
     }
 
     public void markSoldOut() {

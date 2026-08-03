@@ -67,7 +67,7 @@ export async function PUT(req: Request) {
             ...session.user,
             id: String(updatedUser.memberId || session.user.id),
             username: String(updatedUser.username || session.user.username),
-            name: String(updatedUser.name || updatedUser.nickname || session.user.name),
+            name: String(updatedUser.name || session.user.name),
             email: updatedUser.email,
             phoneNumber: updatedUser.phoneNumber,
         };

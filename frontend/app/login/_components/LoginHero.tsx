@@ -13,8 +13,8 @@ export default function LoginHero({ title, description }: LoginHeroProps) {
         <div className={styles.imageSection}>
             <div className={styles.dittoImageWrapper}>
                 <Image
-                    src="/images/ditto/welcome-ditto.png"
-                    alt="Welcome Ditto"
+                    src="/images/welcome.png"
+                    alt="말랑이샵 환영"
                     fill
                     className={styles.welcomeImage}
                     priority

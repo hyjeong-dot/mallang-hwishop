@@ -34,6 +34,7 @@ public class RegisterProductService implements RegisterProductUseCase {
                 .slug(slug)
                 .description(command.getDescription())
                 .price(command.getPrice())
+                .discountPrice(command.getDiscountPrice())
                 .categoryId(command.getCategoryId())
                 .isAvailable(command.getIsAvailable())
                 .isSoldOut(false) // 초기 등록 시 품절 아님

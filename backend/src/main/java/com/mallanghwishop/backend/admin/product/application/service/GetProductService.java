@@ -54,6 +54,7 @@ public class GetProductService implements GetProductUseCase {
                 .engName(product.getEngName())
                 .description(product.getDescription())
                 .price(product.getPrice())
+                .discountPrice(product.getDiscountPrice())
                 .categoryName(category != null ? category.getName() : "알 수 없음")
                 .categoryIcon(category != null ? category.getIcon() : "")
                 .imageSrc(imageSrc)

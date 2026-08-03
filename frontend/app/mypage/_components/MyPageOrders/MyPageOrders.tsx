@@ -297,7 +297,7 @@ export default function MyPageOrders() {
                             <textarea
                                 value={reviewContent}
                                 onChange={e => setReviewContent(e.target.value)}
-                                placeholder="말랑이샵에서의 경험을 남겨주세요! 💜"
+                                placeholder="말랑이샵에서의 경험을 남겨주세요! 🎀"
                                 maxLength={500}
                                 style={{
                                     width: '100%', minHeight: '120px', border: '1px solid #d1d5db', borderRadius: '8px',

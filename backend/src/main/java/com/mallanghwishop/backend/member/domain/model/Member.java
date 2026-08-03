@@ -14,10 +14,18 @@ public class Member {
 
     private UUID id;
     private String username;
-    private String nickname;
+    private String name;
     private String password;
     private String email;
     private String phoneNumber;
+    
+    private String zipcode;
+    private String address;
+    private String detailAddress;
+    
+    private String refundBank;
+    private String refundAccount;
+    private String refundHolder;
     private String role; // "ROLE_ADMIN", "ROLE_USER"
     private java.time.LocalDateTime createdAt;
 

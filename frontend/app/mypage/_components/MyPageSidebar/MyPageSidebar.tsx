@@ -38,7 +38,7 @@ export default function MyPageSidebar({
         <aside className={styles.profileCard}>
             <div className={styles.avatarWrapper}>
                 <Image
-                    src="/images/ditto/welcome-ditto.png"
+                    src="/images/welcome.png"
                     alt="Avatar"
                     width={100}
                     height={100}

@@ -11,6 +11,7 @@ public class UpdateProductCommand {
     private final String engName;
     private final String description;
     private final int price;
+    private final Integer discountPrice;
     private final Long categoryId;
     private final String imageSrc;
     private final Boolean isAvailable;

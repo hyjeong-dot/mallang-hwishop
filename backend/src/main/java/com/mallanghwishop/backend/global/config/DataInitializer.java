@@ -49,7 +49,7 @@ public class DataInitializer implements CommandLineRunner {
                         // 관리자 계정
                         memberRepository.save(com.mallanghwishop.backend.member.adapter.out.persistence.entity.MemberJpaEntity.fromDomain(Member.builder()
                                         .username("admin")
-                                        .nickname("관리자")
+                                        .name("관리자")
                                         .password(passwordEncoder.encode("1234"))
                                         .email("admin@ncafe.com")
                                         .phoneNumber("010-0000-0000")
@@ -59,7 +59,7 @@ public class DataInitializer implements CommandLineRunner {
                         // 테스트 유저 (heo)
                         memberRepository.save(com.mallanghwishop.backend.member.adapter.out.persistence.entity.MemberJpaEntity.fromDomain(Member.builder()
                                         .username("heo")
-                                        .nickname("둥이")
+                                        .name("둥이")
                                         .password(passwordEncoder.encode("1234"))
                                         .email("heo@ncafe.com")
                                         .phoneNumber("010-1234-5678")

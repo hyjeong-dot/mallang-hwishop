@@ -75,7 +75,7 @@ public class ReviewService {
         log.info("Review created: orderId={}", request.getOrderId());
 
         String productNames = resolveProductNames(order);
-        return ReviewResponse.from(saved, member.getNickname(), productNames);
+        return ReviewResponse.from(saved, member.getName(), productNames);
     }
 
     /**
@@ -90,7 +90,7 @@ public class ReviewService {
                 .map(com.mallanghwishop.backend.review.adapter.out.persistence.entity.ReviewJpaEntity::toDomain)
                 .map(r -> {
                     String productNames = resolveProductNames(r.getOrder());
-                    return ReviewResponse.from(r, member.getNickname(), productNames);
+                    return ReviewResponse.from(r, member.getName(), productNames);
                 })
                 .collect(Collectors.toList());
     }
@@ -108,7 +108,7 @@ public class ReviewService {
                 .orElseThrow(() -> new IllegalArgumentException("리뷰를 찾을 수 없습니다."));
 
         String productNames = resolveProductNames(review.getOrder());
-        return ReviewResponse.from(review, member.getNickname(), productNames);
+        return ReviewResponse.from(review, member.getName(), productNames);
     }
 
 
@@ -120,11 +120,11 @@ public class ReviewService {
         return reviewRepository.findByOrder_Items_ProductIdOrderByCreatedAtDesc(productId).stream()
                 .map(com.mallanghwishop.backend.review.adapter.out.persistence.entity.ReviewJpaEntity::toDomain)
                 .map(r -> {
-                    String nickname = loadMemberPort.findById(r.getMemberId())
-                            .map(Member::getNickname)
-                            .orElse("익명");
+                    String name = loadMemberPort.findById(r.getMemberId())
+                            .map(Member::getName)
+                            .orElse("알 수 없음");
                     String productNames = resolveProductNames(r.getOrder());
-                    return ReviewResponse.from(r, nickname, productNames);
+                    return ReviewResponse.from(r, name, productNames);
                 })
                 .collect(Collectors.toList());
     }

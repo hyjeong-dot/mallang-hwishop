@@ -13,17 +13,17 @@ public class ReviewResponse {
     private Long orderId;
     private String content;
     private int rating;
-    private String nickname;
+    private String name;
     private String productNames; // 주문한 상품 이름 (쉼표 구분)
     private LocalDateTime createdAt;
 
-    public static ReviewResponse from(Review review, String nickname, String productNames) {
+    public static ReviewResponse from(Review review, String name, String productNames) {
         return ReviewResponse.builder()
                 .id(review.getId())
                 .orderId(review.getOrderId())
                 .content(review.getContent())
                 .rating(review.getRating())
-                .nickname(nickname)
+                .name(name)
                 .productNames(productNames)
                 .createdAt(review.getCreatedAt())
                 .build();

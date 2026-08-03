@@ -34,6 +34,7 @@ export default function ProductEditContainer({ productId }: ProductEditContainer
                 engName: product.engName,
                 description: product.description || '',
                 price: String(product.price),
+                discountPrice: product.discountPrice ? String(product.discountPrice) : '',
                 categoryId: matchedCategory ? String(matchedCategory.id) : '',
                 isAvailable: product.isAvailable,
                 isSoldOut: product.isSoldOut,

@@ -13,7 +13,7 @@ public class AdminOrderResult {
     private final Long id;
     private final String orderUid;
     private final UUID memberId;
-    private final String nickname; // To show who ordered
+    private final String name; // To show who ordered
     private final int totalPrice;
     private final String status;
     private final String statusLabel; // For UI display

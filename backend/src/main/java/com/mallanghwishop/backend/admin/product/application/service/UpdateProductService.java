@@ -32,7 +32,7 @@ public class UpdateProductService implements UpdateProductUseCase {
         product.setKorName(command.getKorName());
         product.setEngName(command.getEngName());
         product.setDescription(command.getDescription());
-        product.setPrice(command.getPrice());
+        product.updatePrice(command.getPrice(), command.getDiscountPrice());
         product.setCategoryId(command.getCategoryId());
         product.setIsAvailable(command.getIsAvailable());
         product.setIsSoldOut(command.getIsSoldOut());

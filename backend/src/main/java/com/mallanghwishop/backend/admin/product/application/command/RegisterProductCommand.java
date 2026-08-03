@@ -10,6 +10,7 @@ public class RegisterProductCommand {
     private final String engName;
     private final String description;
     private final int price;
+    private final Integer discountPrice;
     private final Long categoryId;
     private final Boolean isAvailable;
     private final Integer sortOrder;

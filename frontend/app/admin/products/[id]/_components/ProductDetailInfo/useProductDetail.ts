@@ -30,6 +30,7 @@ export interface ProductDetail {
     engName: string;
     description: string;
     price: number;
+    discountPrice?: number;
     categoryName: string;
     imageSrc: string;
     images?: ProductImageDetail[];
