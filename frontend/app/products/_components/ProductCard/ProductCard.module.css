@@ -147,6 +147,26 @@
     justify-content: space-between;
 }
 
+.discountContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-left: auto;
+}
+
+.originalPrice {
+    font-size: 0.8em;
+    color: #999;
+    text-decoration: line-through;
+    margin-bottom: 2px;
+}
+
+.discountPrice {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--color-primary-700, #E67A95);
+}
+
 .price {
     font-size: 1.1rem;
     font-weight: 800;
