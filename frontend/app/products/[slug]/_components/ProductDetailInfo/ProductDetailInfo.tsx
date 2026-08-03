@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-import { Heart, Share2, Info, ShoppingBag } from 'lucide-react';
+import { Heart, Share2, Info, ShoppingBag, Coins } from 'lucide-react';
 import styles from './ProductDetailInfo.module.css';
 import { useProductDetail } from './useProductDetail';
 import { useAuth } from '@/context/AuthContext';
@@ -180,6 +180,12 @@ export default function ProductDetailInfo({ slug }: ProductDetailInfoProps) {
                     </div>
                 ) : (
                     <span className={styles.price}>₩{formatPrice(product.price)}</span>
+                )}
+                {(!product.discountPrice || product.discountPrice === 0) && (
+                    <span className={styles.pointEarnBadge}>
+                        <Coins size={14} />
+                        구매 시 {formatPrice(Math.floor(product.price * 0.03))}원 적립
+                    </span>
                 )}
             </div>
 
