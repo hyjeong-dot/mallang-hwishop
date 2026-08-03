@@ -64,8 +64,10 @@ public class GetProductDetailService implements GetProductDetailUseCase {
                 .categoryName(categoryName)
                 .categoryIcon(categoryIcon)
                 .imageSrc(imageSrc)
-                .isSoldOut(product.getIsSoldOut())
+                .isSoldOut(product.getIsSoldOut() || product.getSaleStatus() == com.mallanghwishop.backend.product.domain.model.SaleStatus.SOLD_OUT)
                 .isAvailable(product.getIsAvailable())
+                .saleStartAt(product.getSaleStartAt())
+                .saleStatus(product.getSaleStatus() != null ? product.getSaleStatus().name() : "ON_SALE")
                 .createdAt(product.getCreatedAt())
                 .updatedAt(product.getUpdatedAt())
                 .build();

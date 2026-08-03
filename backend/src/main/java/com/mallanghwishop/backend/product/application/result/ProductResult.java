@@ -17,4 +17,6 @@ public class ProductResult {
     private String categoryIcon;
     private String imageSrc;
     private Boolean isSoldOut;
+    private java.time.LocalDateTime saleStartAt;
+    private String saleStatus;
 }

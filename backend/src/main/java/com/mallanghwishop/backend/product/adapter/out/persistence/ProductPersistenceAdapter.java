@@ -64,6 +64,12 @@ public class ProductPersistenceAdapter implements LoadProductPort, SaveProductPo
     }
 
     @Override
+    public List<Product> findAllUpcoming() {
+        return repository.findAllBySaleStatus(com.mallanghwishop.backend.product.domain.model.SaleStatus.UPCOMING)
+                .stream().map(ProductJpaEntity::toDomain).collect(Collectors.toList());
+    }
+
+    @Override
     public Product save(Product product) {
         ProductJpaEntity entity = ProductJpaEntity.fromDomain(product);
         return repository.save(entity).toDomain();

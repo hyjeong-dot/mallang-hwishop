@@ -11,6 +11,8 @@ export interface ProductResponse {
     categoryIcon: string;
     imageSrc: string;
     isSoldOut: boolean;
+    saleStartAt?: string;
+    saleStatus?: string;
 }
 
 export interface ProductListResponse {

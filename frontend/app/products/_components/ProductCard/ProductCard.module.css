@@ -67,6 +67,35 @@
     font-size: 0.9rem;
 }
 
+.upcomingOverlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    gap: 0.5rem;
+}
+
+.upcomingBadge {
+    padding: 0.4rem 1rem;
+    background: #ffec3d;
+    color: #333;
+    border-radius: 99px;
+    font-weight: 800;
+    font-size: 0.85rem;
+}
+
+.countdown {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
 .categoryBadge {
     position: absolute;
     top: 0.75rem;

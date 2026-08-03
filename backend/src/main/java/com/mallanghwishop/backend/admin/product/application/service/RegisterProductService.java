@@ -37,6 +37,7 @@ public class RegisterProductService implements RegisterProductUseCase {
                 .categoryId(command.getCategoryId())
                 .isAvailable(command.getIsAvailable())
                 .sortOrder(command.getSortOrder())
+                .saleStartAt(command.getSaleStartAt())
                 .build();
 
         return saveProductPort.save(product);

@@ -37,6 +37,14 @@ public class UpdateProductService implements UpdateProductUseCase {
         product.setIsAvailable(command.getIsAvailable());
         product.setIsSoldOut(command.getIsSoldOut());
         product.setSortOrder(command.getSortOrder());
+        product.setSaleStartAt(command.getSaleStartAt());
+
+        // 예약 판매 상태 갱신 로직
+        if (command.getSaleStartAt() != null && command.getSaleStartAt().isAfter(java.time.LocalDateTime.now())) {
+            product.setSaleStatus(com.mallanghwishop.backend.product.domain.model.SaleStatus.UPCOMING);
+        } else {
+            product.setSaleStatus(com.mallanghwishop.backend.product.domain.model.SaleStatus.ON_SALE);
+        }
 
         // slug가 아직 없으면 자동 생성 (이미 있으면 변경하지 않음 — URL 안정성)
         if (product.getSlug() == null && command.getEngName() != null) {

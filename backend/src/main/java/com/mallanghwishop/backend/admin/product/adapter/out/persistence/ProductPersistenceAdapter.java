@@ -29,6 +29,8 @@ public class ProductPersistenceAdapter implements SaveProductPort, LoadProductPo
                 .isAvailable(product.getIsAvailable())
                 .isSoldOut(product.getIsSoldOut())
                 .sortOrder(product.getSortOrder())
+                .saleStartAt(product.getSaleStartAt())
+                .saleStatus(product.getSaleStatus())
                 .createdAt(product.getCreatedAt())
                 .updatedAt(product.getUpdatedAt())
                 .build();
@@ -46,6 +48,8 @@ public class ProductPersistenceAdapter implements SaveProductPort, LoadProductPo
                 .isAvailable(entity.getIsAvailable())
                 .isSoldOut(entity.getIsSoldOut())
                 .sortOrder(entity.getSortOrder())
+                .saleStartAt(entity.getSaleStartAt())
+                .saleStatus(entity.getSaleStatus())
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
                 .build();

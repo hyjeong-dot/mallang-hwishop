@@ -12,6 +12,7 @@ public class RegisterProductRequest {
     private Long categoryId;
     private Boolean isAvailable;
     private Integer sortOrder;
+    private java.time.LocalDateTime saleStartAt;
 
     public RegisterProductCommand toCommand() {
         return RegisterProductCommand.builder()
@@ -22,6 +23,7 @@ public class RegisterProductRequest {
                 .categoryId(categoryId)
                 .isAvailable(isAvailable)
                 .sortOrder(sortOrder)
+                .saleStartAt(saleStartAt)
                 .build();
     }
 }

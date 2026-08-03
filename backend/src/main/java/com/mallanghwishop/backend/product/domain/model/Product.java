@@ -24,13 +24,24 @@ public class Product {
     private Boolean isAvailable;
     private Boolean isSoldOut;
     private Integer sortOrder;
+    private LocalDateTime saleStartAt;
+    private SaleStatus saleStatus;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
     // --- 비즈니스 로직 ---
 
     public boolean canOrder() {
-        return Boolean.TRUE.equals(isAvailable) && !Boolean.TRUE.equals(isSoldOut);
+        if (!Boolean.TRUE.equals(isAvailable)) return false;
+        if (saleStatus == SaleStatus.SOLD_OUT || Boolean.TRUE.equals(isSoldOut)) return false;
+        if (saleStatus == SaleStatus.UPCOMING) {
+            // 스케줄러가 아직 상태를 ON_SALE로 바꾸지 않았더라도, 지정 시간이 지났다면 구매 허용
+            if (saleStartAt != null && !saleStartAt.isAfter(LocalDateTime.now())) {
+                return true;
+            }
+            return false;
+        }
+        return true;
     }
 
     public void updatePrice(int newPrice) {

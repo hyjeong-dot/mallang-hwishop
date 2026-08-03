@@ -1,5 +1,6 @@
 package com.mallanghwishop.backend.admin.product.domain.model;
 
+import com.mallanghwishop.backend.product.domain.model.SaleStatus;
 import lombok.*;
 import java.time.LocalDateTime;
 
@@ -33,6 +34,10 @@ public class Product {
 
     private Integer sortOrder;
 
+    private LocalDateTime saleStartAt;
+
+    private SaleStatus saleStatus;
+
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
@@ -45,6 +50,14 @@ public class Product {
         if (this.sortOrder == null) this.sortOrder = 0;
         if (this.slug == null && this.engName != null) {
             this.slug = generateSlug(this.engName);
+        }
+        // 예약 판매 상태 초기화
+        if (this.saleStatus == null) {
+            if (this.saleStartAt != null && this.saleStartAt.isAfter(LocalDateTime.now())) {
+                this.saleStatus = SaleStatus.UPCOMING;
+            } else {
+                this.saleStatus = SaleStatus.ON_SALE;
+            }
         }
     }
 

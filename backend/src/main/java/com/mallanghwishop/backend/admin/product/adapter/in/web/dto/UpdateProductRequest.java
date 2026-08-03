@@ -13,6 +13,7 @@ public class UpdateProductRequest {
     private Boolean isAvailable;
     private Boolean isSoldOut;
     private Integer sortOrder;
+    private java.time.LocalDateTime saleStartAt;
 
     public UpdateProductCommand toCommand(Long id) {
         return UpdateProductCommand.builder()
@@ -25,6 +26,7 @@ public class UpdateProductRequest {
                 .isAvailable(isAvailable)
                 .isSoldOut(isSoldOut)
                 .sortOrder(sortOrder)
+                .saleStartAt(saleStartAt)
                 .build();
     }
 }

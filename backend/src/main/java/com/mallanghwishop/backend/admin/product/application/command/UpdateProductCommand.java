@@ -16,4 +16,5 @@ public class UpdateProductCommand {
     private final Boolean isAvailable;
     private final Boolean isSoldOut;
     private final Integer sortOrder;
+    private final java.time.LocalDateTime saleStartAt;
 }

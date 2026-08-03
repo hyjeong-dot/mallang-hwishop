@@ -13,6 +13,8 @@ export interface ProductResponse {
     images?: any[];
     isAvailable: boolean;
     isSoldOut: boolean;
+    saleStartAt?: string;
+    saleStatus?: string;
     sortOrder: number;
     createdAt?: string;
     updatedAt?: string;

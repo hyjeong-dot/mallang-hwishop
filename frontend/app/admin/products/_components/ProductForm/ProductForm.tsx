@@ -23,6 +23,8 @@ export interface ProductFormData {
     categoryId: string;
     isAvailable: boolean;
     isSoldOut: boolean;
+    isReservation: boolean;
+    saleStartAt: string;
 }
 
 // Option form data
@@ -73,6 +75,8 @@ export default function ProductForm({
         categoryId: initialFormData?.categoryId || '',
         isAvailable: initialFormData?.isAvailable !== undefined ? initialFormData.isAvailable : true,
         isSoldOut: initialFormData?.isSoldOut !== undefined ? initialFormData.isSoldOut : false,
+        isReservation: !!initialFormData?.saleStartAt && new Date(initialFormData.saleStartAt) > new Date(),
+        saleStartAt: initialFormData?.saleStartAt ? new Date(initialFormData.saleStartAt).toISOString().slice(0, 16) : '',
     });
 
     // Sync formData when initialFormData changes (important for edit mode)
@@ -282,6 +286,11 @@ export default function ProductForm({
         }
         if (!formData.categoryId) {
             newErrors.categoryId = '카테고리를 선택해주세요';
+        }
+        if (formData.isReservation && !formData.saleStartAt) {
+            newErrors.saleStartAt = '판매 시작 일시를 설정해주세요';
+        } else if (formData.isReservation && new Date(formData.saleStartAt) <= new Date()) {
+            newErrors.saleStartAt = '판매 시작 일시는 현재 시간 이후여야 합니다.';
         }
 
         setErrors(newErrors);
@@ -607,7 +616,39 @@ export default function ProductForm({
                             <span className={styles.statusHint}>체크 시 "Sold Out" 배지가 표시됩니다.</span>
                         </div>
                     </label>
+
+                    <label className={styles.statusOption}>
+                        <input
+                            type="checkbox"
+                            name="isReservation"
+                            checked={formData.isReservation}
+                            onChange={handleChange}
+                        />
+                        <div>
+                            <span className={styles.statusLabel}>예약 판매</span>
+                            <span className={styles.statusHint}>지정된 날짜 이후에만 구매가 가능합니다.</span>
+                        </div>
+                    </label>
                 </div>
+
+                {formData.isReservation && (
+                    <div className={styles.formGroup} style={{ marginTop: '1rem' }}>
+                        <label htmlFor="saleStartAt" className={styles.label}>
+                            판매 시작 일시 <span className={styles.required}>*</span>
+                        </label>
+                        <input
+                            type="datetime-local"
+                            id="saleStartAt"
+                            name="saleStartAt"
+                            value={formData.saleStartAt}
+                            onChange={handleChange}
+                            className={`${styles.input} ${errors.saleStartAt ? styles.inputError : ''}`}
+                        />
+                        {errors.saleStartAt && (
+                            <span className={styles.errorText}>{errors.saleStartAt}</span>
+                        )}
+                    </div>
+                )}
             </section>
 
             {/* Form Actions */}

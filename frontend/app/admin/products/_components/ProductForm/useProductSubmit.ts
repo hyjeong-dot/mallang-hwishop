@@ -112,6 +112,7 @@ export function useProductSubmit() {
                     categoryId: Number(formData.categoryId),
                     isAvailable: formData.isAvailable,
                     sortOrder: 0,
+                    saleStartAt: formData.isReservation && formData.saleStartAt ? formData.saleStartAt + ':00' : null,
                 }),
             });
             
@@ -155,6 +156,7 @@ export function useProductSubmit() {
                     isAvailable: formData.isAvailable,
                     isSoldOut: formData.isSoldOut,
                     sortOrder: 0,
+                    saleStartAt: formData.isReservation && formData.saleStartAt ? formData.saleStartAt + ':00' : null,
                 }),
             });
             

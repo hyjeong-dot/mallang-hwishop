@@ -16,4 +16,5 @@ public interface LoadProductPort {
     Optional<Product> findAvailableBySlug(String slug);
     Optional<Product> findById(Long id);
     List<Product> findAll();
+    List<Product> findAllUpcoming();
 }

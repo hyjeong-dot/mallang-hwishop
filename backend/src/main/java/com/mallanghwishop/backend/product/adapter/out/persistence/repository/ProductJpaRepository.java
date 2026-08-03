@@ -24,4 +24,6 @@ public interface ProductJpaRepository extends JpaRepository<ProductJpaEntity, Lo
     Optional<ProductJpaEntity> findByKorName(String korName);
 
     boolean existsByKorName(String korName);
+
+    List<ProductJpaEntity> findAllBySaleStatus(com.mallanghwishop.backend.product.domain.model.SaleStatus saleStatus);
 }

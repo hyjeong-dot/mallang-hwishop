@@ -20,6 +20,8 @@ public class ProductDetailResult {
     private String imageSrc;
     private Boolean isSoldOut;
     private Boolean isAvailable;
+    private java.time.LocalDateTime saleStartAt;
+    private String saleStatus;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

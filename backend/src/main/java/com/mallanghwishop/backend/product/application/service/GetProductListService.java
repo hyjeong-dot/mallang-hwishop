@@ -64,7 +64,9 @@ public class GetProductListService implements GetProductListUseCase {
                     .categoryName(categoryName)
                     .categoryIcon(categoryIcon)
                     .imageSrc(imageSrc)
-                    .isSoldOut(product.getIsSoldOut())
+                    .isSoldOut(product.getIsSoldOut() || product.getSaleStatus() == com.mallanghwishop.backend.product.domain.model.SaleStatus.SOLD_OUT)
+                    .saleStartAt(product.getSaleStartAt())
+                    .saleStatus(product.getSaleStatus() != null ? product.getSaleStatus().name() : "ON_SALE")
                     .build();
         }).collect(Collectors.toList());
 

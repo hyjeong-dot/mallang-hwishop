@@ -1,6 +1,7 @@
 package com.mallanghwishop.backend.product.adapter.out.persistence.entity;
 
 import com.mallanghwishop.backend.product.domain.model.Product;
+import com.mallanghwishop.backend.product.domain.model.SaleStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
@@ -49,6 +50,13 @@ public class ProductJpaEntity {
     @Column(name = "sort_order")
     private Integer sortOrder;
 
+    @Column(name = "sale_start_at")
+    private LocalDateTime saleStartAt;
+
+    @Column(name = "sale_status")
+    @Enumerated(EnumType.STRING)
+    private SaleStatus saleStatus;
+
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
@@ -64,6 +72,13 @@ public class ProductJpaEntity {
         if (this.sortOrder == null) this.sortOrder = 0;
         if (this.slug == null && this.engName != null) {
             this.slug = Product.generateSlug(this.engName);
+        }
+        if (this.saleStatus == null) {
+            if (this.saleStartAt != null && this.saleStartAt.isAfter(LocalDateTime.now())) {
+                this.saleStatus = SaleStatus.UPCOMING;
+            } else {
+                this.saleStatus = SaleStatus.ON_SALE;
+            }
         }
     }
 
@@ -86,6 +101,8 @@ public class ProductJpaEntity {
                 .isAvailable(isAvailable)
                 .isSoldOut(isSoldOut)
                 .sortOrder(sortOrder)
+                .saleStartAt(saleStartAt)
+                .saleStatus(saleStatus)
                 .createdAt(createdAt)
                 .updatedAt(updatedAt)
                 .build();
@@ -103,8 +120,11 @@ public class ProductJpaEntity {
                 .isAvailable(product.getIsAvailable())
                 .isSoldOut(product.getIsSoldOut())
                 .sortOrder(product.getSortOrder())
+                .saleStartAt(product.getSaleStartAt())
+                .saleStatus(product.getSaleStatus())
                 .createdAt(product.getCreatedAt())
                 .updatedAt(product.getUpdatedAt())
                 .build();
     }
 }
+

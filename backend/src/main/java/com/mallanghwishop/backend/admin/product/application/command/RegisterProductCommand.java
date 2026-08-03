@@ -13,4 +13,5 @@ public class RegisterProductCommand {
     private final Long categoryId;
     private final Boolean isAvailable;
     private final Integer sortOrder;
+    private final java.time.LocalDateTime saleStartAt;
 }

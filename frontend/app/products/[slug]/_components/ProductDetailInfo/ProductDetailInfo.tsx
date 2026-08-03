@@ -90,6 +90,56 @@ export default function ProductDetailInfo({ slug }: ProductDetailInfoProps) {
         action();
     };
 
+    // Countdown state for UPCOMING products
+    const [timeLeft, setTimeLeft] = useState<string>('');
+    const [isLocallyOpen, setIsLocallyOpen] = useState(false);
+    
+    // 원래 데이터상 UPCOMING이면서 예약 시간이 있을 때, 로컬에서 오픈되지 않은 경우에만 UPCOMING 배지 유지
+    const isUpcoming = product?.saleStatus === 'UPCOMING' && !!product?.saleStartAt && !isLocallyOpen;
+
+    useEffect(() => {
+        // 이미 프론트엔드에서 오픈 처리되었거나 데이터 자체가 UPCOMING이 아니면 타이머 중단
+        if (product?.saleStatus !== 'UPCOMING' || !product?.saleStartAt || isLocallyOpen) return;
+
+        const targetTime = new Date(product.saleStartAt).getTime();
+
+        const updateTimer = () => {
+            const now = new Date().getTime();
+            const diff = targetTime - now;
+
+            if (diff <= 0) {
+                setIsLocallyOpen(true);
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+            if (days > 0) {
+                setTimeLeft(`D-${days} ${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`);
+            } else {
+                setTimeLeft(`${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`);
+            }
+        };
+
+        updateTimer();
+        const interval = setInterval(updateTimer, 1000);
+        return () => clearInterval(interval);
+    }, [product?.saleStatus, product?.saleStartAt, isLocallyOpen]);
+
+    const formatSaleStart = (dateString?: string) => {
+        if (!dateString) return '';
+        const d = new Date(dateString);
+        const m = d.getMonth() + 1;
+        const day = d.getDate();
+        const h = d.getHours();
+        const isPM = h >= 12;
+        const h12 = h % 12 || 12;
+        return `${m}/${day} ${isPM ? '오후' : '오전'} ${h12}시 오픈`;
+    };
+
     if (isLoading) return <LoadingCharacter message="정보를 불러오는 중..." />;
     if (error || !product) return null;
 
@@ -126,6 +176,13 @@ export default function ProductDetailInfo({ slug }: ProductDetailInfoProps) {
                 <span className={styles.price}>₩{formatPrice(product.price)}</span>
             </div>
 
+            {isUpcoming && (
+                <div className={styles.upcomingBanner}>
+                    <span className={styles.upcomingTitle}>🔔 오픈 예정 ({formatSaleStart(product.saleStartAt)})</span>
+                    <span className={styles.upcomingCountdown}>{timeLeft}</span>
+                </div>
+            )}
+
             <div className={styles.descSection}>
                 <h3 className={styles.sectionTitle}><Info size={16} /> 상품 설명</h3>
                 <p className={styles.description}>{product.description || '준비된 설명이 없습니다.'}</p>
@@ -134,7 +191,7 @@ export default function ProductDetailInfo({ slug }: ProductDetailInfoProps) {
             <div className={styles.ctaRow}>
                 <button
                     className={styles.cartBtn}
-                    disabled={product.isSoldOut}
+                    disabled={product.isSoldOut || isUpcoming}
                     onClick={() => {
                         addItem({
                             productId: product.id,
@@ -152,12 +209,12 @@ export default function ProductDetailInfo({ slug }: ProductDetailInfoProps) {
                 </button>
                 <button
                     className={styles.mainCta}
-                    disabled={product.isSoldOut}
+                    disabled={product.isSoldOut || isUpcoming}
                     onClick={() => handleAction(() => {
                         setIsOrderModalOpen(true);
                     })}
                 >
-                    {product.isSoldOut ? '현재 준비 중입니다' : '주문하기 💜'}
+                    {isUpcoming ? '오픈 대기 중' : product.isSoldOut ? '현재 준비 중입니다' : '주문하기 💜'}
                 </button>
             </div>
 
