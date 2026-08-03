@@ -16,7 +16,6 @@ import org.springframework.data.domain.Persistable;
 public class MemberJpaEntity implements Persistable<UUID> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @Column(name = "username", nullable = false, unique = true)
