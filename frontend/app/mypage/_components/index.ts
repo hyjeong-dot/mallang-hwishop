@@ -5,4 +5,5 @@ export { default as MyPageOrders } from "./MyPageOrders/MyPageOrders";
 export { default as MyPageFavorites } from "./MyPageFavorites/MyPageFavorites";
 export { default as MyPageReviews } from "./MyPageReviews/MyPageReviews";
 export { default as MyPageInquiries } from "./MyPageInquiries/MyPageInquiries";
+export { default as MyPagePoints } from "./MyPagePoints/MyPagePoints";
 export { default as MyPageMain } from "./MyPageMain/MyPageMain";

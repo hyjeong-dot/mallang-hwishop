@@ -25,4 +25,6 @@ public class MeResponse {
     private String refundBank;
     private String refundAccount;
     private String refundHolder;
+    
+    private int currentPoint;
 }

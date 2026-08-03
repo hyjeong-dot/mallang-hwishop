@@ -14,6 +14,7 @@ import com.mallanghwishop.backend.auth.domain.exception.AuthenticationFailedExce
 import com.mallanghwishop.backend.config.jwt.JwtProvider;
 import com.mallanghwishop.backend.member.application.port.out.LoadMemberPort;
 import com.mallanghwishop.backend.member.domain.model.Member;
+import com.mallanghwishop.backend.point.application.port.in.PointUseCase;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,7 @@ public class AuthController {
     private final UpdateProfileUseCase updateProfileUseCase;
     private final JwtProvider jwtProvider;
     private final LoadMemberPort loadMemberPort;
+    private final PointUseCase pointUseCase;
 
     @PostMapping("/login")
     public LoginResponse login(@RequestBody LoginRequest request, HttpServletResponse response) {
@@ -96,6 +98,7 @@ public class AuthController {
                 .refundBank(member.getRefundBank())
                 .refundAccount(member.getRefundAccount())
                 .refundHolder(member.getRefundHolder())
+                .currentPoint(pointUseCase.getBalance(member.getId()))
                 .build();
     }
 

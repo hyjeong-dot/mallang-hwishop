@@ -22,6 +22,12 @@ public class Order {
     private String orderUid;
     private String paymentKey;
     private Long couponId;
+    
+    @Builder.Default
+    private int pointUsed = 0;
+    
+    @Builder.Default
+    private int pointEarned = 0;
 
     @Builder.Default
     private Integer discountAmount = 0;

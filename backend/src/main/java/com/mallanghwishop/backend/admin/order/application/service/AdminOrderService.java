@@ -10,6 +10,7 @@ import com.mallanghwishop.backend.member.adapter.out.persistence.MemberJpaReposi
 import com.mallanghwishop.backend.order.adapter.out.persistence.repository.OrderRepository;
 import com.mallanghwishop.backend.order.domain.model.Order;
 import com.mallanghwishop.backend.order.domain.model.OrderStatus;
+import com.mallanghwishop.backend.point.application.port.in.PointUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class AdminOrderService implements GetAdminOrderListUseCase, UpdateOrderS
     private final OrderRepository orderRepository;
     private final MemberJpaRepository memberRepository;
     private final ProductJpaRepository productRepository;
-
+    private final PointUseCase pointUseCase;
 
     @Override
     @Transactional(readOnly = true)
@@ -45,10 +46,21 @@ public class AdminOrderService implements GetAdminOrderListUseCase, UpdateOrderS
                 .map(com.mallanghwishop.backend.order.adapter.out.persistence.entity.OrderJpaEntity::toDomain)
                 .orElseThrow(() -> new IllegalArgumentException("Order not found with id: " + orderId));
 
+        OrderStatus previousStatus = order.getStatus();
         order.setStatus(status);
         orderRepository.save(com.mallanghwishop.backend.order.adapter.out.persistence.entity.OrderJpaEntity.fromDomain(order));
 
-        // Phase 2에서 적립금 차감 로직 추가 예정
+        // 배송 완료로 상태가 변경되는 경우, 그리고 이전 상태가 완료가 아니었던 경우 적립금 지급
+        if (status == OrderStatus.COMPLETED && previousStatus != OrderStatus.COMPLETED) {
+            if (order.getPointEarned() > 0) {
+                pointUseCase.earnPoints(
+                        order.getMemberId(),
+                        order.getPointEarned(),
+                        order.getId(),
+                        "주문 #" + order.getOrderUid() + " 구매 적립금"
+                );
+            }
+        }
     }
 
     private AdminOrderResult toResult(Order order) {

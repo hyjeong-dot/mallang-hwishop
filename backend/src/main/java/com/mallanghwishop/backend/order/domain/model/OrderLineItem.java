@@ -16,5 +16,6 @@ public class OrderLineItem {
     private Long productId;
     private int price; // 구매 당시 가격
     private int quantity; // 구매 수량
+    private int pointEarned; // 이 항목으로 인해 적립될(된) 포인트
     private LocalDateTime createdAt;
 }

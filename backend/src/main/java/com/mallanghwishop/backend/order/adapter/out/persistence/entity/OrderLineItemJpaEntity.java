@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import org.springframework.data.annotation.CreatedDate;
 
 @Entity
 @Table(name = "order_line_items")
@@ -31,6 +32,11 @@ public class OrderLineItemJpaEntity {
     @Column(nullable = false)
     private int quantity; // 구매 수량
 
+    @Column(nullable = false, columnDefinition = "integer default 0")
+    @Builder.Default
+    private int pointEarned = 0;
+
+    @CreatedDate
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
@@ -46,6 +52,7 @@ public class OrderLineItemJpaEntity {
                 .productId(item.getProductId())
                 .price(item.getPrice())
                 .quantity(item.getQuantity())
+                .pointEarned(item.getPointEarned())
                 .createdAt(item.getCreatedAt())
                 .build();
     }
@@ -56,6 +63,7 @@ public class OrderLineItemJpaEntity {
                 .productId(this.productId)
                 .price(this.price)
                 .quantity(this.quantity)
+                .pointEarned(this.pointEarned)
                 .createdAt(this.createdAt)
                 .build();
     }

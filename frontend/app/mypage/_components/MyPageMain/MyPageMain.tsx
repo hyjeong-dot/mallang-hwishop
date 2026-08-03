@@ -13,7 +13,8 @@ import {
     MyPageOrders,
     MyPageFavorites,
     MyPageReviews,
-    MyPageInquiries
+    MyPageInquiries,
+    MyPagePoints
 } from "..";
 
 export default function MyPageMain() {
@@ -55,6 +56,7 @@ export default function MyPageMain() {
                     {activeTab === "profile" && <MyPageProfile />}
                     {activeTab === "orders" && <MyPageOrders />}
                     {activeTab === "favorites" && <MyPageFavorites />}
+                    {activeTab === "points" && <MyPagePoints />}
                     {activeTab === "reviews" && <MyPageReviews />}
                     {activeTab === "inquiries" && <MyPageInquiries />}
                     {activeTab === "payment" && (

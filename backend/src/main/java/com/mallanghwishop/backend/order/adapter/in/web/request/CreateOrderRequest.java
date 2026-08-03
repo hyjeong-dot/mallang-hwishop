@@ -16,6 +16,7 @@ public class CreateOrderRequest {
     private String orderType; // DINE_IN or TAKEOUT
     private String requestMemo;
     private Long couponId; // nullable
+    private Integer pointUsed; // 사용한 적립금
     private List<OrderLineItemRequest> items;
 
     public CreateOrderCommand toCommand(String username) {
@@ -24,6 +25,7 @@ public class CreateOrderRequest {
                 .orderType(OrderType.valueOf(this.orderType))
                 .requestMemo(this.requestMemo)
                 .couponId(this.couponId)
+                .pointUsed(this.pointUsed)
                 .items(this.items.stream()
                         .map(item -> OrderLineItemCommand.builder()
                                 .productId(item.getProductId())

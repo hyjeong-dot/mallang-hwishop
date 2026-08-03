@@ -27,6 +27,7 @@ public class CreateOrderService implements CreateOrderUseCase {
     private final LoadProductPort loadProductPort;
     private final com.mallanghwishop.backend.product.application.port.out.SaveProductPort saveProductPort;
     private final LoadMemberPort loadMemberPort;
+    private final com.mallanghwishop.backend.point.application.port.in.PointUseCase pointUseCase;
 
     private final com.mallanghwishop.backend.admin.cafe.application.port.in.GetCafeSettingsUseCase getCafeSettingsUseCase;
 
@@ -48,6 +49,7 @@ public class CreateOrderService implements CreateOrderUseCase {
                 .requestMemo(command.getRequestMemo())
                 .orderUid(orderUid)
                 .status(OrderStatus.PENDING)
+                .pointUsed(command.getPointUsed() != null ? command.getPointUsed() : 0)
                 .build();
 
         command.getItems().forEach(itemCmd -> {
@@ -61,16 +63,29 @@ public class CreateOrderService implements CreateOrderUseCase {
             product.decreaseStock(itemCmd.getQuantity());
             saveProductPort.save(product);
 
-            // 옵션 포함 단가가 전달되면 사용, 없으면 상품 기본가
-            int price = product.getPrice();
-            if (itemCmd.getUnitPrice() != null && itemCmd.getUnitPrice() >= product.getPrice()) {
-                price = itemCmd.getUnitPrice();
+            // 할인가가 적용된 상품인지 확인
+            boolean isDiscounted = (product.getDiscountPrice() != null && product.getDiscountPrice() > 0 && product.getDiscountPrice() < product.getPrice());
+            
+            // 최종 단가 결정 (할인가가 있으면 할인가 우선, 없으면 정가)
+            int finalPrice = isDiscounted ? product.getDiscountPrice() : product.getPrice();
+            
+            // 옵션 등 추가 금액이 포함된 단가가 넘어온 경우
+            if (itemCmd.getUnitPrice() != null && itemCmd.getUnitPrice() > finalPrice) {
+                finalPrice = itemCmd.getUnitPrice();
+            }
+
+            // 적립금 계산 (정가 판매 상품만 3% 적립)
+            int pointEarned = 0;
+            if (!isDiscounted) {
+                // 정가 판매 상품인 경우 3% 적립
+                pointEarned = (int) Math.floor((finalPrice * itemCmd.getQuantity()) * 0.03);
             }
 
             OrderLineItem lineItem = OrderLineItem.builder()
                     .productId(product.getId())
-                    .price(price)
+                    .price(finalPrice)
                     .quantity(itemCmd.getQuantity())
+                    .pointEarned(pointEarned)
                     .build();
 
             order.addLineItem(lineItem);
@@ -78,9 +93,28 @@ public class CreateOrderService implements CreateOrderUseCase {
 
         order.calculateTotalPrice();
 
-        // Phase 2에서 적립금 적립 로직 추가 예정
+        // 주문의 총 적립 예정 포인트 계산
+        int totalPointEarned = order.getItems().stream().mapToInt(OrderLineItem::getPointEarned).sum();
+        order.setPointEarned(totalPointEarned);
+
+        // 배송비 처리는 Phase 3 나중에 추가. 여기서는 상품 총합 + 배송비(예: 3500)에서 포인트를 차감해야 함.
+        // 현재는 상품 총합(totalPrice)에서 포인트 차감 처리. (음수 방지)
+        int pointUsed = order.getPointUsed();
+        if (pointUsed > 0) {
+            order.applyDiscount(pointUsed); // applyDiscount는 totalPrice에서 차감함
+        }
+
         Order savedOrder = orderPort.saveOrder(order);
 
+        // 포인트 차감 적용 (DB 저장 후)
+        if (pointUsed > 0) {
+            pointUseCase.usePoints(
+                    member.getId(),
+                    pointUsed,
+                    savedOrder.getId(),
+                    "주문 #" + savedOrder.getOrderUid() + " 결제 사용"
+            );
+        }
 
         return OrderResult.builder()
                 .orderId(savedOrder.getId())

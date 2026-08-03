@@ -9,11 +9,10 @@ interface OrderSummaryProps {
     totalPrice: number;
     finalPrice: number;
     isSubmitting: boolean;
-    onSubmit: () => void;
-    availableCoupons: CouponData[];
-    selectedCouponId: number | null;
-    onCouponSelect: (id: number | null) => void;
-    discountAmount: number;
+    pointUsed: number;
+    onPointChange: (val: number) => void;
+    currentPoint: number;
+    expectedEarnPoint: number;
 }
 
 export default function OrderSummary({
@@ -22,10 +21,10 @@ export default function OrderSummary({
     finalPrice,
     isSubmitting,
     onSubmit,
-    availableCoupons,
-    selectedCouponId,
-    onCouponSelect,
-    discountAmount,
+    pointUsed,
+    onPointChange,
+    currentPoint,
+    expectedEarnPoint
 }: OrderSummaryProps) {
     return (
         <div className={styles.summarySection}>
@@ -50,32 +49,28 @@ export default function OrderSummary({
                 ))}
             </div>
 
-            {/* 쿠폰 선택 */}
+            {/* 적립금 사용 */}
             <div className={styles.couponSection}>
-                <label className={styles.couponLabel}>🎫 쿠폰 적용</label>
-                <select
-                    className={styles.couponSelect}
-                    value={selectedCouponId ?? ''}
-                    onChange={(e) => {
-                        const val = e.target.value;
-                        onCouponSelect(val ? parseInt(val) : null);
-                    }}
-                >
-                    <option value="">쿠폰 선택 안 함</option>
-                    {availableCoupons.map(coupon => (
-                        <option key={coupon.id} value={coupon.id}>
-                            {coupon.name}
-                            {coupon.type === 'FIXED' && ` (${coupon.discount.toLocaleString()}원 할인)`}
-                            {coupon.type === 'PERCENT' && ` (${coupon.discount}% 할인)`}
-                            {coupon.type === 'FREE_DRINK' && ' (무료 음료)'}
-                        </option>
-                    ))}
-                </select>
-                {discountAmount > 0 && (
-                    <div className={styles.discountInfo}>
-                        -  {discountAmount.toLocaleString()}원 할인 적용!
-                    </div>
-                )}
+                <label className={styles.couponLabel}>🎁 적립금 사용</label>
+                <div className={styles.pointInputWrapper}>
+                    <input 
+                        type="number"
+                        className={styles.pointInput}
+                        value={pointUsed || ''}
+                        onChange={(e) => onPointChange(parseInt(e.target.value) || 0)}
+                        placeholder="0"
+                    />
+                    <span className={styles.pointUnit}>원</span>
+                    <button 
+                        className={styles.pointAllBtn}
+                        onClick={() => onPointChange(currentPoint)}
+                    >
+                        전액 사용
+                    </button>
+                </div>
+                <div className={styles.pointInfo}>
+                    보유 적립금: {currentPoint.toLocaleString()}원
+                </div>
             </div>
 
             <div className={styles.totalRow}>
@@ -83,16 +78,21 @@ export default function OrderSummary({
                 <span className={styles.originalPrice}>{totalPrice.toLocaleString()}원</span>
             </div>
 
-            {discountAmount > 0 && (
+            {pointUsed > 0 && (
                 <div className={styles.discountRow}>
-                    <span className={styles.discountLabel}>쿠폰 할인</span>
-                    <span className={styles.discountPrice}>-{discountAmount.toLocaleString()}원</span>
+                    <span className={styles.discountLabel}>적립금 사용</span>
+                    <span className={styles.discountPrice}>-{pointUsed.toLocaleString()}원</span>
                 </div>
             )}
 
             <div className={styles.finalRow}>
                 <span className={styles.totalLabel}>총 결제 금액</span>
                 <span className={styles.totalPrice}>{finalPrice.toLocaleString()}원</span>
+            </div>
+
+            <div className={styles.expectedPointRow}>
+                <span className={styles.expectedPointLabel}>적립 예정 금액</span>
+                <span className={styles.expectedPointValue}>+{expectedEarnPoint.toLocaleString()}원</span>
             </div>
 
             <button 

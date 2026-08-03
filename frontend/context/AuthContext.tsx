@@ -11,6 +11,7 @@ interface User {
     role: string;
     email?: string;
     phoneNumber?: string;
+    currentPoint?: number;
 }
 
 interface AuthContextType {

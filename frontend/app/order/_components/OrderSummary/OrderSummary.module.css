@@ -177,3 +177,73 @@
     opacity: 0.6;
     cursor: not-allowed;
 }
+
+/* 포인트 입력 부분 */
+.pointInputWrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.pointInput {
+    flex: 1;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid #e0ccff;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    background: #faf8ff;
+    outline: none;
+    transition: border-color 200ms;
+    text-align: right;
+}
+
+.pointInput:focus {
+    border-color: var(--color-primary-600);
+}
+
+.pointUnit {
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+.pointAllBtn {
+    padding: 0.6rem 1rem;
+    background-color: var(--color-primary-100);
+    color: var(--color-primary-600);
+    border: none;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 200ms;
+}
+
+.pointAllBtn:hover {
+    background-color: var(--color-primary-200);
+}
+
+.pointInfo {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.expectedPointRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-top: 0.5rem;
+}
+
+.expectedPointLabel {
+    font-size: 0.9rem;
+    color: var(--color-primary-500);
+}
+
+.expectedPointValue {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-primary-600);
+}

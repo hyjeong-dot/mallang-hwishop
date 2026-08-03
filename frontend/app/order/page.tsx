@@ -19,10 +19,10 @@ export default function OrderPage() {
         isSuccessModalOpen,
         handleSubmitOrder,
         handleSuccessConfirm,
-        availableCoupons,
-        selectedCouponId,
-        handleCouponSelect,
-        discountAmount
+        pointUsed,
+        handlePointChange,
+        currentPoint,
+        expectedEarnPoint
     } = useOrder();
 
     if (isLoading) {
@@ -49,10 +49,10 @@ export default function OrderPage() {
                     finalPrice={finalPrice}
                     isSubmitting={isSubmitting}
                     onSubmit={handleSubmitOrder}
-                    availableCoupons={availableCoupons}
-                    selectedCouponId={selectedCouponId}
-                    onCouponSelect={handleCouponSelect}
-                    discountAmount={discountAmount}
+                    pointUsed={pointUsed}
+                    onPointChange={handlePointChange}
+                    currentPoint={currentPoint}
+                    expectedEarnPoint={expectedEarnPoint}
                 />
             </div>
 

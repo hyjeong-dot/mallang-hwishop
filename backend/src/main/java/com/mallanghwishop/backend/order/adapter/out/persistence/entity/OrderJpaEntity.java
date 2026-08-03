@@ -48,6 +48,14 @@ public class OrderJpaEntity {
     @Column(name = "coupon_id")
     private Long couponId;
 
+    @Column(nullable = false, columnDefinition = "integer default 0")
+    @Builder.Default
+    private int pointUsed = 0;
+
+    @Column(nullable = false, columnDefinition = "integer default 0")
+    @Builder.Default
+    private int pointEarned = 0;
+
     @Builder.Default
     @Column(name = "discount_amount")
     private Integer discountAmount = 0;
@@ -92,6 +100,8 @@ public class OrderJpaEntity {
                 .orderUid(order.getOrderUid())
                 .paymentKey(order.getPaymentKey())
                 .couponId(order.getCouponId())
+                .pointUsed(order.getPointUsed())
+                .pointEarned(order.getPointEarned())
                 .discountAmount(order.getDiscountAmount())
                 .createdAt(order.getCreatedAt())
                 .updatedAt(order.getUpdatedAt())
@@ -116,6 +126,8 @@ public class OrderJpaEntity {
                 .orderUid(this.orderUid)
                 .paymentKey(this.paymentKey)
                 .couponId(this.couponId)
+                .pointUsed(this.pointUsed)
+                .pointEarned(this.pointEarned)
                 .discountAmount(this.discountAmount)
                 .createdAt(this.createdAt)
                 .updatedAt(this.updatedAt)

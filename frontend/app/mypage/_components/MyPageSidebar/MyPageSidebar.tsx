@@ -10,7 +10,8 @@ import {
     UserMinus,
     Ticket,
     MessageSquare,
-    MessageSquarePlus
+    MessageSquarePlus,
+    Coins
 } from "lucide-react";
 import styles from "./MyPageSidebar.module.css";
 
@@ -75,11 +76,11 @@ export default function MyPageSidebar({
                     찜한 상품
                 </button>
                 <button
-                    className={`${styles.productItem} ${activeTab === "coupons" ? styles.active : ""}`}
-                    onClick={() => onTabChange("coupons")}
+                    className={`${styles.productItem} ${activeTab === "points" ? styles.active : ""}`}
+                    onClick={() => onTabChange("points")}
                 >
-                    <Ticket size={18} />
-                    내 쿠폰
+                    <Coins size={18} />
+                    내 적립금
                 </button>
                 <button
                     className={`${styles.productItem} ${activeTab === "reviews" ? styles.active : ""}`}

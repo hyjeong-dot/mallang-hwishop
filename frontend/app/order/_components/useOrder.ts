@@ -24,18 +24,7 @@ function loadTossScript(): Promise<any> {
     });
 }
 
-export interface CouponData {
-    id: number;
-    name: string;
-    description: string;
-    type: string;
-    discount: number;
-    minOrder: number;
-    code: string;
-    status: string;
-    usable: boolean;
-    expiresAt: string;
-}
+// 쿠폰은 제거됨 (포인트 사용)
 
 export function useOrder() {
     const router = useRouter();
@@ -51,10 +40,8 @@ export function useOrder() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccessModalOpen, setSuccessModalOpen] = useState(false);
 
-    // 쿠폰 관련 상태
-    const [availableCoupons, setAvailableCoupons] = useState<CouponData[]>([]);
-    const [selectedCouponId, setSelectedCouponId] = useState<number | null>(null);
-    const [discountAmount, setDiscountAmount] = useState(0);
+    // 포인트 관련 상태
+    const [pointUsed, setPointUsed] = useState(0);
 
     // Redirect to login if unauthenticated or products if empty cart
     useEffect(() => {
@@ -101,52 +88,19 @@ export function useOrder() {
         setCartOpen(false);
     }, [setCartOpen]);
 
-    // 사용 가능한 쿠폰 불러오기
-    useEffect(() => {
-        if (user) {
-            fetchAPI('/coupons/active')
-                .then(data => setAvailableCoupons(data || []))
-                .catch(err => console.error('Failed to load coupons:', err));
-        }
-    }, [user]);
-
-    // 쿠폰 선택 시 할인 계산
-    const handleCouponSelect = (couponId: number | null) => {
-        setSelectedCouponId(couponId);
-        if (!couponId) {
-            setDiscountAmount(0);
-            return;
-        }
-        const coupon = availableCoupons.find(c => c.id === couponId);
-        if (!coupon) {
-            setDiscountAmount(0);
-            return;
-        }
-
-        // 최소 주문 금액 체크
-        if (coupon.minOrder > 0 && totalPrice < coupon.minOrder) {
-            toast.error(`최소 주문 금액 ${coupon.minOrder.toLocaleString()}원 이상이어야 해요!`);
-            setSelectedCouponId(null);
-            setDiscountAmount(0);
-            return;
-        }
-
-        let discount = 0;
-        switch (coupon.type) {
-            case 'FIXED':
-                discount = coupon.discount;
-                break;
-            case 'PERCENT':
-                discount = Math.floor(totalPrice * coupon.discount / 100);
-                break;
-            case 'FREE_DRINK':
-                discount = coupon.discount; // 아메리카노 가격 4,500원 고정
-                break;
-        }
-        setDiscountAmount(Math.min(discount, totalPrice));
+    // 포인트 사용 핸들러
+    const handlePointChange = (amount: number) => {
+        if (!user) return;
+        const maxUsable = Math.min(totalPrice, user.currentPoint || 0);
+        
+        let validAmount = amount;
+        if (validAmount < 0) validAmount = 0;
+        if (validAmount > maxUsable) validAmount = maxUsable;
+        
+        setPointUsed(validAmount);
     };
 
-    const finalPrice = Math.max(0, totalPrice - discountAmount);
+    const finalPrice = Math.max(0, totalPrice - pointUsed);
 
     const handleSubmitOrder = async () => {
         if (items.length === 0) return;
@@ -178,7 +132,7 @@ export function useOrder() {
                 body: JSON.stringify({
                     orderType,
                     requestMemo: fullMemo,
-                    couponId: selectedCouponId,
+                    pointUsed: pointUsed,
                     items: formattedItems
                 })
             });
@@ -250,10 +204,10 @@ export function useOrder() {
         isSuccessModalOpen,
         handleSubmitOrder,
         handleSuccessConfirm,
-        // 쿠폰
-        availableCoupons,
-        selectedCouponId,
-        handleCouponSelect,
-        discountAmount
+        // 포인트
+        pointUsed,
+        handlePointChange,
+        currentPoint: user?.currentPoint || 0,
+        expectedEarnPoint: Math.floor(totalPrice * 0.03)
     };
 }
