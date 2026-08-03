@@ -13,6 +13,8 @@ public class RegisterProductRequest {
     private Boolean isAvailable;
     private Integer sortOrder;
     private java.time.LocalDateTime saleStartAt;
+    private Integer stock;
+    private Integer maxPerOrder;
 
     public RegisterProductCommand toCommand() {
         return RegisterProductCommand.builder()
@@ -24,6 +26,8 @@ public class RegisterProductRequest {
                 .isAvailable(isAvailable)
                 .sortOrder(sortOrder)
                 .saleStartAt(saleStartAt)
+                .stock(stock)
+                .maxPerOrder(maxPerOrder)
                 .build();
     }
 }

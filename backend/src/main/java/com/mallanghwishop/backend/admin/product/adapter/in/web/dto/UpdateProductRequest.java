@@ -14,6 +14,8 @@ public class UpdateProductRequest {
     private Boolean isSoldOut;
     private Integer sortOrder;
     private java.time.LocalDateTime saleStartAt;
+    private Integer stock;
+    private Integer maxPerOrder;
 
     public UpdateProductCommand toCommand(Long id) {
         return UpdateProductCommand.builder()
@@ -27,6 +29,8 @@ public class UpdateProductRequest {
                 .isSoldOut(isSoldOut)
                 .sortOrder(sortOrder)
                 .saleStartAt(saleStartAt)
+                .stock(stock)
+                .maxPerOrder(maxPerOrder)
                 .build();
     }
 }

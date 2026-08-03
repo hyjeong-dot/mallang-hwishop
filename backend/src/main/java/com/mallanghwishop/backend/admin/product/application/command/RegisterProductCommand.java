@@ -14,4 +14,6 @@ public class RegisterProductCommand {
     private final Boolean isAvailable;
     private final Integer sortOrder;
     private final java.time.LocalDateTime saleStartAt;
+    private final Integer stock;
+    private final Integer maxPerOrder;
 }

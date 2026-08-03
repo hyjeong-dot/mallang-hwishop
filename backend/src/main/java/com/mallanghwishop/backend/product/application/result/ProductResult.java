@@ -19,4 +19,6 @@ public class ProductResult {
     private Boolean isSoldOut;
     private java.time.LocalDateTime saleStartAt;
     private String saleStatus;
+    private Integer stock;
+    private Integer maxPerOrder;
 }

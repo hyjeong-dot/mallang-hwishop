@@ -61,6 +61,10 @@ public class GetProductService implements GetProductUseCase {
                 .isAvailable(product.getIsAvailable())
                 .isSoldOut(product.getIsSoldOut())
                 .sortOrder(product.getSortOrder())
+                .saleStartAt(product.getSaleStartAt())
+                .saleStatus(product.getSaleStatus() != null ? product.getSaleStatus().name() : null)
+                .stock(product.getStock())
+                .maxPerOrder(product.getMaxPerOrder())
                 .createdAt(product.getCreatedAt())
                 .updatedAt(product.getUpdatedAt())
                 .build();

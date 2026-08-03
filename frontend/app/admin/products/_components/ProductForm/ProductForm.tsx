@@ -25,6 +25,8 @@ export interface ProductFormData {
     isSoldOut: boolean;
     isReservation: boolean;
     saleStartAt: string;
+    stock: string;
+    isUnlimitedStock: boolean;
 }
 
 // Option form data
@@ -77,6 +79,8 @@ export default function ProductForm({
         isSoldOut: initialFormData?.isSoldOut !== undefined ? initialFormData.isSoldOut : false,
         isReservation: !!initialFormData?.saleStartAt && new Date(initialFormData.saleStartAt) > new Date(),
         saleStartAt: initialFormData?.saleStartAt ? new Date(initialFormData.saleStartAt).toISOString().slice(0, 16) : '',
+        stock: initialFormData?.stock !== undefined && initialFormData?.stock !== null ? String(initialFormData.stock) : '',
+        isUnlimitedStock: initialFormData?.stock === null || initialFormData?.stock === undefined,
     });
 
     // Sync formData when initialFormData changes (important for edit mode)
@@ -291,6 +295,9 @@ export default function ProductForm({
             newErrors.saleStartAt = '판매 시작 일시를 설정해주세요';
         } else if (formData.isReservation && new Date(formData.saleStartAt) <= new Date()) {
             newErrors.saleStartAt = '판매 시작 일시는 현재 시간 이후여야 합니다.';
+        }
+        if (!formData.isUnlimitedStock && (!formData.stock || Number(formData.stock) < 0)) {
+            newErrors.stock = '올바른 재고 수량을 입력해주세요';
         }
 
         setErrors(newErrors);
@@ -629,7 +636,41 @@ export default function ProductForm({
                             <span className={styles.statusHint}>지정된 날짜 이후에만 구매가 가능합니다.</span>
                         </div>
                     </label>
+
+                    <label className={styles.statusOption}>
+                        <input
+                            type="checkbox"
+                            name="isUnlimitedStock"
+                            checked={formData.isUnlimitedStock}
+                            onChange={handleChange}
+                        />
+                        <div>
+                            <span className={styles.statusLabel}>무제한 재고</span>
+                            <span className={styles.statusHint}>체크 시 수량 제한 없이 판매됩니다.</span>
+                        </div>
+                    </label>
                 </div>
+
+                {!formData.isUnlimitedStock && (
+                    <div className={styles.formGroup} style={{ marginTop: '1rem' }}>
+                        <label htmlFor="stock" className={styles.label}>
+                            재고 수량 <span className={styles.required}>*</span>
+                        </label>
+                        <input
+                            type="number"
+                            id="stock"
+                            name="stock"
+                            value={formData.stock}
+                            onChange={handleChange}
+                            className={`${styles.input} ${errors.stock ? styles.inputError : ''}`}
+                            placeholder="예: 100"
+                            min="0"
+                        />
+                        {errors.stock && (
+                            <span className={styles.errorText}>{errors.stock}</span>
+                        )}
+                    </div>
+                )}
 
                 {formData.isReservation && (
                     <div className={styles.formGroup} style={{ marginTop: '1rem' }}>

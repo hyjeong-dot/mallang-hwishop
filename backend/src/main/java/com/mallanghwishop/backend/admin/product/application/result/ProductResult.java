@@ -20,6 +20,10 @@ public class ProductResult {
     private final List<ProductImageResult> images;
     private final Boolean isAvailable;
     private final Boolean isSoldOut;
+    private final java.time.LocalDateTime saleStartAt;
+    private final String saleStatus;
+    private final Integer stock;
+    private final Integer maxPerOrder;
     private final Integer sortOrder;
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;

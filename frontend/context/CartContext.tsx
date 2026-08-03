@@ -15,6 +15,8 @@ export interface CartItem {
     image?: string;
     imageSrc?: string;
     selectedOptionNames?: string[];  // 선택한 옵션 이름들
+    stock?: number;
+    maxPerOrder?: number;
 }
 
 interface CartContextType {
@@ -137,9 +139,20 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
             setItems(prev => {
                 const existingItem = prev.find(item => item.id === cartKey);
                 if (existingItem) {
+                    const maxAllowed = Math.min(
+                        newItem.maxPerOrder ?? 2,
+                        newItem.stock !== undefined && newItem.stock !== null ? newItem.stock : Infinity
+                    );
+                    const newQuantity = Math.min(existingItem.quantity + 1, maxAllowed);
+                    
+                    if (existingItem.quantity === maxAllowed) {
+                        toast.error(`최대 구매 가능 수량은 ${maxAllowed}개입니다.`);
+                        return prev;
+                    }
+
                     return prev.map(item =>
                         item.id === cartKey
-                            ? { ...item, quantity: item.quantity + 1 }
+                            ? { ...item, quantity: newQuantity }
                             : item
                     );
                 }
@@ -168,6 +181,20 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
     const updateQuantity = async (id: string, quantity: number) => {
         if (quantity < 1) return;
+        
+        const itemToUpdate = items.find(item => item.id === id);
+        if (itemToUpdate) {
+            const maxAllowed = Math.min(
+                itemToUpdate.maxPerOrder ?? 2,
+                itemToUpdate.stock !== undefined && itemToUpdate.stock !== null ? itemToUpdate.stock : Infinity
+            );
+            
+            if (quantity > maxAllowed) {
+                toast.error(`최대 구매 가능 수량은 ${maxAllowed}개입니다.`);
+                quantity = maxAllowed;
+            }
+        }
+
         setItems(prev => prev.map(item => item.id === id ? { ...item, quantity } : item));
         
         if (user) {

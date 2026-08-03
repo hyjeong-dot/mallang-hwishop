@@ -48,6 +48,11 @@ public class ProductPersistenceAdapter implements LoadProductPort, SaveProductPo
     }
 
     @Override
+    public Optional<Product> findAvailableByIdWithLock(Long id) {
+        return repository.findAvailableByIdWithLock(id).map(ProductJpaEntity::toDomain);
+    }
+
+    @Override
     public Optional<Product> findAvailableBySlug(String slug) {
         return repository.findBySlugAndIsAvailableTrue(slug).map(ProductJpaEntity::toDomain);
     }

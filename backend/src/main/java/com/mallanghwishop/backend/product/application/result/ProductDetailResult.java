@@ -22,6 +22,8 @@ public class ProductDetailResult {
     private Boolean isAvailable;
     private java.time.LocalDateTime saleStartAt;
     private String saleStatus;
+    private Integer stock;
+    private Integer maxPerOrder;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

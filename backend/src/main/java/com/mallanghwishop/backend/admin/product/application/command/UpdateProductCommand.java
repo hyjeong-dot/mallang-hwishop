@@ -17,4 +17,6 @@ public class UpdateProductCommand {
     private final Boolean isSoldOut;
     private final Integer sortOrder;
     private final java.time.LocalDateTime saleStartAt;
+    private final Integer stock;
+    private final Integer maxPerOrder;
 }

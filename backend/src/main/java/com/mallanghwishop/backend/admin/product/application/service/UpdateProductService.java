@@ -36,8 +36,10 @@ public class UpdateProductService implements UpdateProductUseCase {
         product.setCategoryId(command.getCategoryId());
         product.setIsAvailable(command.getIsAvailable());
         product.setIsSoldOut(command.getIsSoldOut());
-        product.setSortOrder(command.getSortOrder());
+        product.setSortOrder(command.getSortOrder() != null ? command.getSortOrder() : 0);
         product.setSaleStartAt(command.getSaleStartAt());
+        product.setStock(command.getStock());
+        product.setMaxPerOrder(command.getMaxPerOrder());
 
         // 예약 판매 상태 갱신 로직
         if (command.getSaleStartAt() != null && command.getSaleStartAt().isAfter(java.time.LocalDateTime.now())) {

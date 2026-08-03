@@ -34,12 +34,11 @@ public class Product {
 
     private Integer sortOrder;
 
-    private LocalDateTime saleStartAt;
-
+    private java.time.LocalDateTime saleStartAt;
     private SaleStatus saleStatus;
-
+    private Integer stock;
+    private Integer maxPerOrder;
     private LocalDateTime createdAt;
-
     private LocalDateTime updatedAt;
 
     public void initialize() {

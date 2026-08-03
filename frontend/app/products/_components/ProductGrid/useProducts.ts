@@ -13,6 +13,8 @@ export interface ProductResponse {
     isSoldOut: boolean;
     saleStartAt?: string;
     saleStatus?: string;
+    stock?: number;
+    maxPerOrder?: number;
 }
 
 export interface ProductListResponse {

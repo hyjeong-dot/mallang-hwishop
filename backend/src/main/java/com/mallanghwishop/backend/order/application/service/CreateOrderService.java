@@ -25,6 +25,7 @@ public class CreateOrderService implements CreateOrderUseCase {
 
     private final OrderPort orderPort;
     private final LoadProductPort loadProductPort;
+    private final com.mallanghwishop.backend.product.application.port.out.SaveProductPort saveProductPort;
     private final LoadMemberPort loadMemberPort;
 
     private final com.mallanghwishop.backend.admin.cafe.application.port.in.GetCafeSettingsUseCase getCafeSettingsUseCase;
@@ -50,8 +51,15 @@ public class CreateOrderService implements CreateOrderUseCase {
                 .build();
 
         command.getItems().forEach(itemCmd -> {
-            Product product = loadProductPort.findAvailableById(itemCmd.getProductId())
-                    .orElseThrow(() -> new IllegalArgumentException("상품을 찾을 수 없습니다: " + itemCmd.getProductId()));
+            Product product = loadProductPort.findAvailableByIdWithLock(itemCmd.getProductId())
+                    .orElseThrow(() -> new IllegalArgumentException("상품을 찾을 수 없거나 판매가 중지되었습니다: " + itemCmd.getProductId()));
+
+            if (product.getMaxPerOrder() != null && itemCmd.getQuantity() > product.getMaxPerOrder()) {
+                throw new IllegalStateException(product.getKorName() + "의 최대 주문 가능 수량은 " + product.getMaxPerOrder() + "개입니다.");
+            }
+
+            product.decreaseStock(itemCmd.getQuantity());
+            saveProductPort.save(product);
 
             // 옵션 포함 단가가 전달되면 사용, 없으면 상품 기본가
             int price = product.getPrice();

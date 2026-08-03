@@ -67,6 +67,8 @@ public class GetProductListService implements GetProductListUseCase {
                     .isSoldOut(product.getIsSoldOut() || product.getSaleStatus() == com.mallanghwishop.backend.product.domain.model.SaleStatus.SOLD_OUT)
                     .saleStartAt(product.getSaleStartAt())
                     .saleStatus(product.getSaleStatus() != null ? product.getSaleStatus().name() : "ON_SALE")
+                    .stock(product.getStock())
+                    .maxPerOrder(product.getMaxPerOrder())
                     .build();
         }).collect(Collectors.toList());
 

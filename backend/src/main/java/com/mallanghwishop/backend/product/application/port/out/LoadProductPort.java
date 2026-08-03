@@ -13,6 +13,7 @@ public interface LoadProductPort {
     List<Product> searchAvailable(String searchQuery);
     List<Product> searchAvailableByCategoryId(Long categoryId, String searchQuery);
     Optional<Product> findAvailableById(Long id);
+    Optional<Product> findAvailableByIdWithLock(Long id);
     Optional<Product> findAvailableBySlug(String slug);
     Optional<Product> findById(Long id);
     List<Product> findAll();

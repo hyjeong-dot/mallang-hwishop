@@ -57,6 +57,12 @@ public class ProductJpaEntity {
     @Enumerated(EnumType.STRING)
     private SaleStatus saleStatus;
 
+    @Column(name = "stock")
+    private Integer stock;
+
+    @Column(name = "max_per_order")
+    private Integer maxPerOrder;
+
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
@@ -103,6 +109,8 @@ public class ProductJpaEntity {
                 .sortOrder(sortOrder)
                 .saleStartAt(saleStartAt)
                 .saleStatus(saleStatus)
+                .stock(stock)
+                .maxPerOrder(maxPerOrder)
                 .createdAt(createdAt)
                 .updatedAt(updatedAt)
                 .build();
@@ -122,6 +130,8 @@ public class ProductJpaEntity {
                 .sortOrder(product.getSortOrder())
                 .saleStartAt(product.getSaleStartAt())
                 .saleStatus(product.getSaleStatus())
+                .stock(product.getStock())
+                .maxPerOrder(product.getMaxPerOrder())
                 .createdAt(product.getCreatedAt())
                 .updatedAt(product.getUpdatedAt())
                 .build();

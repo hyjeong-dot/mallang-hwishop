@@ -199,7 +199,9 @@ export default function ProductDetailInfo({ slug }: ProductDetailInfoProps) {
                             engName: product.engName,
                             price: product.price,
                             image: product.imageSrc,
-                            imageSrc: product.imageSrc
+                            imageSrc: product.imageSrc,
+                            stock: product.stock,
+                            maxPerOrder: product.maxPerOrder
                         });
                         setIsCartConfirmModalOpen(true);
                     }}

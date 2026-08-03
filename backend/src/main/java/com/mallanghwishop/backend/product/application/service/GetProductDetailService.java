@@ -68,6 +68,8 @@ public class GetProductDetailService implements GetProductDetailUseCase {
                 .isAvailable(product.getIsAvailable())
                 .saleStartAt(product.getSaleStartAt())
                 .saleStatus(product.getSaleStatus() != null ? product.getSaleStatus().name() : "ON_SALE")
+                .stock(product.getStock())
+                .maxPerOrder(product.getMaxPerOrder())
                 .createdAt(product.getCreatedAt())
                 .updatedAt(product.getUpdatedAt())
                 .build();

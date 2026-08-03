@@ -26,6 +26,8 @@ public class Product {
     private Integer sortOrder;
     private LocalDateTime saleStartAt;
     private SaleStatus saleStatus;
+    private Integer stock;
+    private Integer maxPerOrder;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -51,6 +53,21 @@ public class Product {
 
     public void markSoldOut() {
         this.isSoldOut = true;
+    }
+
+    public void decreaseStock(int quantity) {
+        if (this.stock == null) {
+            // 무제한 재고
+            return;
+        }
+        if (this.stock < quantity) {
+            throw new IllegalStateException("재고가 부족합니다. 남은 수량: " + this.stock);
+        }
+        this.stock -= quantity;
+        if (this.stock == 0) {
+            this.saleStatus = SaleStatus.SOLD_OUT;
+            this.isSoldOut = true;
+        }
     }
 
     public void markAvailable() {
