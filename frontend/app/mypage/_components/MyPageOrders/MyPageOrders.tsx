@@ -149,7 +149,7 @@ export default function MyPageOrders() {
             {orders.length === 0 ? (
                 <div className={styles.emptyState}>
                     아직 주문하신 내역이 없어요. <br />
-                    <Link href="/products" className={styles.productLink}>맛있는 커피 보러 가기 ☕</Link>
+                    <Link href="/products" className={styles.productLink}> 상품 보러 가기 </Link>
                 </div>
             ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1rem' }}>

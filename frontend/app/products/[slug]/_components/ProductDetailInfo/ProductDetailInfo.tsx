@@ -232,7 +232,7 @@ export default function ProductDetailInfo({ slug }: ProductDetailInfoProps) {
                 isOpen={isLoginModalOpen}
                 onClose={() => setIsLoginModalOpen(false)}
                 title="로그인이 필요해요 🎀"
-                description="말랑이가 사장님을 기다리고 있어요! 로그인하고 맛있는 상품를 주문하시겠어요?"
+                description="말랑이가 사장님을 기다리고 있어요! 로그인하고 상품를 주문하시겠어요?"
                 confirmText="로그인하러 가기"
                 cancelText="나중에 할게요"
                 onConfirm={() => router.push('/login')}

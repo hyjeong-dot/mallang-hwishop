@@ -72,9 +72,9 @@ export default function CartDrawer() {
                         {items.length === 0 ? (
                             <div className={styles.emptyCart}>
                                 <div className={styles.emptyIcon}>🍮</div>
-                                <p>장바구니가 비어있어요.<br />말랑이이 기다리고 있어요!</p>
+                                <p>장바구니가 비어있어요.<br />말랑이가 기다리고 있어요!</p>
                                 <Link 
-                                    href="/menus" 
+                                    href="/products" 
                                     className={styles.browseBtn}
                                     onClick={() => setCartOpen(false)}
                                 >
@@ -145,7 +145,7 @@ export default function CartDrawer() {
                 isOpen={isLoginModalOpen}
                 onClose={() => setLoginModalOpen(false)}
                 title="로그인이 필요해요 🎀"
-                description="말랑이가 사장님을 기다리고 있어요! 로그인하고 맛있는 상품를 주문하시겠어요?"
+                description="말랑이가 사장님을 기다리고 있어요! 로그인하고 상품를 주문하시겠어요?"
                 confirmText="로그인하러 가기"
                 cancelText="나중에 할게요"
                 onConfirm={() => {

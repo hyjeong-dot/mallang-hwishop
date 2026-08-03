@@ -165,7 +165,7 @@ export default function CategoriesPage() {
                                 className={styles.modalInput}
                                 value={inputName}
                                 onChange={(e) => setInputName(e.target.value)}
-                                placeholder="예: 커피, 음료, 디저트"
+                                placeholder="예: 슬라임, 슬랑이, 왁뿌"
                                 autoFocus
                                 onKeyDown={(e) => e.key === 'Enter' && handleSave()}
                             />
