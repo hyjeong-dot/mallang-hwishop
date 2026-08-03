@@ -35,7 +35,7 @@ export default function OrderCard({ order, onUpdateStatus }: OrderCardProps) {
                             📅 {formatDate(order.createdAt)}
                         </span>
                         <span className={styles.headerMeta}>
-                            {order.orderType === 'TOGO' ? '포장' : '매장'}
+                            배송
                         </span>
                     </div>
                     <div className={styles.headerRight}>
@@ -112,6 +112,17 @@ export default function OrderCard({ order, onUpdateStatus }: OrderCardProps) {
                                         <div className={styles.infoValue}>{order.requestMemo}</div>
                                     </div>
                                 )}
+                                <div className={styles.infoGroup}>
+                                    <span className={styles.infoLabel}>📞 연락처</span>
+                                    <div className={styles.infoValue}>{order.phoneNumber}</div>
+                                </div>
+                                <div className={styles.infoGroup}>
+                                    <span className={styles.infoLabel}>📍 배송지</span>
+                                    <div className={styles.infoValue}>
+                                        {order.recipientName}<br />
+                                        {order.address} {order.detailAddress} ({order.zipcode})
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

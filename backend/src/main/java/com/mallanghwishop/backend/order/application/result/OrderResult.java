@@ -1,7 +1,7 @@
 package com.mallanghwishop.backend.order.application.result;
 
 import com.mallanghwishop.backend.order.domain.model.OrderStatus;
-import com.mallanghwishop.backend.order.domain.model.OrderType;
+
 import lombok.Builder;
 import lombok.Getter;
 
@@ -14,7 +14,11 @@ public class OrderResult {
     private final Long orderId;
     private final String orderUid;
     private final int totalPrice;
-    private final OrderType orderType;
+    private final String recipientName;
+    private final String phoneNumber;
+    private final String zipcode;
+    private final String address;
+    private final String detailAddress;
     private final OrderStatus status;
     private final LocalDateTime createdAt;
     private final List<OrderLineItemResult> items;

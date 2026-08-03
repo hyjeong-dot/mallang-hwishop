@@ -20,7 +20,11 @@ interface OrderResult {
     orderId: number;
     orderUid: string;
     totalPrice: number;
-    orderType: string;
+    recipientName?: string;
+    phoneNumber?: string;
+    zipcode?: string;
+    address?: string;
+    detailAddress?: string;
     status: string;
     createdAt: string;
     items?: OrderLineItem[];
@@ -166,7 +170,7 @@ export default function MyPageOrders() {
                                 <div style={{ fontSize: '0.9rem', color: 'var(--color-text-light)', marginBottom: '0.5rem' }}>
                                     {new Date(order.createdAt).toLocaleDateString()} {new Date(order.createdAt).toLocaleTimeString()}
                                     &nbsp;|&nbsp;
-                                    {order.orderType === 'DINE_IN' ? '매장' : '포장'}
+                                    {order.recipientName} ({order.address} {order.detailAddress})
                                 </div>
                                 {/* 상품 항목 목록 */}
                                 {order.items && order.items.length > 0 && (

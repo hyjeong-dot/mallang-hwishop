@@ -17,7 +17,11 @@ public class AdminOrderResult {
     private final int totalPrice;
     private final String status;
     private final String statusLabel; // For UI display
-    private final String orderType;
+    private final String recipientName;
+    private final String phoneNumber;
+    private final String zipcode;
+    private final String address;
+    private final String detailAddress;
     private final String requestMemo;
     private final List<AdminOrderLineItemResult> items;
     private final LocalDateTime createdAt;

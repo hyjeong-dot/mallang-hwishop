@@ -1,7 +1,6 @@
 package com.mallanghwishop.backend.order.adapter.out.persistence.entity;
 
 import com.mallanghwishop.backend.order.domain.model.OrderStatus;
-import com.mallanghwishop.backend.order.domain.model.OrderType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,9 +27,20 @@ public class OrderJpaEntity {
     @Column(name = "total_price", nullable = false)
     private int totalPrice;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "order_type", nullable = false)
-    private OrderType orderType;
+    @Column(name = "recipient_name", nullable = false)
+    private String recipientName;
+
+    @Column(name = "phone_number", nullable = false)
+    private String phoneNumber;
+
+    @Column(name = "zipcode", nullable = false)
+    private String zipcode;
+
+    @Column(name = "address", nullable = false)
+    private String address;
+
+    @Column(name = "detail_address")
+    private String detailAddress;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -94,7 +104,11 @@ public class OrderJpaEntity {
                 .id(order.getId())
                 .memberId(order.getMemberId())
                 .totalPrice(order.getTotalPrice())
-                .orderType(order.getOrderType())
+                .recipientName(order.getRecipientName())
+                .phoneNumber(order.getPhoneNumber())
+                .zipcode(order.getZipcode())
+                .address(order.getAddress())
+                .detailAddress(order.getDetailAddress())
                 .status(order.getStatus())
                 .requestMemo(order.getRequestMemo())
                 .orderUid(order.getOrderUid())
@@ -120,7 +134,11 @@ public class OrderJpaEntity {
                 .id(this.id)
                 .memberId(this.memberId)
                 .totalPrice(this.totalPrice)
-                .orderType(this.orderType)
+                .recipientName(this.recipientName)
+                .phoneNumber(this.phoneNumber)
+                .zipcode(this.zipcode)
+                .address(this.address)
+                .detailAddress(this.detailAddress)
                 .status(this.status)
                 .requestMemo(this.requestMemo)
                 .orderUid(this.orderUid)

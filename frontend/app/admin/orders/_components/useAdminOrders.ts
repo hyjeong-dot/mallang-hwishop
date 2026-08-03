@@ -15,7 +15,11 @@ export interface AdminOrder {
     totalPrice: number;
     status: string;
     statusLabel: string;
-    orderType: string;
+    recipientName: string;
+    phoneNumber: string;
+    zipcode: string;
+    address: string;
+    detailAddress: string;
     requestMemo: string;
     items: AdminOrderItem[];
     createdAt: string;

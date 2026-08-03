@@ -16,7 +16,12 @@ public class Order {
     private Long id;
     private UUID memberId;
     private int totalPrice;
-    private OrderType orderType;
+    private String recipientName;
+    private String phoneNumber;
+    private String zipcode;
+    private String address;
+    private String detailAddress;
+    
     private OrderStatus status;
     private String requestMemo;
     private String orderUid;

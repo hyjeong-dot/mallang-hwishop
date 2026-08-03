@@ -2,7 +2,6 @@ package com.mallanghwishop.backend.order.adapter.in.web.request;
 
 import com.mallanghwishop.backend.order.application.port.in.command.CreateOrderCommand;
 import com.mallanghwishop.backend.order.application.port.in.command.OrderLineItemCommand;
-import com.mallanghwishop.backend.order.domain.model.OrderType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,7 +12,12 @@ import java.util.stream.Collectors;
 @Data
 @NoArgsConstructor
 public class CreateOrderRequest {
-    private String orderType; // DINE_IN or TAKEOUT
+    private String recipientName;
+    private String phoneNumber;
+    private String zipcode;
+    private String address;
+    private String detailAddress;
+    
     private String requestMemo;
     private Long couponId; // nullable
     private Integer pointUsed; // 사용한 적립금
@@ -22,7 +26,11 @@ public class CreateOrderRequest {
     public CreateOrderCommand toCommand(String username) {
         return CreateOrderCommand.builder()
                 .username(username)
-                .orderType(OrderType.valueOf(this.orderType))
+                .recipientName(this.recipientName)
+                .phoneNumber(this.phoneNumber)
+                .zipcode(this.zipcode)
+                .address(this.address)
+                .detailAddress(this.detailAddress)
                 .requestMemo(this.requestMemo)
                 .couponId(this.couponId)
                 .pointUsed(this.pointUsed)

@@ -1,6 +1,5 @@
 package com.mallanghwishop.backend.order.application.port.in.command;
 
-import com.mallanghwishop.backend.order.domain.model.OrderType;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -11,7 +10,12 @@ import java.util.UUID;
 @Builder
 public class CreateOrderCommand {
     private final String username;
-    private final OrderType orderType;
+    private final String recipientName;
+    private final String phoneNumber;
+    private final String zipcode;
+    private final String address;
+    private final String detailAddress;
+    
     private final String requestMemo;
     private final Long couponId; // nullable
     private final Integer pointUsed; // nullable

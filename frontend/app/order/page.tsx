@@ -11,8 +11,8 @@ export default function OrderPage() {
         items,
         totalPrice,
         finalPrice,
-        orderType,
-        setOrderType,
+        shippingInfo,
+        setShippingInfo,
         requestMemo,
         setRequestMemo,
         isSubmitting,
@@ -36,8 +36,8 @@ export default function OrderPage() {
             <div className={styles.content}>
                 {/* 왼쪽 폼 영역 */}
                 <OrderForm
-                    orderType={orderType}
-                    setOrderType={setOrderType}
+                    shippingInfo={shippingInfo}
+                    setShippingInfo={setShippingInfo}
                     requestMemo={requestMemo}
                     setRequestMemo={setRequestMemo}
                 />

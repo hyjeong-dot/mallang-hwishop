@@ -11,6 +11,9 @@ interface User {
     role: string;
     email?: string;
     phoneNumber?: string;
+    zipcode?: string;
+    address?: string;
+    detailAddress?: string;
     currentPoint?: number;
 }
 
@@ -33,12 +36,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         // Check if user is logged in on mount
         const checkAuth = async () => {
             try {
-                const response = await fetch('/api/auth/session');
+                const response = await fetch('/api/auth/me');
                 if (response.ok) {
                     const result = await response.json();
-                    // Backend returns { success: true, data: { username, role, ... } }
+                    // Backend returns { success: true, data: { username, role, address... } }
                     if (result.success && result.data) {
-                        setUser(result.data); // result.data contains id, username, name, role
+                        setUser(result.data); // result.data contains full user info
                     }
                 }
             } catch (error) {

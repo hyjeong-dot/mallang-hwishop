@@ -134,6 +134,71 @@
     display: none;
 }
 
+/* 배송지 폼 */
+.addressForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: #fafafa;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.inputWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.inputIcon {
+    position: absolute;
+    left: 1rem;
+    color: var(--text-muted);
+}
+
+.input {
+    width: 100%;
+    padding: 0.8rem 1rem 0.8rem 2.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-size: 0.95rem;
+    transition: all 0.2s;
+}
+
+.input:focus {
+    border-color: var(--color-primary-600);
+    outline: none;
+    box-shadow: 0 0 0 3px var(--color-primary-100);
+}
+
+.searchAddressBtn {
+    padding: 4px 12px;
+    background: var(--color-primary-600, #FF8BA7);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    box-shadow: 0 2px 6px rgba(255, 139, 167, 0.3);
+}
+
 /* 텍스트 영역 */
 .textarea {
     width: 100%;

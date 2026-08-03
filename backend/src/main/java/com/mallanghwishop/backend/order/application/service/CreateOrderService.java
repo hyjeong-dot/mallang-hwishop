@@ -45,7 +45,11 @@ public class CreateOrderService implements CreateOrderUseCase {
 
         Order order = Order.builder()
                 .memberId(member.getId())
-                .orderType(command.getOrderType())
+                .recipientName(command.getRecipientName())
+                .phoneNumber(command.getPhoneNumber())
+                .zipcode(command.getZipcode())
+                .address(command.getAddress())
+                .detailAddress(command.getDetailAddress())
                 .requestMemo(command.getRequestMemo())
                 .orderUid(orderUid)
                 .status(OrderStatus.PENDING)
@@ -120,7 +124,6 @@ public class CreateOrderService implements CreateOrderUseCase {
                 .orderId(savedOrder.getId())
                 .orderUid(savedOrder.getOrderUid())
                 .totalPrice(savedOrder.getTotalPrice())
-                .orderType(savedOrder.getOrderType())
                 .status(savedOrder.getStatus())
                 .createdAt(savedOrder.getCreatedAt())
                 .build();

@@ -35,7 +35,27 @@ export function useOrder() {
     const [totalPrice, setTotalPrice] = useState(0);
     const [isDirectOrder, setIsDirectOrder] = useState(false);
 
-    const [orderType, setOrderType] = useState<'DINE_IN' | 'TAKEOUT' | null>(null);
+    const [shippingInfo, setShippingInfo] = useState({
+        recipientName: '',
+        phoneNumber: '',
+        zipcode: '',
+        address: '',
+        detailAddress: ''
+    });
+
+    useEffect(() => {
+        if (user) {
+            setShippingInfo(prev => ({
+                ...prev,
+                recipientName: prev.recipientName || user.name || '',
+                phoneNumber: prev.phoneNumber || user.phoneNumber || '',
+                zipcode: prev.zipcode || user.zipcode || '',
+                address: prev.address || user.address || '',
+                detailAddress: prev.detailAddress || user.detailAddress || ''
+            }));
+        }
+    }, [user]);
+
     const [requestMemo, setRequestMemo] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccessModalOpen, setSuccessModalOpen] = useState(false);
@@ -104,8 +124,8 @@ export function useOrder() {
 
     const handleSubmitOrder = async () => {
         if (items.length === 0) return;
-        if (!orderType) {
-            toast.error('매장 이용 방법을 선택해 주세요.');
+        if (!shippingInfo.recipientName || !shippingInfo.phoneNumber || !shippingInfo.zipcode || !shippingInfo.address) {
+            toast.error('배송지 정보를 모두 입력해 주세요.');
             return;
         }
 
@@ -130,7 +150,7 @@ export function useOrder() {
             const orderResult = await fetchAPI('/orders', {
                 method: 'POST',
                 body: JSON.stringify({
-                    orderType,
+                    ...shippingInfo,
                     requestMemo: fullMemo,
                     pointUsed: pointUsed,
                     items: formattedItems
@@ -196,8 +216,8 @@ export function useOrder() {
         items,
         totalPrice,
         finalPrice,
-        orderType,
-        setOrderType,
+        shippingInfo,
+        setShippingInfo,
         requestMemo,
         setRequestMemo,
         isSubmitting,
