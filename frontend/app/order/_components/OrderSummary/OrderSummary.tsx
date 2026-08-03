@@ -1,7 +1,6 @@
 "use client";
 
 import { CartItem } from '@/context/CartContext';
-import { CouponData } from '../useOrder';
 import styles from './OrderSummary.module.css';
 
 interface OrderSummaryProps {
@@ -9,6 +8,7 @@ interface OrderSummaryProps {
     totalPrice: number;
     finalPrice: number;
     isSubmitting: boolean;
+    onSubmit: () => void;
     pointUsed: number;
     onPointChange: (val: number) => void;
     currentPoint: number;
