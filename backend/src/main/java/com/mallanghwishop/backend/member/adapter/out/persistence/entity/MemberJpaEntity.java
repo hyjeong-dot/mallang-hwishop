@@ -5,13 +5,15 @@ import lombok.*;
 import java.util.UUID;
 import com.mallanghwishop.backend.member.domain.model.Member;
 
+import org.springframework.data.domain.Persistable;
+
 @Entity
 @Table(name = "members")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MemberJpaEntity {
+public class MemberJpaEntity implements Persistable<UUID> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -52,6 +54,11 @@ public class MemberJpaEntity {
     @PrePersist
     protected void onCreate() {
         this.createdAt = java.time.LocalDateTime.now();
+    }
+
+    @Override
+    public boolean isNew() {
+        return this.createdAt == null;
     }
 
     public static MemberJpaEntity fromDomain(Member member) {
