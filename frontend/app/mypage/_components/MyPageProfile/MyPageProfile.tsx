@@ -72,6 +72,21 @@ export default function MyPageProfile() {
         setPhoneNumber(formattedValue);
     };
 
+    const handleSearchAddress = () => {
+        if (typeof window !== 'undefined' && (window as any).daum?.Postcode) {
+            new (window as any).daum.Postcode({
+                oncomplete: (data: any) => {
+                    const zonecode = data.zonecode;
+                    const fullAddr = data.roadAddress || data.jibunAddress;
+                    setZipcode(zonecode);
+                    setAddress(`(${zonecode}) ${fullAddr}`);
+                }
+            }).open();
+        } else {
+            toast.error('주소 검색 서비스를 로드하는 중입니다. 잠시 후 다시 시도해 주세요.');
+        }
+    };
+
     const handleSave = async () => {
         // 이름 검증
         if (name.trim().length < 2) {
@@ -220,36 +235,45 @@ export default function MyPageProfile() {
                 </div>
 
                 <div style={{ marginTop: '20px', marginBottom: '10px', fontSize: '14px', fontWeight: 'bold', color: 'var(--gray-700)' }}>
-                    배송지 주소 (선택)
+                    배송지 주소
                 </div>
                 <div className={styles.inputGroup}>
-                    <label className={styles.label}>
-                        <div className={styles.labelWrapper}>
-                            <MapPin size={16} />
-                            <span>우편번호</span>
-                        </div>
-                    </label>
-                    <input
-                        className={styles.input}
-                        type="text"
-                        value={zipcode}
-                        onChange={(e) => setZipcode(e.target.value)}
-                        placeholder="우편번호"
-                    />
-                </div>
-                <div className={styles.inputGroup}>
-                    <label className={styles.label}>
-                        <div className={styles.labelWrapper}>
-                            <MapPin size={16} />
-                            <span>기본 주소</span>
-                        </div>
-                    </label>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                        <label className={styles.label} style={{ margin: 0 }}>
+                            <div className={styles.labelWrapper}>
+                                <MapPin size={16} />
+                                <span>기본 주소</span>
+                            </div>
+                        </label>
+                        <button
+                            type="button"
+                            onClick={handleSearchAddress}
+                            style={{
+                                padding: '4px 12px',
+                                background: 'var(--color-primary-600, #FF8BA7)',
+                                color: '#fff',
+                                border: 'none',
+                                borderRadius: '8px',
+                                fontSize: '12px',
+                                fontWeight: '700',
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '4px',
+                                boxShadow: '0 2px 6px rgba(255, 139, 167, 0.3)'
+                            }}
+                        >
+                            주소 검색
+                        </button>
+                    </div>
                     <input
                         className={styles.input}
                         type="text"
                         value={address}
-                        onChange={(e) => setAddress(e.target.value)}
-                        placeholder="기본 주소"
+                        readOnly
+                        onClick={handleSearchAddress}
+                        placeholder="주소 검색 버튼을 눌러주세요"
+                        style={{ cursor: 'pointer', backgroundColor: '#fafafa' }}
                     />
                 </div>
                 <div className={styles.inputGroup}>
@@ -269,7 +293,7 @@ export default function MyPageProfile() {
                 </div>
 
                 <div style={{ marginTop: '20px', marginBottom: '10px', fontSize: '14px', fontWeight: 'bold', color: 'var(--gray-700)' }}>
-                    환불 계좌 정보 (선택)
+                    환불 계좌 정보
                 </div>
                 <div className={styles.inputGroup}>
                     <label className={styles.label}>

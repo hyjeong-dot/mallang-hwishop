@@ -10,7 +10,8 @@
 
 .loginWrapper {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    padding-top: 4rem;
     gap: 4rem;
     max-width: 1000px;
     width: 100%;
@@ -35,6 +36,8 @@
     flex-direction: column;
     align-items: center;
     gap: 1.5rem;
+    position: sticky;
+    top: 6rem;
 }
 
 .dittoImageWrapper {
@@ -423,10 +426,45 @@
     transition: width 0.3s ease, background-color 0.3s ease;
 }
 
-.strengthLabel {
-    font-size: 0.72rem;
-    font-weight: 700;
-    min-width: 2rem;
-    text-align: right;
+
+/* Signup Specific Layout */
+.signupCard {
+    max-width: 640px !important;
+}
+
+.signupGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 1.2rem;
+}
+
+.fullWidth {
+    grid-column: span 2;
+}
+
+.sectionTitle {
+    grid-column: span 2;
+    margin-top: 0.8rem;
+    margin-bottom: 0.1rem;
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: var(--color-primary-700, #E67A95);
+    border-bottom: 1px dashed var(--color-primary-100, #FFE4E8);
+    padding-bottom: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+@media (max-width: 640px) {
+    .signupGrid {
+        grid-template-columns: 1fr;
+    }
+    .fullWidth {
+        grid-column: span 1;
+    }
+    .sectionTitle {
+        grid-column: span 1;
+    }
 }
 

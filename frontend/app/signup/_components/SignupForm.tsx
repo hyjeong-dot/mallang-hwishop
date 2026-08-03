@@ -4,7 +4,7 @@ import { useState, FormEvent, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { UserPlus, User, Lock, Eye, EyeOff, AlertCircle, Mail, Phone, Smile, CheckSquare, Square, Check, X, MapPin, Building, CreditCard } from 'lucide-react';
+import { UserPlus, User, Lock, Eye, EyeOff, AlertCircle, Mail, Phone, Smile, CheckSquare, Square, Check, X, MapPin, Building, CreditCard, Search } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import toast from 'react-hot-toast';
 import styles from '@/app/login/login.module.css';
@@ -118,7 +118,23 @@ export default function SignupForm() {
         setPhoneNumber(formattedValue);
     };
 
-    const addressValid = zipcode.trim().length > 0 && address.trim().length > 0;
+    const handleSearchAddress = () => {
+        if (typeof window !== 'undefined' && (window as any).daum?.Postcode) {
+            new (window as any).daum.Postcode({
+                oncomplete: (data: any) => {
+                    const zonecode = data.zonecode;
+                    const fullAddr = data.roadAddress || data.jibunAddress;
+                    setZipcode(zonecode);
+                    setAddress(`(${zonecode}) ${fullAddr}`);
+                    document.getElementById('detailAddress')?.focus();
+                }
+            }).open();
+        } else {
+            toast.error('주소 검색 서비스를 로드하는 중입니다. 잠시 후 다시 시도해 주세요.');
+        }
+    };
+
+    const addressValid = address.trim().length > 0;
     const refundValid = refundBank.trim().length > 0 && refundAccount.trim().length > 0 && refundHolder.trim().length > 0;
 
     const allValid = usernameValid && passwordValid && confirmValid && nameValid && emailValid && phoneValid && addressValid && refundValid && termsAgreed;
@@ -184,7 +200,7 @@ export default function SignupForm() {
     };
 
     return (
-        <div className={styles.card}>
+        <div className={`${styles.card} ${styles.signupCard}`}>
             <div className={styles.header}>
                 <h1 className={styles.title}>
                     <div className={styles.titleIcon}>
@@ -206,317 +222,310 @@ export default function SignupForm() {
                         </div>
                     )}
 
-                    {/* 아이디 */}
-                    <div className={styles.inputGroup}>
-                        <label htmlFor="username" className={styles.label}>아이디</label>
-                        <div className={`${styles.inputWrapper} ${getFieldClass('username', usernameValid, username)}`}>
-                            <User size={18} className={styles.inputIcon} />
-                            <input
-                                type="text"
-                                id="username"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                                onBlur={() => markTouched('username')}
-                                className={styles.input}
-                                placeholder="사용할 아이디를 입력하세요"
-                                required
-                                autoComplete="off"
-                            />
+                    <div className={styles.signupGrid}>
+                        {/* 1. 계정 정보 */}
+                        <div className={styles.sectionTitle}>
+                            <span>🔑 계정 정보</span>
                         </div>
-                        {touched.username && username.length > 0 && <ValidationHints hints={usernameHints} />}
-                    </div>
 
-                    {/* 비밀번호 */}
-                    <div className={styles.inputGroup}>
-                        <label htmlFor="password" className={styles.label}>비밀번호</label>
-                        <div className={`${styles.inputWrapper} ${getFieldClass('password', passwordValid, password)}`}>
-                            <Lock size={18} className={styles.inputIcon} />
-                            <input
-                                type={showPassword ? 'text' : 'password'}
-                                id="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                onBlur={() => markTouched('password')}
-                                className={styles.input}
-                                placeholder="비밀번호를 입력하세요"
-                                required
-                            />
-                            <button
-                                type="button"
-                                onClick={() => setShowPassword(!showPassword)}
-                                className={styles.togglePassword}
-                                tabIndex={-1}
-                            >
-                                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                            </button>
+                        {/* 아이디 */}
+                        <div className={styles.inputGroup}>
+                            <label htmlFor="username" className={styles.label}>아이디</label>
+                            <div className={`${styles.inputWrapper} ${getFieldClass('username', usernameValid, username)}`}>
+                                <User size={18} className={styles.inputIcon} />
+                                <input
+                                    type="text"
+                                    id="username"
+                                    value={username}
+                                    onChange={(e) => setUsername(e.target.value)}
+                                    onBlur={() => markTouched('username')}
+                                    className={styles.input}
+                                    placeholder="사용할 아이디"
+                                    required
+                                    autoComplete="off"
+                                />
+                            </div>
+                            {touched.username && username.length > 0 && <ValidationHints hints={usernameHints} />}
                         </div>
-                        {password.length > 0 && (
-                            <>
-                                <div className={styles.strengthBar}>
-                                    <div className={styles.strengthTrack}>
-                                        <div
-                                            className={styles.strengthFill}
-                                            style={{ width: `${strength.percent}%`, backgroundColor: strength.color }}
-                                        />
+
+                        {/* 이름 */}
+                        <div className={styles.inputGroup}>
+                            <label htmlFor="name" className={styles.label}>이름</label>
+                            <div className={`${styles.inputWrapper} ${getFieldClass('name', nameValid, name)}`}>
+                                <Smile size={18} className={styles.inputIcon} />
+                                <input
+                                    type="text"
+                                    id="name"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    onBlur={() => markTouched('name')}
+                                    className={styles.input}
+                                    placeholder="이름 입력"
+                                    required
+                                />
+                            </div>
+                            {touched.name && name.length > 0 && <ValidationHints hints={nameHints} />}
+                        </div>
+
+                        {/* 비밀번호 */}
+                        <div className={styles.inputGroup}>
+                            <label htmlFor="password" className={styles.label}>비밀번호</label>
+                            <div className={`${styles.inputWrapper} ${getFieldClass('password', passwordValid, password)}`}>
+                                <Lock size={18} className={styles.inputIcon} />
+                                <input
+                                    type={showPassword ? 'text' : 'password'}
+                                    id="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    onBlur={() => markTouched('password')}
+                                    className={styles.input}
+                                    placeholder="비밀번호"
+                                    required
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className={styles.togglePassword}
+                                    tabIndex={-1}
+                                >
+                                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                </button>
+                            </div>
+                            {password.length > 0 && (
+                                <>
+                                    <div className={styles.strengthBar}>
+                                        <div className={styles.strengthTrack}>
+                                            <div
+                                                className={styles.strengthFill}
+                                                style={{ width: `${strength.percent}%`, backgroundColor: strength.color }}
+                                            />
+                                        </div>
+                                        <span className={styles.strengthLabel} style={{ color: strength.color }}>
+                                            {strength.label}
+                                        </span>
                                     </div>
-                                    <span className={styles.strengthLabel} style={{ color: strength.color }}>
-                                        {strength.label}
-                                    </span>
-                                </div>
-                                <ValidationHints hints={passwordHints} />
-                            </>
-                        )}
-                    </div>
-
-                    {/* 비밀번호 확인 */}
-                    <div className={styles.inputGroup}>
-                        <label htmlFor="confirmPassword" className={styles.label}>비밀번호 확인</label>
-                        <div className={`${styles.inputWrapper} ${getFieldClass('confirmPassword', confirmValid, confirmPassword)}`}>
-                            <Lock size={18} className={styles.inputIcon} />
-                            <input
-                                type={showPassword ? 'text' : 'password'}
-                                id="confirmPassword"
-                                value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                                onBlur={() => markTouched('confirmPassword')}
-                                className={styles.input}
-                                placeholder="비밀번호를 다시 입력하세요"
-                                required
-                            />
+                                    <ValidationHints hints={passwordHints} />
+                                </>
+                            )}
                         </div>
-                        {touched.confirmPassword && confirmPassword.length > 0 && <ValidationHints hints={confirmHints} />}
-                    </div>
 
-                    {/* 이름 */}
-                    <div className={styles.inputGroup}>
-                        <label htmlFor="name" className={styles.label}>이름</label>
-                        <div className={`${styles.inputWrapper} ${getFieldClass('name', nameValid, name)}`}>
-                            <Smile size={18} className={styles.inputIcon} />
-                            <input
-                                type="text"
-                                id="name"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                onBlur={() => markTouched('name')}
-                                className={styles.input}
-                                placeholder="이름을 입력하세요"
-                                required
-                            />
+                        {/* 비밀번호 확인 */}
+                        <div className={styles.inputGroup}>
+                            <label htmlFor="confirmPassword" className={styles.label}>비밀번호 확인</label>
+                            <div className={`${styles.inputWrapper} ${getFieldClass('confirmPassword', confirmValid, confirmPassword)}`}>
+                                <Lock size={18} className={styles.inputIcon} />
+                                <input
+                                    type={showPassword ? 'text' : 'password'}
+                                    id="confirmPassword"
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    onBlur={() => markTouched('confirmPassword')}
+                                    className={styles.input}
+                                    placeholder="비밀번호 재입력"
+                                    required
+                                />
+                            </div>
+                            {touched.confirmPassword && confirmPassword.length > 0 && <ValidationHints hints={confirmHints} />}
                         </div>
-                        {touched.name && name.length > 0 && <ValidationHints hints={nameHints} />}
-                    </div>
 
-                    {/* 이메일 */}
-                    <div className={styles.inputGroup}>
-                        <label htmlFor="email" className={styles.label}>이메일</label>
-                        <div className={`${styles.inputWrapper} ${getFieldClass('email', emailValid, email)}`}>
-                            <Mail size={18} className={styles.inputIcon} />
-                            <input
-                                type="email"
-                                id="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                onBlur={() => markTouched('email')}
-                                className={styles.input}
-                                placeholder="example@ncafe.com"
-                                required
-                            />
+                        {/* 2. 연락처 & 배송지 주소 */}
+                        <div className={styles.sectionTitle}>
+                            <span>📱 연락처 & 배송지 주소</span>
                         </div>
-                        {touched.email && email.length > 0 && <ValidationHints hints={emailHints} />}
-                    </div>
 
-                    {/* 전화번호 */}
-                    <div className={styles.inputGroup}>
-                        <label htmlFor="phoneNumber" className={styles.label}>휴대폰 번호</label>
-                        <div className={`${styles.inputWrapper} ${getFieldClass('phoneNumber', phoneValid, phoneNumber)}`}>
-                            <Phone size={18} className={styles.inputIcon} />
-                            <input
-                                type="tel"
-                                id="phoneNumber"
-                                value={phoneNumber}
-                                onChange={(e) => { handlePhoneChange(e); markTouched('phoneNumber'); }}
-                                onBlur={() => markTouched('phoneNumber')}
-                                className={styles.input}
-                                placeholder="010-0000-0000"
-                                maxLength={13}
-                                required
-                            />
+                        {/* 이메일 */}
+                        <div className={styles.inputGroup}>
+                            <label htmlFor="email" className={styles.label}>이메일</label>
+                            <div className={`${styles.inputWrapper} ${getFieldClass('email', emailValid, email)}`}>
+                                <Mail size={18} className={styles.inputIcon} />
+                                <input
+                                    type="email"
+                                    id="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    onBlur={() => markTouched('email')}
+                                    className={styles.input}
+                                    placeholder="example@ncafe.com"
+                                    required
+                                />
+                            </div>
+                            {touched.email && email.length > 0 && <ValidationHints hints={emailHints} />}
                         </div>
-                        {touched.phoneNumber && phoneNumber.length > 0 && <ValidationHints hints={phoneHints} />}
-                    </div>
 
-                    <div style={{ marginTop: '20px', marginBottom: '10px', fontSize: '14px', fontWeight: 'bold', color: 'var(--gray-700)' }}>
-                        주소 입력 <span style={{ color: '#e53e3e', fontWeight: 'bold' }}>*</span>
-                    </div>
-                    <div className={styles.inputGroup}>
-                        <label htmlFor="zipcode" className={styles.label}>우편번호 <span style={{ color: '#e53e3e' }}>*</span></label>
-                        <div style={{ display: 'flex', gap: '8px' }}>
-                            <div className={styles.inputWrapper} style={{ flex: 1 }}>
+                        {/* 휴대폰 번호 */}
+                        <div className={styles.inputGroup}>
+                            <label htmlFor="phoneNumber" className={styles.label}>휴대폰 번호</label>
+                            <div className={`${styles.inputWrapper} ${getFieldClass('phoneNumber', phoneValid, phoneNumber)}`}>
+                                <Phone size={18} className={styles.inputIcon} />
+                                <input
+                                    type="tel"
+                                    id="phoneNumber"
+                                    value={phoneNumber}
+                                    onChange={(e) => { handlePhoneChange(e); markTouched('phoneNumber'); }}
+                                    onBlur={() => markTouched('phoneNumber')}
+                                    className={styles.input}
+                                    placeholder="010-0000-0000"
+                                    maxLength={13}
+                                    required
+                                />
+                            </div>
+                            {touched.phoneNumber && phoneNumber.length > 0 && <ValidationHints hints={phoneHints} />}
+                        </div>
+
+                        {/* 기본 주소 */}
+                        <div className={`${styles.inputGroup} ${styles.fullWidth}`}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                                <label htmlFor="address" className={styles.label} style={{ margin: 0 }}>기본 주소</label>
+                                <button
+                                    type="button"
+                                    onClick={handleSearchAddress}
+                                    style={{
+                                        padding: '4px 12px',
+                                        background: 'var(--color-primary-600, #FF8BA7)',
+                                        color: '#fff',
+                                        border: 'none',
+                                        borderRadius: '8px',
+                                        fontSize: '12px',
+                                        fontWeight: '700',
+                                        cursor: 'pointer',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '4px',
+                                        boxShadow: '0 2px 6px rgba(255, 139, 167, 0.3)'
+                                    }}
+                                >
+                                    <Search size={13} /> 주소 검색
+                                </button>
+                            </div>
+                            <div className={styles.inputWrapper} style={{ cursor: 'pointer' }} onClick={handleSearchAddress}>
                                 <MapPin size={18} className={styles.inputIcon} />
                                 <input
                                     type="text"
-                                    id="zipcode"
-                                    value={zipcode}
+                                    id="address"
+                                    value={address}
                                     readOnly
                                     className={styles.input}
-                                    placeholder="주소 검색을 눌러주세요"
+                                    placeholder="주소 검색 버튼을 눌러주세요"
+                                    style={{ cursor: 'pointer', backgroundColor: '#fafafa' }}
                                 />
                             </div>
-                            <button
-                                type="button"
-                                onClick={() => {
-                                    if (typeof window !== 'undefined' && (window as any).daum?.Postcode) {
-                                        new (window as any).daum.Postcode({
-                                            oncomplete: (data: any) => {
-                                                setZipcode(data.zonecode);
-                                                setAddress(data.roadAddress || data.jibunAddress);
-                                                // 상세주소로 포커스
-                                                document.getElementById('detailAddress')?.focus();
-                                            }
-                                        }).open();
-                                    } else {
-                                        toast.error('주소 검색 서비스를 로드하는 중입니다...');
-                                    }
-                                }}
-                                style={{
-                                    padding: '10px 16px',
-                                    background: 'var(--primary)',
-                                    color: '#fff',
-                                    border: 'none',
-                                    borderRadius: '10px',
-                                    fontSize: '13px',
-                                    fontWeight: '600',
-                                    cursor: 'pointer',
-                                    whiteSpace: 'nowrap',
-                                }}
-                            >
-                                주소 검색
-                            </button>
                         </div>
-                    </div>
-                    <div className={styles.inputGroup}>
-                        <label htmlFor="address" className={styles.label}>기본 주소 <span style={{ color: '#e53e3e' }}>*</span></label>
-                        <div className={styles.inputWrapper}>
-                            <MapPin size={18} className={styles.inputIcon} />
-                            <input
-                                type="text"
-                                id="address"
-                                value={address}
-                                readOnly
-                                className={styles.input}
-                                placeholder="주소 검색을 눌러주세요"
-                            />
-                        </div>
-                    </div>
-                    {/* 상세 주소 */}
-                    <div className={styles.inputGroup}>
-                        <label htmlFor="detailAddress" className={styles.label}>상세 주소</label>
-                        <div className={styles.inputWrapper}>
-                            <MapPin size={18} className={styles.inputIcon} />
-                            <input
-                                type="text"
-                                id="detailAddress"
-                                value={detailAddress}
-                                onChange={(e) => setDetailAddress(e.target.value)}
-                                className={styles.input}
-                                placeholder="상세 주소"
-                            />
-                        </div>
-                    </div>
 
-                    <div style={{ marginTop: '20px', marginBottom: '10px', fontSize: '14px', fontWeight: 'bold', color: 'var(--gray-700)' }}>
-                        환불 계좌 정보 <span style={{ color: '#e53e3e', fontWeight: 'bold' }}>*</span>
-                    </div>
-                    {/* 은행 */}
-                    <div className={styles.inputGroup}>
-                        <label htmlFor="refundBank" className={styles.label}>은행명 <span style={{ color: '#e53e3e' }}>*</span></label>
-                        <div className={styles.inputWrapper}>
-                            <Building size={18} className={styles.inputIcon} />
-                            <input
-                                type="text"
-                                id="refundBank"
-                                value={refundBank}
-                                onChange={(e) => setRefundBank(e.target.value)}
-                                className={styles.input}
-                                placeholder="예: 국민은행"
-                                required
-                            />
-                        </div>
-                    </div>
-                    {/* 계좌번호 */}
-                    <div className={styles.inputGroup}>
-                        <label htmlFor="refundAccount" className={styles.label}>계좌번호 <span style={{ color: '#e53e3e' }}>*</span></label>
-                        <div className={styles.inputWrapper}>
-                            <CreditCard size={18} className={styles.inputIcon} />
-                            <input
-                                type="text"
-                                id="refundAccount"
-                                value={refundAccount}
-                                onChange={(e) => setRefundAccount(e.target.value)}
-                                className={styles.input}
-                                placeholder="- 없이 입력"
-                                required
-                            />
-                        </div>
-                    </div>
-                    {/* 예금주 */}
-                    <div className={styles.inputGroup}>
-                        <label htmlFor="refundHolder" className={styles.label}>예금주 <span style={{ color: '#e53e3e' }}>*</span></label>
-                        <div className={styles.inputWrapper}>
-                            <User size={18} className={styles.inputIcon} />
-                            <input
-                                type="text"
-                                id="refundHolder"
-                                value={refundHolder}
-                                onChange={(e) => setRefundHolder(e.target.value)}
-                                className={styles.input}
-                                placeholder="예금주"
-                                required
-                            />
-                        </div>
-                    </div>
-
-                    {/* 약관 동의 */}
-                    <div className={styles.termsGroup}>
-                        <label className={styles.termsLabel}>
-                            <input
-                                type="checkbox"
-                                checked={termsAgreed}
-                                onChange={(e) => setTermsAgreed(e.target.checked)}
-                                className={styles.hiddenCheckbox}
-                            />
-                            <div className={styles.customCheckbox}>
-                                {termsAgreed ? <CheckSquare size={20} color="#FF8BA7" /> : <Square size={20} color="#ddd" />}
-                            </div>
-                            <span className={styles.termsText}>
-                                [필수] 이용약관 및 개인정보 처리방침에 동의합니다.
-                            </span>
-                        </label>
-                    </div>
-
-                    <button
-                        type="submit"
-                        className={styles.submitButton}
-                        disabled={isLoading}
-                    >
-                        {isLoading ? (
-                            <>
-                                <Image
-                                    src="/images/logo.png"
-                                    alt="Loading..."
-                                    width={24}
-                                    height={24}
-                                    className={styles.loadingDitto}
+                        {/* 상세 주소 */}
+                        <div className={`${styles.inputGroup} ${styles.fullWidth}`}>
+                            <label htmlFor="detailAddress" className={styles.label}>상세 주소</label>
+                            <div className={styles.inputWrapper}>
+                                <MapPin size={18} className={styles.inputIcon} />
+                                <input
+                                    type="text"
+                                    id="detailAddress"
+                                    value={detailAddress}
+                                    onChange={(e) => setDetailAddress(e.target.value)}
+                                    className={styles.input}
+                                    placeholder="상세 주소를 입력하세요 (동, 호수 등)"
                                 />
-                                <span>가입 중... 🎀</span>
-                            </>
-                        ) : (
-                            <>
-                                <UserPlus size={20} />
-                                가입하기 🎀
-                            </>
-                        )}
-                    </button>
+                            </div>
+                        </div>
+
+                        {/* 3. 환불 계좌 정보 */}
+                        <div className={styles.sectionTitle}>
+                            <span>💳 환불 계좌 정보</span>
+                        </div>
+
+                        {/* 은행명 */}
+                        <div className={styles.inputGroup}>
+                            <label htmlFor="refundBank" className={styles.label}>은행명</label>
+                            <div className={styles.inputWrapper}>
+                                <Building size={18} className={styles.inputIcon} />
+                                <input
+                                    type="text"
+                                    id="refundBank"
+                                    value={refundBank}
+                                    onChange={(e) => setRefundBank(e.target.value)}
+                                    className={styles.input}
+                                    placeholder="예: 국민은행"
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        {/* 예금주 */}
+                        <div className={styles.inputGroup}>
+                            <label htmlFor="refundHolder" className={styles.label}>예금주</label>
+                            <div className={styles.inputWrapper}>
+                                <User size={18} className={styles.inputIcon} />
+                                <input
+                                    type="text"
+                                    id="refundHolder"
+                                    value={refundHolder}
+                                    onChange={(e) => setRefundHolder(e.target.value)}
+                                    className={styles.input}
+                                    placeholder="예금주 성명"
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        {/* 계좌번호 */}
+                        <div className={`${styles.inputGroup} ${styles.fullWidth}`}>
+                            <label htmlFor="refundAccount" className={styles.label}>계좌번호</label>
+                            <div className={styles.inputWrapper}>
+                                <CreditCard size={18} className={styles.inputIcon} />
+                                <input
+                                    type="text"
+                                    id="refundAccount"
+                                    value={refundAccount}
+                                    onChange={(e) => setRefundAccount(e.target.value)}
+                                    className={styles.input}
+                                    placeholder="- 없이 계좌번호 입력"
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        {/* 약관 동의 */}
+                        <div className={`${styles.termsGroup} ${styles.fullWidth}`}>
+                            <label className={styles.termsLabel}>
+                                <input
+                                    type="checkbox"
+                                    checked={termsAgreed}
+                                    onChange={(e) => setTermsAgreed(e.target.checked)}
+                                    className={styles.hiddenCheckbox}
+                                />
+                                <div className={styles.customCheckbox}>
+                                    {termsAgreed ? <CheckSquare size={20} color="#FF8BA7" /> : <Square size={20} color="#ddd" />}
+                                </div>
+                                <span className={styles.termsText}>
+                                    [필수] 이용약관 및 개인정보 처리방침에 동의합니다.
+                                </span>
+                            </label>
+                        </div>
+
+                        {/* 가입하기 버튼 */}
+                        <button
+                            type="submit"
+                            className={`${styles.submitButton} ${styles.fullWidth}`}
+                            disabled={isLoading}
+                        >
+                            {isLoading ? (
+                                <>
+                                    <Image
+                                        src="/images/logo.png"
+                                        alt="Loading..."
+                                        width={24}
+                                        height={24}
+                                        className={styles.loadingDitto}
+                                    />
+                                    <span>가입 중... 🎀</span>
+                                </>
+                            ) : (
+                                <>
+                                    <UserPlus size={20} />
+                                    가입하기 🎀
+                                </>
+                            )}
+                        </button>
+                    </div>
                 </form>
 
                 <div className={styles.signupPrompt}>

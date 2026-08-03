@@ -51,7 +51,7 @@ export default function Header() {
                             {totalCount > 0 && <span className={styles.cartBadge}>{totalCount}</span>}
                         </button>
                         
-                        <Link href="/menus" className={styles.navLink} onClick={closeMobileMenu}>전체 상품</Link>
+
 
                         <div className={styles.buttonGroup}>
                             {user ? (
@@ -100,7 +100,7 @@ export default function Header() {
                     <button 
                         className={styles.mobileMenuBtn} 
                         onClick={toggleMobileMenu}
-                        aria-label="상품 열기"
+                        aria-label="메뉴 열기"
                     >
                         {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
                     </button>
