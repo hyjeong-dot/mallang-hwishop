@@ -6,7 +6,7 @@ import Image from "next/image";
 import styles from "./MyPageOrders.module.css";
 import { fetchAPI } from "@/lib/api";
 import LoadingCharacter from "@/components/common/LoadingCharacter/LoadingCharacter";
-import Modal from "@/components/common/Modal/Modal";
+import OrderCancelModal from "@/components/common/OrderCancelModal/OrderCancelModal";
 import toast from 'react-hot-toast';
 
 interface OrderLineItem {
@@ -29,6 +29,10 @@ interface OrderResult {
     createdAt: string;
     items?: OrderLineItem[];
     requestMemo?: string;
+    cancelReason?: string;
+    cancelReasonType?: string;
+    trackingCarrier?: string;
+    trackingNumber?: string;
 }
 
 const TOSS_CLIENT_KEY = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY || '';
@@ -92,12 +96,16 @@ export default function MyPageOrders() {
         setIsCancelModalOpen(true);
     };
 
-    const handleConfirmCancel = async () => {
+    const handleConfirmCancel = async (reasonType: string, reasonText: string) => {
         if (orderToCancel === null) return;
         
         try {
             await fetchAPI(`/orders/${orderToCancel}/cancel`, {
-                method: 'PATCH'
+                method: 'PATCH',
+                body: JSON.stringify({
+                    cancelReasonType: reasonType,
+                    cancelReason: reasonType === 'OTHER' ? reasonText : ''
+                })
             });
             toast.success('주문이 취소되었습니다.');
             setOrders(orders.map(o => 
@@ -188,6 +196,25 @@ export default function MyPageOrders() {
                                 <div style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
                                     총 {order.totalPrice.toLocaleString()}원
                                 </div>
+                                {(order.trackingCarrier || order.trackingNumber) && (
+                                    <div style={{ marginTop: '0.5rem', fontSize: '0.9rem', color: 'var(--color-primary-600)' }}>
+                                        📦 송장 번호: {order.trackingCarrier} {order.trackingNumber}
+                                    </div>
+                                )}
+                                {order.status === 'CANCELLED' && order.cancelReasonType && (
+                                    <div style={{ marginTop: '0.5rem', fontSize: '0.9rem', color: 'var(--color-error)' }}>
+                                        <span style={{ fontWeight: 600 }}>취소 사유:</span> {
+                                            order.cancelReasonType === 'OTHER' && order.cancelReason ? order.cancelReason : 
+                                            order.cancelReasonType === 'CHANGE_MIND' ? '단순변심' :
+                                            order.cancelReasonType === 'REORDER_AFTER_ADD' ? '상품 추가 후 재주문' :
+                                            order.cancelReasonType === 'BEFORE_OPEN' ? '오픈시간 전 결제 건' :
+                                            order.cancelReasonType === 'EXCEED_COMBINED' ? '합배송 2건 초과 건' :
+                                            order.cancelReasonType === 'OUT_OF_STOCK' ? '재고부족' :
+                                            order.cancelReasonType === 'OTHER' ? '기타' :
+                                            order.cancelReasonType
+                                        }
+                                    </div>
+                                )}
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: 'flex-end' }}>
                                 <div style={{ fontWeight: 600, fontSize: '1.1rem' }}>
@@ -257,18 +284,20 @@ export default function MyPageOrders() {
                 </div>
             )}
 
-            <Modal
+            <OrderCancelModal
                 isOpen={isCancelModalOpen}
                 onClose={() => {
                     setIsCancelModalOpen(false);
                     setOrderToCancel(null);
                 }}
-                title="주문을 취소할까요? 🥺"
-                description={`말랑이가 준비를 멈추고 주문을 취소합니다.\n정말 취소하시겠어요?`}
-                confirmText="네, 취소할래요"
-                cancelText="아니요 (유지)"
                 onConfirm={handleConfirmCancel}
                 variant="ditto"
+                options={[
+                    { value: 'CHANGE_MIND', label: '단순변심' },
+                    { value: 'REORDER_AFTER_ADD', label: '상품 추가 후 재주문' },
+                    { value: 'OTHER', label: '기타' },
+                ]}
+                allowCustomReason={false}
             />
 
             {/* 리뷰 작성 모달 */}

@@ -65,6 +65,10 @@ async function proxyRequest(req: NextRequest) {
         if (resContentType) {
             responseHeaders.set('Content-Type', resContentType);
         }
+        const resContentDisposition = proxyRes.headers.get('content-disposition');
+        if (resContentDisposition) {
+            responseHeaders.set('Content-Disposition', resContentDisposition);
+        }
 
         return new NextResponse(proxyRes.body, {
             status: proxyRes.status,

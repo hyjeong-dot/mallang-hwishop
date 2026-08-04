@@ -58,6 +58,18 @@ public class OrderJpaEntity {
     @Column(name = "coupon_id")
     private Long couponId;
 
+    @Column(name = "cancel_reason")
+    private String cancelReason;
+
+    @Column(name = "cancel_reason_type")
+    private String cancelReasonType;
+    
+    @Column(name = "tracking_carrier")
+    private String trackingCarrier;
+    
+    @Column(name = "tracking_number")
+    private String trackingNumber;
+
     @Column(nullable = false, columnDefinition = "integer default 0")
     @Builder.Default
     private int pointUsed = 0;
@@ -114,6 +126,10 @@ public class OrderJpaEntity {
                 .orderUid(order.getOrderUid())
                 .paymentKey(order.getPaymentKey())
                 .couponId(order.getCouponId())
+                .cancelReason(order.getCancelReason())
+                .cancelReasonType(order.getCancelReasonType())
+                .trackingCarrier(order.getTrackingCarrier())
+                .trackingNumber(order.getTrackingNumber())
                 .pointUsed(order.getPointUsed())
                 .pointEarned(order.getPointEarned())
                 .discountAmount(order.getDiscountAmount())
@@ -144,6 +160,10 @@ public class OrderJpaEntity {
                 .orderUid(this.orderUid)
                 .paymentKey(this.paymentKey)
                 .couponId(this.couponId)
+                .cancelReason(this.cancelReason)
+                .cancelReasonType(this.cancelReasonType)
+                .trackingCarrier(this.trackingCarrier)
+                .trackingNumber(this.trackingNumber)
                 .pointUsed(this.pointUsed)
                 .pointEarned(this.pointEarned)
                 .discountAmount(this.discountAmount)

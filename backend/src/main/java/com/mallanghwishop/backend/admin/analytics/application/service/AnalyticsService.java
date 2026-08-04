@@ -133,7 +133,7 @@ public class AnalyticsService {
                             .map(m -> m.getKorName())
                             .orElse("삭제된 상품");
                     return PopularMenu.builder()
-                            .menuName(menuName)
+                            .productName(menuName)
                             .totalQuantity(e.getValue()[0])
                             .totalRevenue(e.getValue()[1])
                             .build();

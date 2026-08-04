@@ -4,7 +4,7 @@ import com.mallanghwishop.backend.payment.adapter.in.web.request.ConfirmPaymentR
 import com.mallanghwishop.backend.order.adapter.out.persistence.repository.OrderRepository;
 import com.mallanghwishop.backend.order.domain.model.Order;
 import com.mallanghwishop.backend.order.domain.model.OrderStatus;
-import com.mallanghwishop.backend.admin.cafe.application.port.in.GetCafeSettingsUseCase;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,7 +25,7 @@ import java.util.Map;
 public class PaymentService {
 
     private final OrderRepository orderRepository;
-    private final GetCafeSettingsUseCase getCafeSettingsUseCase;
+
 
     @Value("${toss.secret-key:}")
     private String secretKey;
@@ -35,9 +35,7 @@ public class PaymentService {
     /** 토스페이먼츠 결제 승인 요청 후 주문 상태를 PAID로 변경 */
     @Transactional
     public Map<String, Object> confirmPayment(ConfirmPaymentRequest req) {
-        if (!getCafeSettingsUseCase.getSettings().isOpen()) {
-            throw new IllegalStateException("현재 진행 중인 영업 시간이 아닙니다. 결제를 진행할 수 없습니다.");
-        }
+
 
         if (secretKey == null || secretKey.isBlank()) {
             throw new IllegalStateException("TOSS_SECRET_KEY 환경 변수가 설정되지 않았습니다.");

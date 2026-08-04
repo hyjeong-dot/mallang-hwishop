@@ -27,7 +27,7 @@ public class GetAdminDashboardStatsService implements GetAdminDashboardStatsUseC
     public AdminDashboardStatsResult getStats() {
         LocalDateTime todayStart = LocalDateTime.now().with(LocalTime.MIN);
 
-        long totalMenus = productRepository.count();
+        long totalProducts = productRepository.count();
         
         List<Order> todayOrdersList = orderRepository.findAllByCreatedAtAfter(todayStart).stream()
                 .map(com.mallanghwishop.backend.order.adapter.out.persistence.entity.OrderJpaEntity::toDomain)
@@ -40,7 +40,7 @@ public class GetAdminDashboardStatsService implements GetAdminDashboardStatsUseC
         long todayVisits = memberRepository.countByCreatedAtAfter(todayStart);
 
         return AdminDashboardStatsResult.builder()
-                .totalMenus(totalMenus)
+                .totalProducts(totalProducts)
                 .todayOrders(todayOrders)
                 .todaySales(todaySales)
                 .todayVisits(todayVisits)

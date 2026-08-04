@@ -7,5 +7,5 @@ import java.util.List;
 @Getter
 @Builder
 public class FavoriteProductListResult {
-    private final List<FavoriteProductResult> menus;
+    private final List<FavoriteProductResult> products;
 }

@@ -23,6 +23,10 @@ public class AdminOrderResult {
     private final String address;
     private final String detailAddress;
     private final String requestMemo;
+    private final String cancelReason;
+    private final String cancelReasonType;
+    private final String trackingCarrier;
+    private final String trackingNumber;
     private final List<AdminOrderLineItemResult> items;
     private final LocalDateTime createdAt;
 }

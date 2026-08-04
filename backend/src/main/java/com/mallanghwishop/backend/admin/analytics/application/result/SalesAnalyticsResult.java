@@ -36,7 +36,7 @@ public class SalesAnalyticsResult {
     @Getter
     @Builder
     public static class PopularMenu {
-        private final String menuName;
+        private final String productName;
         private final long totalQuantity;
         private final long totalRevenue;
     }

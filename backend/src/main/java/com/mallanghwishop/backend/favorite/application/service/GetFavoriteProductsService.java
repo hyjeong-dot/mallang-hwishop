@@ -35,7 +35,7 @@ public class GetFavoriteProductsService implements GetFavoriteProductsUseCase {
         List<Favorite> favorites = loadFavoriteListPort.findFavoritesByMemberId(memberId);
         List<Category> categories = loadCategoryPort.findAllActive();
         
-        List<FavoriteProductResult> menus = favorites.stream()
+        List<FavoriteProductResult> products = favorites.stream()
                 .map(favorite -> loadProductPort.findAvailableById(favorite.getProductId()))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
@@ -70,6 +70,6 @@ public class GetFavoriteProductsService implements GetFavoriteProductsUseCase {
                 })
                 .collect(Collectors.toList());
                 
-        return FavoriteProductListResult.builder().menus(menus).build();
+        return FavoriteProductListResult.builder().products(products).build();
     }
 }

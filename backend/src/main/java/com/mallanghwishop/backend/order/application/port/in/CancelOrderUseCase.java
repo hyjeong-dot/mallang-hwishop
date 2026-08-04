@@ -1,5 +1,7 @@
 package com.mallanghwishop.backend.order.application.port.in;
 
+import com.mallanghwishop.backend.order.application.command.CancelOrderCommand;
+
 public interface CancelOrderUseCase {
-    void cancelOrder(Long orderId, String username);
+    void cancelOrder(CancelOrderCommand command);
 }

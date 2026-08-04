@@ -62,17 +62,9 @@ export default function AdminSidebar() {
         {
             group: '주문',
             items: [
-                { href: '/admin/orders', label: '주문 관리', icon: ShoppingBag, badge: stats.todayOrders > 0 ? stats.todayOrders : undefined },
-                { href: '/admin/inquiries', label: '문의 관리', icon: MessageSquarePlus },
+                { href: '/admin/orders', label: '주문 관리', icon: ShoppingBag, badge: stats.todayOrders > 0 ? stats.todayOrders : undefined }
             ],
-        },
-        {
-            group: '설정',
-            items: [
-                { href: '/admin/settings', label: '카페 설정', icon: Settings },
-                { href: '/admin/rag', label: 'RAG 지식 관리', icon: Database },
-            ],
-        },
+        }
     ];
 
     // 권한 체크: admin이 아니면 홈으로 튕겨냄

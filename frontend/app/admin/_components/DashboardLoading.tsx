@@ -8,7 +8,7 @@ export default function DashboardLoading() {
             <div className={styles.loadingSpinner}>
                 <div className={styles.metaSlime}>🫠</div>
             </div>
-            <p className={styles.loadingText}>데이터를 불러오는 중몽... 🪄</p>
+            <p className={styles.loadingText}>데이터를 불러오는 중... 🪄</p>
         </div>
     );
 }

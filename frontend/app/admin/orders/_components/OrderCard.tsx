@@ -3,12 +3,12 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { AdminOrder } from './useAdminOrders';
-import Modal from '@/components/common/Modal/Modal';
+import OrderCancelModal from '@/components/common/OrderCancelModal/OrderCancelModal';
 import styles from '../page.module.css';
 
 interface OrderCardProps {
     order: AdminOrder;
-    onUpdateStatus: (orderId: number, status: string) => void;
+    onUpdateStatus: (orderId: number, status: string, cancelReasonType?: string, cancelReason?: string) => void;
 }
 
 export default function OrderCard({ order, onUpdateStatus }: OrderCardProps) {
@@ -112,6 +112,31 @@ export default function OrderCard({ order, onUpdateStatus }: OrderCardProps) {
                                         <div className={styles.infoValue}>{order.requestMemo}</div>
                                     </div>
                                 )}
+                                {(order.trackingCarrier || order.trackingNumber) && (
+                                    <div className={styles.infoGroup}>
+                                        <span className={styles.infoLabel}>📦 송장 번호</span>
+                                        <div className={styles.infoValue}>
+                                            {order.trackingCarrier} {order.trackingNumber}
+                                        </div>
+                                    </div>
+                                )}
+                                {order.status === 'CANCELLED' && order.cancelReasonType && (
+                                    <div className={styles.infoGroup}>
+                                        <span className={styles.infoLabel} style={{ color: '#dc2626' }}>⊘ 취소 사유</span>
+                                        <div className={styles.infoValue} style={{ color: '#dc2626' }}>
+                                            {
+                                                order.cancelReasonType === 'OTHER' && order.cancelReason ? order.cancelReason : 
+                                                order.cancelReasonType === 'CHANGE_MIND' ? '단순변심' :
+                                                order.cancelReasonType === 'REORDER_AFTER_ADD' ? '상품 추가 후 재주문' :
+                                                order.cancelReasonType === 'BEFORE_OPEN' ? '오픈시간 전 결제 건' :
+                                                order.cancelReasonType === 'EXCEED_COMBINED' ? '합배송 2건 초과 건' :
+                                                order.cancelReasonType === 'OUT_OF_STOCK' ? '재고부족' :
+                                                order.cancelReasonType === 'OTHER' ? '기타' :
+                                                order.cancelReasonType
+                                            }
+                                        </div>
+                                    </div>
+                                )}
                                 <div className={styles.infoGroup}>
                                     <span className={styles.infoLabel}>📞 연락처</span>
                                     <div className={styles.infoValue}>{order.phoneNumber}</div>
@@ -163,16 +188,21 @@ export default function OrderCard({ order, onUpdateStatus }: OrderCardProps) {
                 )}
             </div>
 
-            <Modal
+            <OrderCancelModal
                 isOpen={isCancelOpen}
                 onClose={() => setIsCancelOpen(false)}
                 title="주문 취소"
-                description="정말 이 주문을 취소하시겠몽? 취소된 주문은 되돌릴 수 없어요. (._.) "
-                confirmText="취소하기"
-                cancelText="돌아가기"
+                description="정말 이 주문을 취소하시겠어요? 취소된 주문은 되돌릴 수 없어요. 😢"
                 variant="danger"
-                onConfirm={() => {
-                    onUpdateStatus(order.id, 'CANCELLED');
+                options={[
+                    { value: 'BEFORE_OPEN', label: '오픈시간 전 결제 건' },
+                    { value: 'EXCEED_COMBINED', label: '합배송 2건 초과 건' },
+                    { value: 'OUT_OF_STOCK', label: '재고부족' },
+                    { value: 'OTHER', label: '기타 (작성란)' },
+                ]}
+                allowCustomReason={true}
+                onConfirm={(reasonType, reasonText) => {
+                    onUpdateStatus(order.id, 'CANCELLED', reasonType, reasonText);
                 }}
             />
         </>

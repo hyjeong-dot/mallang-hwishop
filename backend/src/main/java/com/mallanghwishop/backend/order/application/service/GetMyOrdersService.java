@@ -50,7 +50,7 @@ public class GetMyOrdersService implements GetMyOrdersUseCase {
                                 ProductJpaEntity product = productMap.get(item.getProductId());
                                 return OrderLineItemResult.builder()
                                         .productId(item.getProductId())
-                                        .menuName(product != null ? product.getKorName() : "삭제된 상품")
+                                        .productName(product != null ? product.getKorName() : "삭제된 상품")
                                         .price(item.getPrice())
                                         .quantity(item.getQuantity())
                                         .build();
@@ -70,6 +70,10 @@ public class GetMyOrdersService implements GetMyOrdersUseCase {
                             .createdAt(order.getCreatedAt())
                             .items(itemResults)
                             .requestMemo(order.getRequestMemo())
+                            .cancelReason(order.getCancelReason())
+                            .cancelReasonType(order.getCancelReasonType())
+                            .trackingCarrier(order.getTrackingCarrier())
+                            .trackingNumber(order.getTrackingNumber())
                             .build();
                 })
                 .collect(Collectors.toList());

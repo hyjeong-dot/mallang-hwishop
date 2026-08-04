@@ -28,6 +28,11 @@ public class Order {
     private String paymentKey;
     private Long couponId;
     
+    private String cancelReason;
+    private String cancelReasonType;
+    private String trackingCarrier;
+    private String trackingNumber;
+    
     @Builder.Default
     private int pointUsed = 0;
     

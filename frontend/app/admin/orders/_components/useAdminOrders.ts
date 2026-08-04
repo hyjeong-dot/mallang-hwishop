@@ -21,6 +21,10 @@ export interface AdminOrder {
     address: string;
     detailAddress: string;
     requestMemo: string;
+    cancelReason?: string;
+    cancelReasonType?: string;
+    trackingCarrier?: string;
+    trackingNumber?: string;
     items: AdminOrderItem[];
     createdAt: string;
 }
@@ -98,9 +102,13 @@ export function useAdminOrders() {
         };
     }, [fetchOrders]);
 
-    const updateStatus = async (orderId: number, status: string) => {
+    const updateStatus = async (orderId: number, status: string, cancelReasonType?: string, cancelReason?: string) => {
         try {
-            const response = await fetch(`/api/admin/orders/${orderId}/status?status=${status}`, {
+            let url = `/api/admin/orders/${orderId}/status?status=${status}`;
+            if (cancelReasonType) url += `&cancelReasonType=${encodeURIComponent(cancelReasonType)}`;
+            if (cancelReason) url += `&cancelReason=${encodeURIComponent(cancelReason)}`;
+
+            const response = await fetch(url, {
                 method: 'PATCH'
             });
             if (!response.ok) throw new Error('상태 변경 실패');

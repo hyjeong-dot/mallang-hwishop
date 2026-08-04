@@ -13,7 +13,7 @@ export default function LoadingCharacter({ message = '말랑이 로딩 중...', 
         <div className={styles.loadingContainer}>
             <div className={styles.characterWrapper}>
                 <Image
-                    src="/images/banner-mobile.png"
+                    src="/images/scroll-top-3.png"
                     alt="Loading..."
                     width={size}
                     height={size}

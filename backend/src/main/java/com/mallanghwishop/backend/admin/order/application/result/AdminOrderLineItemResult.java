@@ -8,7 +8,7 @@ import java.util.List;
 @Builder
 public class AdminOrderLineItemResult {
     private final Long productId;
-    private final String menuName;
+    private final String productName;
     private final int price;
     private final int quantity;
 }

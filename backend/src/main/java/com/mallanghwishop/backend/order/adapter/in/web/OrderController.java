@@ -45,11 +45,15 @@ public class OrderController {
     }
 
     @PatchMapping("/{orderId}/cancel")
-    public void cancelOrder(@PathVariable Long orderId, Authentication authentication) {
+    public void cancelOrder(@PathVariable Long orderId, @RequestBody(required = false) com.mallanghwishop.backend.order.adapter.in.web.request.CancelOrderRequest request, Authentication authentication) {
         if (authentication == null || !authentication.isAuthenticated() || "anonymousUser".equals(authentication.getPrincipal())) {
             throw new AuthenticationFailedException();
         }
 
-        cancelOrderUseCase.cancelOrder(orderId, authentication.getName());
+        if (request == null) {
+            request = new com.mallanghwishop.backend.order.adapter.in.web.request.CancelOrderRequest();
+        }
+
+        cancelOrderUseCase.cancelOrder(request.toCommand(orderId, authentication.getName()));
     }
 }

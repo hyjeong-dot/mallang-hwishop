@@ -414,3 +414,29 @@
         flex: 1;
     }
 }
+
+.excelActions {
+    display: flex;
+    gap: 8px;
+    align-items: stretch;
+}
+
+.excelBtn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 16px;
+    border: 1.5px solid #16a34a;
+    border-radius: 12px;
+    background: #f0fdf4;
+    color: #16a34a;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 200ms;
+}
+
+.excelBtn:hover {
+    background: #16a34a;
+    color: white;
+}

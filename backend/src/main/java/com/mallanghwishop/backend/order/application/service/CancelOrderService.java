@@ -7,10 +7,13 @@ import com.mallanghwishop.backend.order.application.port.in.CancelOrderUseCase;
 import com.mallanghwishop.backend.order.application.port.out.OrderPort;
 import com.mallanghwishop.backend.order.domain.model.Order;
 import com.mallanghwishop.backend.order.domain.model.OrderStatus;
+import com.mallanghwishop.backend.point.application.port.in.PointUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.mallanghwishop.backend.order.application.command.CancelOrderCommand;
 
 @Slf4j
 @Service
@@ -19,15 +22,16 @@ public class CancelOrderService implements CancelOrderUseCase {
 
     private final OrderPort orderPort;
     private final LoadMemberPort loadMemberPort;
+    private final PointUseCase pointUseCase;
 
 
     @Override
     @Transactional
-    public void cancelOrder(Long orderId, String username) {
-        Member member = loadMemberPort.findByUsername(username)
+    public void cancelOrder(CancelOrderCommand command) {
+        Member member = loadMemberPort.findByUsername(command.getUsername())
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
 
-        Order order = orderPort.findById(orderId)
+        Order order = orderPort.findById(command.getOrderId())
                 .orElseThrow(() -> new IllegalArgumentException("주문을 찾을 수 없습니다."));
 
         if (!order.getMemberId().equals(member.getId())) {
@@ -39,8 +43,17 @@ public class CancelOrderService implements CancelOrderUseCase {
         }
 
         order.setStatus(OrderStatus.CANCELLED);
+        order.setCancelReason(command.getCancelReason());
+        order.setCancelReasonType(command.getCancelReasonType());
         orderPort.saveOrder(order);
 
-        // Phase 2에서 적립금 차감 로직 추가 예정
+        if (order.getPointUsed() > 0) {
+            pointUseCase.earnPoints(
+                    member.getId(),
+                    order.getPointUsed(),
+                    order.getId(),
+                    "주문 취소로 인한 적립금 환불"
+            );
+        }
     }
 }

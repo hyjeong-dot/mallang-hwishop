@@ -1,7 +1,6 @@
 package com.mallanghwishop.backend.global.config;
 
-import com.mallanghwishop.backend.admin.cafe.adapter.out.persistence.CafeSettingsJpaRepository;
-import com.mallanghwishop.backend.admin.cafe.domain.model.CafeSettings;
+
 import com.mallanghwishop.backend.admin.category.adapter.out.persistence.AdminCategoryJpaRepository;
 import com.mallanghwishop.backend.product.adapter.out.persistence.entity.ProductImageJpaEntity;
 import com.mallanghwishop.backend.product.adapter.out.persistence.entity.ProductJpaEntity;
@@ -16,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalTime;
+import java.util.UUID;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
@@ -27,27 +27,17 @@ public class DataInitializer implements CommandLineRunner {
         private final ProductJpaRepository productRepository;
         private final ProductImageJpaRepository productImageRepository;
         private final MemberJpaRepository memberRepository;
-        private final CafeSettingsJpaRepository cafeSettingsRepository;
+
         private final PasswordEncoder passwordEncoder;
 
         @Override
         @Transactional
         public void run(String... args) throws Exception {
-                // 0. 카페 설정 초기화
-                if (cafeSettingsRepository.count() == 0) {
-                        cafeSettingsRepository.save(com.mallanghwishop.backend.admin.cafe.adapter.out.persistence.entity.CafeSettingsJpaEntity.fromDomain(CafeSettings.builder()
-                                        .cafeName("말랑이샵")
-                                        .description("말랑이가 운영하는 귀여운 소품샵에 오신 걸 환영합니다!")
-                                        .openTime(LocalTime.of(9, 0))
-                                        .closeTime(LocalTime.of(22, 0))
-                                        .manualClosed(false)
-                                        .build()));
-                }
-
                 // 1. 관리자 계정 생성 // 데이터가 하나도 없을 때만 실행됩니다.
                 if (memberRepository.count() == 0) {
                         // 관리자 계정
                         memberRepository.save(com.mallanghwishop.backend.member.adapter.out.persistence.entity.MemberJpaEntity.fromDomain(Member.builder()
+                                        .id(UUID.randomUUID())
                                         .username("admin")
                                         .name("관리자")
                                         .password(passwordEncoder.encode("1234"))
@@ -58,6 +48,7 @@ public class DataInitializer implements CommandLineRunner {
 
                         // 테스트 유저 (heo)
                         memberRepository.save(com.mallanghwishop.backend.member.adapter.out.persistence.entity.MemberJpaEntity.fromDomain(Member.builder()
+                                        .id(UUID.randomUUID())
                                         .username("heo")
                                         .name("둥이")
                                         .password(passwordEncoder.encode("1234"))

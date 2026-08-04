@@ -23,5 +23,9 @@ public class OrderResult {
     private final LocalDateTime createdAt;
     private final List<OrderLineItemResult> items;
     private final String requestMemo;
+    private final String cancelReason;
+    private final String cancelReasonType;
+    private final String trackingCarrier;
+    private final String trackingNumber;
 }
 

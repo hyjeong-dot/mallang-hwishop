@@ -29,14 +29,9 @@ public class CreateOrderService implements CreateOrderUseCase {
     private final LoadMemberPort loadMemberPort;
     private final com.mallanghwishop.backend.point.application.port.in.PointUseCase pointUseCase;
 
-    private final com.mallanghwishop.backend.admin.cafe.application.port.in.GetCafeSettingsUseCase getCafeSettingsUseCase;
-
     @Override
     @Transactional
     public OrderResult createOrder(CreateOrderCommand command) {
-        if (!getCafeSettingsUseCase.getSettings().isOpen()) {
-            throw new IllegalStateException("현재 진행 중인 영업 시간이 아닙니다. 내일 이용해 주세요!");
-        }
 
         Member member = loadMemberPort.findByUsername(command.getUsername())
                 .orElseThrow(() -> new IllegalArgumentException("Member not found"));

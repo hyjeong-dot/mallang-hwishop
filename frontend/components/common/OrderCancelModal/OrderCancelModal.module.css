@@ -1,0 +1,100 @@
+.body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.radioGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.radioItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: #f9fafb;
+}
+
+.radioItem:hover {
+    border-color: #c4b5fd;
+    background: #faf5ff;
+}
+
+.radioItemActive {
+    border-color: var(--color-primary, #8b5cf6);
+    background: #faf5ff;
+    box-shadow: 0 0 0 1px var(--color-primary, #8b5cf6);
+}
+
+.radioInput {
+    accent-color: var(--color-primary, #8b5cf6);
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.radioLabel {
+    font-size: 0.95rem;
+    color: #1f2937;
+    cursor: pointer;
+    user-select: none;
+}
+
+.select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #1f2937;
+    outline: none;
+    transition: border-color 0.2s;
+    background: #f9fafb;
+}
+
+.select:focus {
+    border-color: #6366f1;
+    background: white;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+.textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 12px;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #1f2937;
+    outline: none;
+    transition: border-color 0.2s;
+    background: #f9fafb;
+    resize: vertical;
+    font-family: inherit;
+}
+
+.textarea:focus {
+    border-color: #6366f1;
+    background: white;
+}

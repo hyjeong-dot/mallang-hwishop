@@ -7,7 +7,7 @@ import lombok.Getter;
 @Builder
 public class OrderLineItemResult {
     private final Long productId;
-    private final String menuName;   // 상품 한글명
+    private final String productName;   // 상품 한글명
     private final String imageSrc;   // 상품 대표 이미지
     private final int price;         // 구매 당시 단가
     private final int quantity;

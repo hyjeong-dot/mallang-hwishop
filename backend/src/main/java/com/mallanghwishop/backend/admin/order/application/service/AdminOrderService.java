@@ -41,13 +41,39 @@ public class AdminOrderService implements GetAdminOrderListUseCase, UpdateOrderS
     }
 
     @Override
-    public void updateStatus(Long orderId, OrderStatus status) {
+    public void updateStatus(Long orderId, OrderStatus status, String cancelReason, String cancelReasonType) {
         Order order = orderRepository.findById(orderId)
                 .map(com.mallanghwishop.backend.order.adapter.out.persistence.entity.OrderJpaEntity::toDomain)
                 .orElseThrow(() -> new IllegalArgumentException("Order not found with id: " + orderId));
 
         OrderStatus previousStatus = order.getStatus();
         order.setStatus(status);
+        
+        if (status == OrderStatus.CANCELLED) {
+            order.setCancelReason(cancelReason);
+            order.setCancelReasonType(cancelReasonType);
+
+            // 주문 취소 시 사용한 적립금 환불
+            if (order.getPointUsed() > 0 && previousStatus != OrderStatus.CANCELLED) {
+                pointUseCase.earnPoints(
+                        order.getMemberId(),
+                        order.getPointUsed(),
+                        order.getId(),
+                        "주문 취소로 인한 적립금 환불"
+                );
+            }
+
+            // 주문 취소 시 지급된 적립금 회수 (이전 상태가 COMPLETED인 경우)
+            if (previousStatus == OrderStatus.COMPLETED && order.getPointEarned() > 0) {
+                pointUseCase.usePoints(
+                        order.getMemberId(),
+                        order.getPointEarned(),
+                        order.getId(),
+                        "주문 취소로 인한 적립금 회수"
+                );
+            }
+        }
+        
         orderRepository.save(com.mallanghwishop.backend.order.adapter.out.persistence.entity.OrderJpaEntity.fromDomain(order));
 
         // 배송 완료로 상태가 변경되는 경우, 그리고 이전 상태가 완료가 아니었던 경우 적립금 지급
@@ -76,7 +102,7 @@ public class AdminOrderService implements GetAdminOrderListUseCase, UpdateOrderS
                     
                     return AdminOrderLineItemResult.builder()
                             .productId(item.getProductId())
-                            .menuName(menuName)
+                            .productName(menuName)
                             .price(item.getPrice())
                             .quantity(item.getQuantity())
                             .build();
@@ -97,6 +123,10 @@ public class AdminOrderService implements GetAdminOrderListUseCase, UpdateOrderS
                 .address(order.getAddress())
                 .detailAddress(order.getDetailAddress())
                 .requestMemo(order.getRequestMemo())
+                .cancelReason(order.getCancelReason())
+                .cancelReasonType(order.getCancelReasonType())
+                .trackingCarrier(order.getTrackingCarrier())
+                .trackingNumber(order.getTrackingNumber())
                 .items(itemResults)
                 .createdAt(order.getCreatedAt())
                 .build();

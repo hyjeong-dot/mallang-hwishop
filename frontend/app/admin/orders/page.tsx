@@ -9,7 +9,7 @@ import DashboardLoading from '../_components/DashboardLoading';
 import styles from './page.module.css';
 
 export default function AdminOrdersPage() {
-    const { orders, isLoading, updateStatus } = useAdminOrders();
+    const { orders, isLoading, updateStatus, refresh } = useAdminOrders();
     const { searchQuery, setSearchQuery, statusFilter, setStatusFilter, filteredOrders } = useOrderFilters(orders);
 
     if (isLoading) return <DashboardLoading />;
@@ -24,6 +24,7 @@ export default function AdminOrdersPage() {
                 statusFilter={statusFilter}
                 onStatusChange={setStatusFilter}
                 resultCount={filteredOrders.length}
+                onExcelUploadSuccess={refresh}
             />
 
             {filteredOrders.length === 0 ? (
