@@ -78,6 +78,9 @@ public class OrderJpaEntity {
     @Builder.Default
     private int pointEarned = 0;
 
+    @Column(name = "delivery_fee", nullable = false)
+    private int deliveryFee;
+
     @Builder.Default
     @Column(name = "discount_amount")
     private Integer discountAmount = 0;
@@ -132,6 +135,7 @@ public class OrderJpaEntity {
                 .trackingNumber(order.getTrackingNumber())
                 .pointUsed(order.getPointUsed())
                 .pointEarned(order.getPointEarned())
+                .deliveryFee(order.getDeliveryFee())
                 .discountAmount(order.getDiscountAmount())
                 .createdAt(order.getCreatedAt())
                 .updatedAt(order.getUpdatedAt())
@@ -166,6 +170,7 @@ public class OrderJpaEntity {
                 .trackingNumber(this.trackingNumber)
                 .pointUsed(this.pointUsed)
                 .pointEarned(this.pointEarned)
+                .deliveryFee(this.deliveryFee)
                 .discountAmount(this.discountAmount)
                 .createdAt(this.createdAt)
                 .updatedAt(this.updatedAt)

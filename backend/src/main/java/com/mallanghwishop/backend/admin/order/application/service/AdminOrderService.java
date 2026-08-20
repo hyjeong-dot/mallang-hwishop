@@ -11,6 +11,7 @@ import com.mallanghwishop.backend.order.adapter.out.persistence.repository.Order
 import com.mallanghwishop.backend.order.domain.model.Order;
 import com.mallanghwishop.backend.order.domain.model.OrderStatus;
 import com.mallanghwishop.backend.point.application.port.in.PointUseCase;
+import com.mallanghwishop.backend.payment.application.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,7 @@ public class AdminOrderService implements GetAdminOrderListUseCase, UpdateOrderS
     private final MemberJpaRepository memberRepository;
     private final ProductJpaRepository productRepository;
     private final PointUseCase pointUseCase;
+    private final PaymentService paymentService;
 
     @Override
     @Transactional(readOnly = true)
@@ -72,6 +74,11 @@ public class AdminOrderService implements GetAdminOrderListUseCase, UpdateOrderS
                         "주문 취소로 인한 적립금 회수"
                 );
             }
+            
+            // Toss 결제 취소 요청
+            if (order.getPaymentKey() != null) {
+                paymentService.cancelPayment(order.getPaymentKey(), cancelReason);
+            }
         }
         
         orderRepository.save(com.mallanghwishop.backend.order.adapter.out.persistence.entity.OrderJpaEntity.fromDomain(order));
@@ -86,6 +93,24 @@ public class AdminOrderService implements GetAdminOrderListUseCase, UpdateOrderS
                         "주문 #" + order.getOrderUid() + " 구매 적립금"
                 );
             }
+        }
+    }
+
+    @Override
+    public void updateTrackingInfo(Long orderId, String trackingCarrier, String trackingNumber) {
+        Order order = orderRepository.findById(orderId)
+                .map(com.mallanghwishop.backend.order.adapter.out.persistence.entity.OrderJpaEntity::toDomain)
+                .orElseThrow(() -> new IllegalArgumentException("Order not found with id: " + orderId));
+        
+        order.setTrackingCarrier(trackingCarrier);
+        order.setTrackingNumber(trackingNumber);
+        orderRepository.save(com.mallanghwishop.backend.order.adapter.out.persistence.entity.OrderJpaEntity.fromDomain(order));
+    }
+
+    @Override
+    public void batchUpdateStatus(List<Long> orderIds, OrderStatus status) {
+        for (Long id : orderIds) {
+            updateStatus(id, status, null, null);
         }
     }
 
@@ -127,6 +152,9 @@ public class AdminOrderService implements GetAdminOrderListUseCase, UpdateOrderS
                 .cancelReasonType(order.getCancelReasonType())
                 .trackingCarrier(order.getTrackingCarrier())
                 .trackingNumber(order.getTrackingNumber())
+                .pointUsed(order.getPointUsed())
+                .pointEarned(order.getPointEarned())
+                .deliveryFee(order.getDeliveryFee())
                 .items(itemResults)
                 .createdAt(order.getCreatedAt())
                 .build();

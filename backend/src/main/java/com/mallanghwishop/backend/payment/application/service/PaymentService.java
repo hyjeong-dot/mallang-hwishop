@@ -31,6 +31,7 @@ public class PaymentService {
     private String secretKey;
 
     private static final String TOSS_CONFIRM_URL = "https://api.tosspayments.com/v1/payments/confirm";
+    private static final String TOSS_CANCEL_URL = "https://api.tosspayments.com/v1/payments/%s/cancel";
 
     /** 토스페이먼츠 결제 승인 요청 후 주문 상태를 PAID로 변경 */
     @Transactional
@@ -98,6 +99,43 @@ public class PaymentService {
         } catch (Exception e) {
             log.error("결제 승인 중 오류 발생", e);
             throw new RuntimeException("결제 처리 중 오류가 발생했습니다.", e);
+        }
+    }
+
+    public void cancelPayment(String paymentKey, String cancelReason) {
+        if (paymentKey == null || paymentKey.isBlank()) {
+            return; // 결제키가 없으면 패스 (예: 포인트 전액결제로 결제모듈을 타지 않은 경우)
+        }
+        if (secretKey == null || secretKey.isBlank()) {
+            log.error("TOSS_SECRET_KEY 환경 변수가 설정되지 않아 토스 결제 취소를 진행할 수 없습니다.");
+            return;
+        }
+
+        try {
+            String authHeader = "Basic "
+                    + Base64.getEncoder().encodeToString((secretKey + ":").getBytes(StandardCharsets.UTF_8));
+            
+            String requestBody = String.format("{\"cancelReason\":\"%s\"}", cancelReason != null ? cancelReason : "주문 취소");
+            
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(String.format(TOSS_CANCEL_URL, paymentKey)))
+                    .header("Authorization", authHeader)
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 200) {
+                log.info("결제 취소 성공: paymentKey={}", paymentKey);
+            } else {
+                log.error("토스 결제 취소 실패: {}", response.body());
+                throw new RuntimeException("결제 취소에 실패했습니다: " + response.body());
+            }
+        } catch (Exception e) {
+            log.error("결제 취소 중 오류 발생", e);
+            throw new RuntimeException("결제 취소 처리 중 오류가 발생했습니다.", e);
         }
     }
 }

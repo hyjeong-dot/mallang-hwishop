@@ -9,11 +9,23 @@ import styles from '../page.module.css';
 interface OrderCardProps {
     order: AdminOrder;
     onUpdateStatus: (orderId: number, status: string, cancelReasonType?: string, cancelReason?: string) => void;
+    onUpdateTrackingInfo: (orderId: number, carrier: string, trackingNumber: string) => void;
+    isSelected: boolean;
+    onToggleSelect: () => void;
 }
 
-export default function OrderCard({ order, onUpdateStatus }: OrderCardProps) {
+export default function OrderCard({ 
+    order, 
+    onUpdateStatus, 
+    onUpdateTrackingInfo,
+    isSelected,
+    onToggleSelect
+}: OrderCardProps) {
     const [isCancelOpen, setIsCancelOpen] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
+    const [trackingCarrier, setTrackingCarrier] = useState(order.trackingCarrier || '');
+    const [trackingNumber, setTrackingNumber] = useState(order.trackingNumber || '');
+    const [isEditingTracking, setIsEditingTracking] = useState(false);
 
     const formatDate = (dateStr: string) => {
         const d = new Date(dateStr);
@@ -29,7 +41,17 @@ export default function OrderCard({ order, onUpdateStatus }: OrderCardProps) {
             <div className={styles.orderCard}>
                 {/* 헤더 행: 주문번호 | 날짜 | 타입 | 상태뱃지 | 접기 */}
                 <div className={styles.cardHeader} onClick={() => setIsExpanded(!isExpanded)}>
-                    <div className={styles.headerLeft}>
+                    <div className={styles.headerLeft} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                        <input 
+                            type="checkbox" 
+                            checked={isSelected}
+                            onChange={(e) => {
+                                e.stopPropagation();
+                                onToggleSelect();
+                            }}
+                            onClick={(e) => e.stopPropagation()}
+                            style={{ width: '18px', height: '18px', cursor: 'pointer' }}
+                        />
                         <span className={styles.orderId}>#{order.orderUid || order.id}</span>
                         <span className={styles.headerMeta}>
                             📅 {formatDate(order.createdAt)}
@@ -112,11 +134,70 @@ export default function OrderCard({ order, onUpdateStatus }: OrderCardProps) {
                                         <div className={styles.infoValue}>{order.requestMemo}</div>
                                     </div>
                                 )}
-                                {(order.trackingCarrier || order.trackingNumber) && (
+                                {(order.trackingCarrier || order.trackingNumber) && !isEditingTracking && (
+                                    <div className={styles.infoGroup}>
+                                        <span className={styles.infoLabel}>📦 송장 번호</span>
+                                        <div className={styles.infoValue} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                            {order.trackingCarrier} {order.trackingNumber}
+                                            <button 
+                                                onClick={(e) => { e.stopPropagation(); setIsEditingTracking(true); }}
+                                                style={{ fontSize: '12px', padding: '2px 8px', borderRadius: '4px', border: '1px solid #d1d5db', background: '#fff', cursor: 'pointer' }}
+                                            >
+                                                수정
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+                                {(!order.trackingCarrier && !order.trackingNumber && !isEditingTracking) && (
                                     <div className={styles.infoGroup}>
                                         <span className={styles.infoLabel}>📦 송장 번호</span>
                                         <div className={styles.infoValue}>
-                                            {order.trackingCarrier} {order.trackingNumber}
+                                            <button 
+                                                onClick={(e) => { e.stopPropagation(); setIsEditingTracking(true); }}
+                                                style={{ fontSize: '12px', padding: '2px 8px', borderRadius: '4px', border: '1px solid #d1d5db', background: '#fff', cursor: 'pointer' }}
+                                            >
+                                                수기 입력
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+                                {isEditingTracking && (
+                                    <div className={styles.infoGroup} onClick={(e) => e.stopPropagation()}>
+                                        <span className={styles.infoLabel}>📦 송장 번호</span>
+                                        <div className={styles.infoValue} style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                                            <input 
+                                                type="text" 
+                                                placeholder="택배사" 
+                                                value={trackingCarrier}
+                                                onChange={(e) => setTrackingCarrier(e.target.value)}
+                                                style={{ width: '80px', padding: '4px 8px', border: '1px solid #d1d5db', borderRadius: '4px' }}
+                                            />
+                                            <input 
+                                                type="text" 
+                                                placeholder="송장번호" 
+                                                value={trackingNumber}
+                                                onChange={(e) => setTrackingNumber(e.target.value)}
+                                                style={{ flex: 1, padding: '4px 8px', border: '1px solid #d1d5db', borderRadius: '4px' }}
+                                            />
+                                            <button 
+                                                onClick={() => {
+                                                    onUpdateTrackingInfo(order.id, trackingCarrier, trackingNumber);
+                                                    setIsEditingTracking(false);
+                                                }}
+                                                style={{ fontSize: '12px', padding: '4px 8px', borderRadius: '4px', border: 'none', background: 'var(--primary-color)', color: '#fff', cursor: 'pointer' }}
+                                            >
+                                                저장
+                                            </button>
+                                            <button 
+                                                onClick={() => {
+                                                    setTrackingCarrier(order.trackingCarrier || '');
+                                                    setTrackingNumber(order.trackingNumber || '');
+                                                    setIsEditingTracking(false);
+                                                }}
+                                                style={{ fontSize: '12px', padding: '4px 8px', borderRadius: '4px', border: '1px solid #d1d5db', background: '#fff', cursor: 'pointer' }}
+                                            >
+                                                취소
+                                            </button>
                                         </div>
                                     </div>
                                 )}
@@ -153,8 +234,25 @@ export default function OrderCard({ order, onUpdateStatus }: OrderCardProps) {
 
                         <div className={styles.cardFooter}>
                             <div className={styles.totalSection}>
-                                <span className={styles.totalLabel}>최종 결제 금액</span>
-                                <span className={styles.totalPrice}>₩{order.totalPrice.toLocaleString()}</span>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', textAlign: 'right', width: '100%' }}>
+                                    <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+                                        상품 금액: ₩{(order.totalPrice - (order.deliveryFee || 0)).toLocaleString()}
+                                    </div>
+                                    {(order.deliveryFee || 0) > 0 && (
+                                        <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+                                            배송비: +₩{(order.deliveryFee || 0).toLocaleString()}
+                                        </div>
+                                    )}
+                                    {(order.pointUsed || 0) > 0 && (
+                                        <div style={{ fontSize: '13px', color: 'var(--color-primary-600)' }}>
+                                            포인트 사용: -₩{(order.pointUsed || 0).toLocaleString()}
+                                        </div>
+                                    )}
+                                    <div style={{ marginTop: '4px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '12px' }}>
+                                        <span className={styles.totalLabel}>최종 결제 금액</span>
+                                        <span className={styles.totalPrice}>₩{order.totalPrice.toLocaleString()}</span>
+                                    </div>
+                                </div>
                             </div>
 
                             <div className={styles.actions}>

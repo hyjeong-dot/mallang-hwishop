@@ -64,6 +64,12 @@ export default function AdminSidebar() {
             items: [
                 { href: '/admin/orders', label: '주문 관리', icon: ShoppingBag, badge: stats.todayOrders > 0 ? stats.todayOrders : undefined }
             ],
+        },
+        {
+            group: '설정',
+            items: [
+                { href: '/admin/settings', label: '상점 설정', icon: Settings }
+            ],
         }
     ];
 

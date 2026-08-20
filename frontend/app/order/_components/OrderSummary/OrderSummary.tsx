@@ -13,6 +13,7 @@ interface OrderSummaryProps {
     onPointChange: (val: number) => void;
     currentPoint: number;
     expectedEarnPoint: number;
+    deliveryFee: number;
 }
 
 export default function OrderSummary({
@@ -24,7 +25,8 @@ export default function OrderSummary({
     pointUsed,
     onPointChange,
     currentPoint,
-    expectedEarnPoint
+    expectedEarnPoint,
+    deliveryFee
 }: OrderSummaryProps) {
     return (
         <div className={styles.summarySection}>
@@ -76,6 +78,11 @@ export default function OrderSummary({
             <div className={styles.totalRow}>
                 <span className={styles.totalLabel}>상품 금액</span>
                 <span className={styles.originalPrice}>{totalPrice.toLocaleString()}원</span>
+            </div>
+
+            <div className={styles.totalRow}>
+                <span className={styles.totalLabel}>배송비</span>
+                <span className={styles.originalPrice}>+{deliveryFee.toLocaleString()}원</span>
             </div>
 
             {pointUsed > 0 && (

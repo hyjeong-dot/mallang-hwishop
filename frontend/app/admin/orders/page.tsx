@@ -9,7 +9,17 @@ import DashboardLoading from '../_components/DashboardLoading';
 import styles from './page.module.css';
 
 export default function AdminOrdersPage() {
-    const { orders, isLoading, updateStatus, refresh } = useAdminOrders();
+    const { 
+        orders, 
+        isLoading, 
+        updateStatus, 
+        updateTrackingInfo,
+        batchUpdateStatus,
+        selectedOrderIds,
+        toggleSelectOrder,
+        toggleSelectAll,
+        refresh 
+    } = useAdminOrders();
     const { searchQuery, setSearchQuery, statusFilter, setStatusFilter, filteredOrders } = useOrderFilters(orders);
 
     if (isLoading) return <DashboardLoading />;
@@ -25,12 +35,21 @@ export default function AdminOrdersPage() {
                 onStatusChange={setStatusFilter}
                 resultCount={filteredOrders.length}
                 onExcelUploadSuccess={refresh}
+                selectedOrderIds={selectedOrderIds}
+                onBatchUpdateStatus={(status) => batchUpdateStatus(Array.from(selectedOrderIds), status)}
             />
 
             {filteredOrders.length === 0 ? (
                 <OrderEmptyState />
             ) : (
-                <OrderList orders={filteredOrders} onUpdateStatus={updateStatus} />
+                <OrderList 
+                    orders={filteredOrders} 
+                    onUpdateStatus={updateStatus} 
+                    onUpdateTrackingInfo={updateTrackingInfo}
+                    selectedOrderIds={selectedOrderIds}
+                    toggleSelectOrder={toggleSelectOrder}
+                    toggleSelectAll={toggleSelectAll}
+                />
             )}
         </div>
     );

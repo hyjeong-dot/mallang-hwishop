@@ -3,6 +3,8 @@ package com.mallanghwishop.backend.order.application.service;
 
 
 import com.mallanghwishop.backend.member.application.port.out.LoadMemberPort;
+import com.mallanghwishop.backend.admin.delivery.application.port.in.GetDeliverySettingsUseCase;
+import com.mallanghwishop.backend.admin.delivery.application.result.DeliverySettingsResult;
 import com.mallanghwishop.backend.member.domain.model.Member;
 import com.mallanghwishop.backend.product.application.port.out.LoadProductPort;
 import com.mallanghwishop.backend.product.domain.model.Product;
@@ -28,6 +30,7 @@ public class CreateOrderService implements CreateOrderUseCase {
     private final com.mallanghwishop.backend.product.application.port.out.SaveProductPort saveProductPort;
     private final LoadMemberPort loadMemberPort;
     private final com.mallanghwishop.backend.point.application.port.in.PointUseCase pointUseCase;
+    private final GetDeliverySettingsUseCase getDeliverySettingsUseCase;
 
     @Override
     @Transactional
@@ -37,6 +40,12 @@ public class CreateOrderService implements CreateOrderUseCase {
                 .orElseThrow(() -> new IllegalArgumentException("Member not found"));
 
         String orderUid = "ORDER-" + System.currentTimeMillis() + "-" + java.util.UUID.randomUUID().toString().substring(0, 8);
+
+        DeliverySettingsResult deliverySettings = getDeliverySettingsUseCase.getSettings();
+        int calculatedDeliveryFee = deliverySettings.getBasicFee();
+        if (command.getZipcode() != null && command.getZipcode().startsWith("63")) {
+            calculatedDeliveryFee += deliverySettings.getJejuExtraFee();
+        }
 
         Order order = Order.builder()
                 .memberId(member.getId())
@@ -48,6 +57,7 @@ public class CreateOrderService implements CreateOrderUseCase {
                 .requestMemo(command.getRequestMemo())
                 .orderUid(orderUid)
                 .status(OrderStatus.PENDING)
+                .deliveryFee(calculatedDeliveryFee)
                 .pointUsed(command.getPointUsed() != null ? command.getPointUsed() : 0)
                 .build();
 

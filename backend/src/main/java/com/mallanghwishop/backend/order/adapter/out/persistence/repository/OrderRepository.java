@@ -14,4 +14,6 @@ public interface OrderRepository extends JpaRepository<OrderJpaEntity, Long> {
     long countByCreatedAtAfter(java.time.LocalDateTime createdAt);
 
     List<OrderJpaEntity> findAllByCreatedAtAfter(java.time.LocalDateTime createdAt);
+
+    List<OrderJpaEntity> findAllByStatusAndCreatedAtBefore(com.mallanghwishop.backend.order.domain.model.OrderStatus status, java.time.LocalDateTime createdAt);
 }

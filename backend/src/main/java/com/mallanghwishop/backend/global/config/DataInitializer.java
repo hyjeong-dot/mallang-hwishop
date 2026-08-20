@@ -9,6 +9,8 @@ import com.mallanghwishop.backend.product.adapter.out.persistence.repository.Pro
 import com.mallanghwishop.backend.member.adapter.out.persistence.MemberJpaRepository;
 import com.mallanghwishop.backend.member.domain.model.Member;
 import com.mallanghwishop.backend.admin.category.domain.model.AdminCategory;
+import com.mallanghwishop.backend.admin.delivery.adapter.out.persistence.DeliverySettingsJpaRepository;
+import com.mallanghwishop.backend.admin.delivery.domain.model.DeliverySettings;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +29,7 @@ public class DataInitializer implements CommandLineRunner {
         private final ProductJpaRepository productRepository;
         private final ProductImageJpaRepository productImageRepository;
         private final MemberJpaRepository memberRepository;
+        private final DeliverySettingsJpaRepository deliverySettingsRepository;
 
         private final PasswordEncoder passwordEncoder;
 
@@ -36,6 +39,13 @@ public class DataInitializer implements CommandLineRunner {
                 // 1. 관리자 계정 생성 // 데이터가 하나도 없을 때만 실행됩니다.
                 if (memberRepository.count() == 0) {
                         // 관리자 계정
+
+                        if (deliverySettingsRepository.count() == 0) {
+                                deliverySettingsRepository.save(com.mallanghwishop.backend.admin.delivery.adapter.out.persistence.entity.DeliverySettingsJpaEntity.fromDomain(DeliverySettings.builder()
+                                                .basicFee(3500)
+                                                .jejuExtraFee(3000)
+                                                .build()));
+                        }
                         memberRepository.save(com.mallanghwishop.backend.member.adapter.out.persistence.entity.MemberJpaEntity.fromDomain(Member.builder()
                                         .id(UUID.randomUUID())
                                         .username("admin")

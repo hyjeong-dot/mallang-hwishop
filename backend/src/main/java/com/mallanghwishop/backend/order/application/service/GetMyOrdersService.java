@@ -74,6 +74,9 @@ public class GetMyOrdersService implements GetMyOrdersUseCase {
                             .cancelReasonType(order.getCancelReasonType())
                             .trackingCarrier(order.getTrackingCarrier())
                             .trackingNumber(order.getTrackingNumber())
+                            .pointUsed(order.getPointUsed())
+                            .pointEarned(order.getPointEarned())
+                            .deliveryFee(order.getDeliveryFee())
                             .build();
                 })
                 .collect(Collectors.toList());

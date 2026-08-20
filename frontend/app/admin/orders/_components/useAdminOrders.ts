@@ -25,6 +25,9 @@ export interface AdminOrder {
     cancelReasonType?: string;
     trackingCarrier?: string;
     trackingNumber?: string;
+    pointUsed?: number;
+    pointEarned?: number;
+    deliveryFee?: number;
     items: AdminOrderItem[];
     createdAt: string;
 }
@@ -32,6 +35,25 @@ export interface AdminOrder {
 export function useAdminOrders() {
     const [orders, setOrders] = useState<AdminOrder[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [selectedOrderIds, setSelectedOrderIds] = useState<Set<number>>(new Set());
+
+    const toggleSelectOrder = (orderId: number) => {
+        const newSelected = new Set(selectedOrderIds);
+        if (newSelected.has(orderId)) {
+            newSelected.delete(orderId);
+        } else {
+            newSelected.add(orderId);
+        }
+        setSelectedOrderIds(newSelected);
+    };
+
+    const toggleSelectAll = (isSelectAll: boolean) => {
+        if (isSelectAll) {
+            setSelectedOrderIds(new Set(orders.map(o => o.id)));
+        } else {
+            setSelectedOrderIds(new Set());
+        }
+    };
 
     const fetchOrders = useCallback(async () => {
         try {
@@ -120,10 +142,47 @@ export function useAdminOrders() {
         }
     };
 
+    const updateTrackingInfo = async (orderId: number, trackingCarrier: string, trackingNumber: string) => {
+        try {
+            const response = await fetch(`/api/admin/orders/${orderId}/tracking`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ trackingCarrier, trackingNumber })
+            });
+            if (!response.ok) throw new Error('송장 정보 수정 실패');
+            toast.success('송장 정보가 수정되었습니다!');
+        } catch (error) {
+            console.error('Update tracking error:', error);
+            toast.error('송장 정보 수정 중 오류가 발생했습니다.');
+        }
+    };
+
+    const batchUpdateStatus = async (orderIds: number[], status: string) => {
+        if (orderIds.length === 0) return;
+        try {
+            const response = await fetch('/api/admin/orders/batch/status', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ orderIds, status })
+            });
+            if (!response.ok) throw new Error('일괄 상태 변경 실패');
+            toast.success('선택한 주문들의 상태가 변경되었습니다!');
+            setSelectedOrderIds(new Set());
+        } catch (error) {
+            console.error('Batch update status error:', error);
+            toast.error('일괄 상태 변경 중 오류가 발생했습니다.');
+        }
+    };
+
     return {
         orders,
         isLoading,
         updateStatus,
+        updateTrackingInfo,
+        batchUpdateStatus,
+        selectedOrderIds,
+        toggleSelectOrder,
+        toggleSelectAll,
         refresh: fetchOrders
     };
 }

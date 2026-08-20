@@ -25,6 +25,9 @@ interface OrderResult {
     zipcode?: string;
     address?: string;
     detailAddress?: string;
+    pointUsed?: number;
+    pointEarned?: number;
+    deliveryFee?: number;
     status: string;
     createdAt: string;
     items?: OrderLineItem[];
@@ -193,8 +196,18 @@ export default function MyPageOrders() {
                                         ))}
                                     </div>
                                 )}
+                                {(order.deliveryFee ?? 0) > 0 && (
+                                    <div style={{ fontSize: '0.9rem', color: 'var(--color-text-light)' }}>
+                                        + 배송비 {(order.deliveryFee ?? 0).toLocaleString()}원
+                                    </div>
+                                )}
+                                {(order.pointUsed ?? 0) > 0 && (
+                                    <div style={{ fontSize: '0.9rem', color: 'var(--color-primary-600)' }}>
+                                        - 포인트 사용 {(order.pointUsed ?? 0).toLocaleString()}원
+                                    </div>
+                                )}
                                 <div style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
-                                    총 {order.totalPrice.toLocaleString()}원
+                                    총 결제금액 {order.totalPrice.toLocaleString()}원
                                 </div>
                                 {(order.trackingCarrier || order.trackingNumber) && (
                                     <div style={{ marginTop: '0.5rem', fontSize: '0.9rem', color: 'var(--color-primary-600)' }}>

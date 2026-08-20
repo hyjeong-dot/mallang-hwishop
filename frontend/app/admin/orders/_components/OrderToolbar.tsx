@@ -21,12 +21,15 @@ interface OrderToolbarProps {
     onStatusChange: (status: string) => void;
     resultCount: number;
     onExcelUploadSuccess: () => void;
+    selectedOrderIds: Set<number>;
+    onBatchUpdateStatus: (status: string) => void;
 }
 
 export default function OrderToolbar({
     searchQuery, onSearchChange,
     statusFilter, onStatusChange,
     resultCount, onExcelUploadSuccess,
+    selectedOrderIds, onBatchUpdateStatus
 }: OrderToolbarProps) {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const activeLabel = STATUS_FILTERS.find(f => f.value === statusFilter)?.label;
@@ -109,6 +112,26 @@ export default function OrderToolbar({
                     🔍 {resultCount}건
                     {statusFilter && ` · ${activeLabel}`}
                     {searchQuery && ` · "${searchQuery}"`}
+                </div>
+            )}
+
+            {selectedOrderIds.size > 0 && (
+                <div className={styles.batchActions} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '12px', background: 'var(--bg-card)', borderRadius: '8px', border: '1px solid var(--border-color)', marginTop: '12px' }}>
+                    <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text-primary)' }}>
+                        선택된 주문 {selectedOrderIds.size}개 상태 일괄 변경:
+                    </span>
+                    <button 
+                        onClick={() => onBatchUpdateStatus('PREPARING')}
+                        style={{ padding: '6px 12px', fontSize: '13px', borderRadius: '6px', border: '1px solid var(--border-color)', background: '#fff', cursor: 'pointer' }}
+                    >
+                        상품 준비 시작
+                    </button>
+                    <button 
+                        onClick={() => onBatchUpdateStatus('COMPLETED')}
+                        style={{ padding: '6px 12px', fontSize: '13px', borderRadius: '6px', border: 'none', background: 'var(--color-success)', color: '#fff', cursor: 'pointer' }}
+                    >
+                        제공 완료
+                    </button>
                 </div>
             )}
         </>

@@ -19,6 +19,9 @@ public class OrderResult {
     private final String zipcode;
     private final String address;
     private final String detailAddress;
+    private int pointUsed;
+    private int pointEarned;
+    private int deliveryFee;
     private final OrderStatus status;
     private final LocalDateTime createdAt;
     private final List<OrderLineItemResult> items;

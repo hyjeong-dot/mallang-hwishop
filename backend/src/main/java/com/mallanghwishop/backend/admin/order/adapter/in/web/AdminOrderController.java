@@ -67,6 +67,27 @@ public class AdminOrderController {
         orderSseEmitters.notify("status-changed");
     }
 
+    @PatchMapping("/{id}/tracking")
+    public ResponseEntity<?> updateTrackingInfo(@PathVariable Long id,
+                                                @RequestBody Map<String, String> request) {
+        String trackingCarrier = request.get("trackingCarrier");
+        String trackingNumber = request.get("trackingNumber");
+        updateOrderStatusUseCase.updateTrackingInfo(id, trackingCarrier, trackingNumber);
+        orderSseEmitters.notify("status-changed");
+        return ResponseEntity.ok(Map.of("success", true, "message", "송장 정보가 수정되었습니다."));
+    }
+
+    @PostMapping("/batch/status")
+    public ResponseEntity<?> batchUpdateStatus(@RequestBody Map<String, Object> request) {
+        List<Integer> orderIdsInt = (List<Integer>) request.get("orderIds");
+        List<Long> orderIds = orderIdsInt.stream().map(Integer::longValue).toList();
+        OrderStatus status = OrderStatus.valueOf((String) request.get("status"));
+        
+        updateOrderStatusUseCase.batchUpdateStatus(orderIds, status);
+        orderSseEmitters.notify("status-changed");
+        return ResponseEntity.ok(Map.of("success", true, "message", "선택한 주문 상태가 일괄 변경되었습니다."));
+    }
+
     /**
      * 관리자 주문 SSE 스트림 구독
      */

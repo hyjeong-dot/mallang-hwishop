@@ -43,6 +43,9 @@ public class Order {
     private Integer discountAmount = 0;
 
     @Builder.Default
+    private int deliveryFee = 0;
+
+    @Builder.Default
     private List<OrderLineItem> items = new ArrayList<>();
 
     private LocalDateTime createdAt;
@@ -56,7 +59,7 @@ public class Order {
     public void calculateTotalPrice() {
         this.totalPrice = items.stream()
                 .mapToInt(item -> item.getPrice() * item.getQuantity())
-                .sum();
+                .sum() + this.deliveryFee;
     }
 
     public void applyDiscount(int discount) {

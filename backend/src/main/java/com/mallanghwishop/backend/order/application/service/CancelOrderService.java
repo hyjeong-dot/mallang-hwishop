@@ -8,10 +8,13 @@ import com.mallanghwishop.backend.order.application.port.out.OrderPort;
 import com.mallanghwishop.backend.order.domain.model.Order;
 import com.mallanghwishop.backend.order.domain.model.OrderStatus;
 import com.mallanghwishop.backend.point.application.port.in.PointUseCase;
+import com.mallanghwishop.backend.payment.application.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 
 import com.mallanghwishop.backend.order.application.command.CancelOrderCommand;
 
@@ -23,6 +26,7 @@ public class CancelOrderService implements CancelOrderUseCase {
     private final OrderPort orderPort;
     private final LoadMemberPort loadMemberPort;
     private final PointUseCase pointUseCase;
+    private final PaymentService paymentService;
 
 
     @Override
@@ -42,10 +46,23 @@ public class CancelOrderService implements CancelOrderUseCase {
             throw new IllegalStateException("결제 대기 또는 결제 완료 상태에서만 취소할 수 있습니다.");
         }
 
+        if (order.getStatus() == OrderStatus.PAID) {
+            LocalDate orderDate = order.getCreatedAt().toLocalDate();
+            LocalDate currentDate = LocalDate.now();
+            if (!orderDate.isEqual(currentDate)) {
+                throw new IllegalStateException("사용자는 결제 당일에만 주문을 취소할 수 있습니다.");
+            }
+        }
+
         order.setStatus(OrderStatus.CANCELLED);
         order.setCancelReason(command.getCancelReason());
         order.setCancelReasonType(command.getCancelReasonType());
         orderPort.saveOrder(order);
+
+        // Toss 결제 취소 요청
+        if (order.getPaymentKey() != null) {
+            paymentService.cancelPayment(order.getPaymentKey(), command.getCancelReason());
+        }
 
         if (order.getPointUsed() > 0) {
             pointUseCase.earnPoints(

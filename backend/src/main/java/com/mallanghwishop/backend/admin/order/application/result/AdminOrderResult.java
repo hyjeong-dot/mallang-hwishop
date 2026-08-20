@@ -22,6 +22,9 @@ public class AdminOrderResult {
     private final String zipcode;
     private final String address;
     private final String detailAddress;
+    private final int pointUsed;
+    private final int pointEarned;
+    private final int deliveryFee;
     private final String requestMemo;
     private final String cancelReason;
     private final String cancelReasonType;

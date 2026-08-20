@@ -22,7 +22,8 @@ export default function OrderPage() {
         pointUsed,
         handlePointChange,
         currentPoint,
-        expectedEarnPoint
+        expectedEarnPoint,
+        deliveryFee
     } = useOrder();
 
     if (isLoading) {
@@ -53,6 +54,7 @@ export default function OrderPage() {
                     onPointChange={handlePointChange}
                     currentPoint={currentPoint}
                     expectedEarnPoint={expectedEarnPoint}
+                    deliveryFee={deliveryFee}
                 />
             </div>
 
