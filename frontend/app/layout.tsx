@@ -26,6 +26,7 @@ export const metadata: Metadata = {
 
 import { HeaderWrapper } from "@/components/layout/HeaderWrapper";
 import Footer from "@/components/layout/Footer";
+import KakaoFloatingButton from "@/components/layout/KakaoFloatingButton";
 
 import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
@@ -46,6 +47,7 @@ export default function RootLayout({
             <HeaderWrapper />
             {children}
             <Footer />
+            <KakaoFloatingButton />
             <ToastProvider />
           </CartProvider>
         </AuthProvider>

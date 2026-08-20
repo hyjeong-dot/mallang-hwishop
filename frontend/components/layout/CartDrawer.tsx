@@ -74,7 +74,7 @@ export default function CartDrawer() {
                                 <div className={styles.emptyIcon}>🍮</div>
                                 <p>장바구니가 비어있어요.<br />말랑이가 기다리고 있어요!</p>
                                 <Link 
-                                    href="/products" 
+                                    href="/" 
                                     className={styles.browseBtn}
                                     onClick={() => setCartOpen(false)}
                                 >

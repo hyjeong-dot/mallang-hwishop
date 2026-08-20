@@ -66,7 +66,7 @@ export default function ProductCard({ product, onLoad }: ProductCardProps) {
     };
 
     return (
-        <Link href={`/products/${product.slug}`} className={`${styles.card} ${product.isSoldOut ? styles.soldOut : ''}`}>
+        <Link href={`/${product.slug}`} className={`${styles.card} ${product.isSoldOut ? styles.soldOut : ''}`}>
             <div className={styles.imageWrapper}>
                 <Image
                     src={imageSrc}

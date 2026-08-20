@@ -39,9 +39,15 @@ export default function Footer() {
     return (
         <footer className={styles.footer}>
             <div className={styles.container}>
-                <div className={styles.footerGrid}>
-                    <div>
-                        <div className={styles.logoArea} style={{ color: '#fff', marginBottom: '1rem' }}>
+                <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center', marginBottom: '2.5rem', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '1.5rem' }}>
+                    <Link href="/terms" className={styles.footerLink}>이용약관</Link>
+                    <Link href="/privacy" className={styles.footerLink}>개인정보처리방침</Link>
+                    <a href="http://www.ftc.go.kr/bizCommPop.do?wrkr_no=123-45-67890" target="_blank" rel="noopener noreferrer" className={styles.footerLink}>사업자정보확인</a>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '3rem' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', minWidth: '300px' }}>
+                        <div className={styles.logoArea} style={{ color: '#fff', marginBottom: 0 }}>
                             <Image
                                 src="/images/logo.png"
                                 alt="Mallang Logo"
@@ -51,66 +57,29 @@ export default function Footer() {
                             />
                             <span>말랑이샵</span>
                         </div>
-                        <p className={styles.footerDesc}>
+                        <p className={styles.footerDesc} style={{ margin: 0 }}>
                             세상에서 가장 귀여운 수제볼 shop
                             <br />
                             말랑말랑한 행복을 선물합니다.
                         </p>
-                        <div className={styles.socialIcons}>
-                            <a href="#" className={styles.socialIcon} aria-label="Instagram">
+                        <div className={styles.socialIcons} style={{ marginTop: '0.5rem' }}>
+                            <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" className={styles.socialIcon} aria-label="Instagram">
                                 <Instagram size={18} />
                             </a>
-                            <a href="#" className={styles.socialIcon} aria-label="Gift">
-                                <Gift size={18} />
-                            </a>
-                            <a href="#" className={styles.socialIcon} aria-label="Heart">
-                                <Heart size={18} />
-                            </a>
                         </div>
                     </div>
 
-                    <div>
-                        <h4 className={styles.footerTitle}>말랑이샵</h4>
-                        <nav className={styles.footerLinks}>
-                            <Link href="/#about" className={styles.footerLink}>샵 소개</Link>
-                            <Link href="/menus" className={styles.footerLink}>상품</Link>
-                            <Link href="/#special" className={styles.footerLink}>즐길거리</Link>
-                        </nav>
-                    </div>
-
-                    <div>
-                        <h4 className={styles.footerTitle}>고객 지원</h4>
-                        <nav className={styles.footerLinks}>
-                            <Link href="#" className={styles.footerLink}>자주 묻는 질문</Link>
-                            <Link href="#" className={styles.footerLink}>예약 문의</Link>
-                            <Link href="#" className={styles.footerLink}>이벤트</Link>
-                        </nav>
-                    </div>
-
-                    <div>
-                        <h4 className={styles.footerTitle}>연락처</h4>
-                        <div className={styles.contactItem}>
-                            <MapPin size={16} />
-                            <span>서울특별시 강남구 테헤란로 123</span>
-                        </div>
-                        <div className={styles.contactItem}>
-                            <Phone size={16} />
-                            <span>02-1234-5678</span>
-                        </div>
-                        <div className={styles.contactItem}>
-                            <Mail size={16} />
-                            <span>hello@mallangshop.kr</span>
-                        </div>
-                        <div className={styles.contactItem}>
-                            <Clock size={16} />
-                            <span>매일 09:00 - 22:00</span>
-                        </div>
+                    <div style={{ flex: 1, fontSize: '0.85rem', color: 'rgba(255,255,255,0.6)', lineHeight: '1.8' }}>
+                        <p>상호명: 말랑이샵 | 대표자: 홍길동 | 개인정보관리책임자: 홍길동 | 전화: 02-1234-5678 | 이메일: hello@mallangshop.kr</p>
+                        <p>주소: 서울특별시 강남구 테헤란로 123 | 사업자등록번호: 123-45-67890 | 통신판매업신고: 제2026-서울강남-0123호 </p>
+                        
+                        <p style={{ marginTop: '1.5rem', fontWeight: 600, color: 'rgba(255,255,255,0.8)', fontSize: '0.95rem' }}>
+                            만 14세 미만의 어린이, 임산부, 호흡기 질환자, 피부가 예민하신 분들은 절대 구매/사용을 금합니다.
+                        </p>
                     </div>
                 </div>
 
-
-
-                <div className={styles.footerBottom}>
+                <div className={styles.footerBottom} style={{ marginTop: '1rem' }}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
                         <Image
                             src="/images/footer-illustration.png"

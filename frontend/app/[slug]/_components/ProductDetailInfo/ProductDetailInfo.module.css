@@ -154,6 +154,38 @@
     line-height: 1.8;
 }
 
+.instagramLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    padding: 0.8rem 1.2rem;
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    color: white;
+    border-radius: 99px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.instagramLink:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(220, 39, 67, 0.3);
+}
+
+.commonInfoSection {
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
+.commonInfoImage {
+    width: 100%;
+    height: auto;
+    border-radius: 1rem;
+    object-fit: cover;
+}
+
 .extraInfo {
     display: flex;
     flex-direction: column;

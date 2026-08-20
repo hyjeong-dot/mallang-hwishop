@@ -179,7 +179,7 @@ export default function AdminSidebar() {
                         <Home size={18} />
                         <span>홈 화면으로</span>
                     </Link>
-                    <Link href="/products" className={styles.switchButton}>
+                    <Link href="/" className={styles.switchButton}>
                         <Coffee size={18} />
                         <span>상품 주문하기</span>
                     </Link>

@@ -55,7 +55,14 @@ const getStatusBadge = (status: string) => {
         default:
             return <span>{status}</span>;
     }
-}
+};
+
+const ORDER_STATUS_STEPS = [
+    { key: 'PENDING', label: '결제대기' },
+    { key: 'PAID', label: '결제완료' },
+    { key: 'PREPARING', label: '배송준비' },
+    { key: 'COMPLETED', label: '배송완료' }
+];
 
 export default function MyPageOrders() {
     const [orders, setOrders] = useState<OrderResult[]>([]);
@@ -164,18 +171,20 @@ export default function MyPageOrders() {
             {orders.length === 0 ? (
                 <div className={styles.emptyState}>
                     아직 주문하신 내역이 없어요. <br />
-                    <Link href="/products" className={styles.productLink}> 상품 보러 가기 </Link>
+                    <Link href="/" className={styles.productLink}> 상품 보러 가기 </Link>
                 </div>
             ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1rem' }}>
                     {orders.map(order => (
                         <div key={order.orderId} style={{ 
                             padding: '1.5rem', 
-                            border: '1px solid var(--color-border)', 
-                            borderRadius: '8px', 
+                            border: '2px solid var(--border-color)', 
+                            borderRadius: '12px', 
                             display: 'flex', 
                             justifyContent: 'space-between',
-                            alignItems: 'center'
+                            alignItems: 'center',
+                            flexWrap: 'wrap',
+                            gap: '1rem'
                         }}>
                             <div style={{ flex: 1 }}>
                                 <div style={{ fontSize: '0.9rem', color: 'var(--color-text-light)', marginBottom: '0.5rem' }}>
@@ -210,8 +219,18 @@ export default function MyPageOrders() {
                                     총 결제금액 {order.totalPrice.toLocaleString()}원
                                 </div>
                                 {(order.trackingCarrier || order.trackingNumber) && (
-                                    <div style={{ marginTop: '0.5rem', fontSize: '0.9rem', color: 'var(--color-primary-600)' }}>
-                                        📦 송장 번호: {order.trackingCarrier} {order.trackingNumber}
+                                    <div style={{ marginTop: '1rem', fontSize: '0.9rem', padding: '0.8rem', background: 'var(--bg-primary)', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                        📦 <span style={{ fontWeight: 600 }}>{order.trackingCarrier}</span> {order.trackingNumber}
+                                        {order.trackingNumber && (
+                                            <a 
+                                                href={`https://tracker.delivery/#/${order.trackingCarrier === 'CJ대한통운' ? 'kr.cjlogistics' : order.trackingCarrier === '우체국택배' ? 'kr.epost' : 'kr.logen'}/${order.trackingNumber}`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                style={{ marginLeft: 'auto', fontSize: '0.8rem', padding: '0.3rem 0.8rem', background: '#fff', border: '1px solid var(--color-primary-100)', borderRadius: '99px', color: 'var(--color-primary-600)', textDecoration: 'none', fontWeight: 600 }}
+                                            >
+                                                배송조회 〉
+                                            </a>
+                                        )}
                                     </div>
                                 )}
                                 {order.status === 'CANCELLED' && order.cancelReasonType && (
@@ -229,8 +248,40 @@ export default function MyPageOrders() {
                                     </div>
                                 )}
                             </div>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: 'flex-end' }}>
-                                <div style={{ fontWeight: 600, fontSize: '1.1rem' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'flex-end', minWidth: '300px' }}>
+                                
+                                {order.status !== 'CANCELLED' && (
+                                    <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between', position: 'relative', marginTop: '0.5rem' }}>
+                                        {/* Background Line */}
+                                        <div style={{ position: 'absolute', top: '12px', left: '10%', right: '10%', height: '2px', background: 'var(--border-color)', zIndex: 0 }} />
+                                        
+                                        {ORDER_STATUS_STEPS.map((step, idx) => {
+                                            const currentIndex = ORDER_STATUS_STEPS.findIndex(s => s.key === order.status);
+                                            const isActive = idx <= currentIndex;
+                                            const isCurrent = idx === currentIndex;
+                                            return (
+                                                <div key={step.key} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', zIndex: 1, gap: '6px' }}>
+                                                    <div style={{ 
+                                                        width: '26px', height: '26px', borderRadius: '50%', 
+                                                        background: isActive ? 'var(--color-primary-600)' : '#fff',
+                                                        border: `2px solid ${isActive ? 'var(--color-primary-600)' : 'var(--border-color)'}`,
+                                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                        color: isActive ? '#fff' : 'transparent',
+                                                        fontSize: '12px', fontWeight: 'bold',
+                                                        boxShadow: isCurrent ? '0 0 0 4px var(--color-primary-100)' : 'none'
+                                                    }}>
+                                                        {isActive ? '✓' : ''}
+                                                    </div>
+                                                    <span style={{ fontSize: '0.8rem', color: isActive ? 'var(--color-primary-700)' : 'var(--text-muted)', fontWeight: isActive ? 700 : 400, whiteSpace: 'nowrap' }}>
+                                                        {step.label}
+                                                    </span>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                )}
+
+                                <div style={{ fontWeight: 600, fontSize: '1.2rem', marginTop: '0.5rem' }}>
                                     {getStatusBadge(order.status)}
                                 </div>
                                 {order.status === 'PENDING' && (

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Settings, LogIn, LogOut, User, UserPlus, Menu, X, ShoppingBag } from "lucide-react";
+import { Settings, LogIn, LogOut, User, UserPlus, Menu, X, ShoppingBag, Instagram } from "lucide-react";
 import Image from "next/image";
 import styles from "./layout.module.css";
 import { useAuth } from "@/context/AuthContext";
@@ -51,7 +51,15 @@ export default function Header() {
                             {totalCount > 0 && <span className={styles.cartBadge}>{totalCount}</span>}
                         </button>
                         
-
+                        <a 
+                            href="https://instagram.com/" 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className={styles.desktopCartBtn}
+                            aria-label="인스타그램"
+                        >
+                            <Instagram size={20} />
+                        </a>
 
                         <div className={styles.buttonGroup}>
                             {user ? (

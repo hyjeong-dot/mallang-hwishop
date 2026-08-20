@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-import { Heart, Share2, Info, ShoppingBag, Coins } from 'lucide-react';
+import { Heart, Share2, Info, ShoppingBag, Coins, Instagram } from 'lucide-react';
 import styles from './ProductDetailInfo.module.css';
 import { useProductDetail } from './useProductDetail';
 import { useAuth } from '@/context/AuthContext';
@@ -199,6 +199,19 @@ export default function ProductDetailInfo({ slug }: ProductDetailInfoProps) {
             <div className={styles.descSection}>
                 <h3 className={styles.sectionTitle}><Info size={16} /> 상품 설명</h3>
                 <p className={styles.description}>{product.description || '준비된 설명이 없습니다.'}</p>
+                <a 
+                    href="https://instagram.com/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className={styles.instagramLink}
+                >
+                    <Instagram size={18} />
+                    <span>인스타그램에서 더 많은 사진 보기</span>
+                </a>
+            </div>
+
+            <div className={styles.commonInfoSection}>
+                <img src="/images/common-info-placeholder.png" alt="공통 안내사항" className={styles.commonInfoImage} onError={(e) => { e.currentTarget.style.display = 'none'; }} />
             </div>
 
             <div className={styles.ctaRow}>

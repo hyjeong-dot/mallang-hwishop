@@ -17,6 +17,14 @@ export default function ProductDetailImage({ slug }: ProductDetailImageProps) {
     const { images, isLoading: isDataLoading } = useProductImages(product?.id ?? 0);
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [isImageReady, setIsImageReady] = useState(false);
+    const [zoomStyle, setZoomStyle] = useState({});
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+        const x = ((e.clientX - left) / width) * 100;
+        const y = ((e.clientY - top) / height) * 100;
+        setZoomStyle({ transformOrigin: `${x}% ${y}%` });
+    };
 
     // 데이터 로딩 중일 때 표시
     if (isDataLoading) return <LoadingCharacter message="이미지를 불러오는 중..." />;
@@ -27,12 +35,16 @@ export default function ProductDetailImage({ slug }: ProductDetailImageProps) {
     return (
         <div className={styles.gallery}>
             {!isImageReady && <LoadingCharacter message="이미지를 준비하고 있어요... 🎀" />}
-            <div className={`${styles.mainImageWrapper} ${!isImageReady ? styles.hidden : styles.fadeIn}`}>
+            <div 
+                className={`${styles.mainImageWrapper} ${!isImageReady ? styles.hidden : styles.fadeIn}`}
+                onMouseMove={handleMouseMove}
+            >
                 <Image
                     src={mainImageSrc}
                     alt={product?.korName || '상품 이미지'}
                     fill
                     className={styles.mainImage}
+                    style={zoomStyle}
                     priority
                     onLoad={() => setIsImageReady(true)}
                     onError={() => setIsImageReady(true)}

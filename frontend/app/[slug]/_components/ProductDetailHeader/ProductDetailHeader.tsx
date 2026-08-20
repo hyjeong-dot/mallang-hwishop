@@ -8,7 +8,7 @@ export default function ProductDetailHeader() {
     return (
         <header className={styles.header}>
             <div className={styles.container}>
-                <Link href="/products" className={styles.backLink}>
+                <Link href="/" className={styles.backLink}>
                     <ArrowLeft size={18} />
                     <span>전체 상품</span>
                 </Link>

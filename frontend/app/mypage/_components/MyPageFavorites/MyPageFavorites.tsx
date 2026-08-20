@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Heart } from "lucide-react";
 import { fetchAPI } from "@/lib/api";
 import LoadingCharacter from "@/components/common/LoadingCharacter/LoadingCharacter";
-import ProductCard from "../../../products/_components/ProductCard/ProductCard";
+import ProductCard from "../../../_components/ProductCard/ProductCard";
 import styles from "./MyPageFavorites.module.css";
 
 export default function MyPageFavorites() {
@@ -46,7 +46,7 @@ export default function MyPageFavorites() {
                 <div className={styles.emptyState}>
                     <div className={styles.emptyIcon}>🎀</div>
                     <p>아직 찜한 상품가 없어요.<br />마음에 드는 상품를 하트로 담아보세요!</p>
-                    <Link href="/products" className={styles.productLink}>상품 보러 가기</Link>
+                    <Link href="/" className={styles.productLink}>상품 보러 가기</Link>
                 </div>
             ) : (
                 <div className={styles.grid}>
