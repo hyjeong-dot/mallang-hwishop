@@ -25,6 +25,9 @@ public class AdminOrderResult {
     private final int pointUsed;
     private final int pointEarned;
     private final int deliveryFee;
+    private final Long shippingGroupId;
+    private final Integer shippingGroupRefundAmount;
+    private final Boolean shippingGroupIsRefunded;
     private final String requestMemo;
     private final String cancelReason;
     private final String cancelReasonType;

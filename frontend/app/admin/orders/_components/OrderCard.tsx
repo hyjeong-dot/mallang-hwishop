@@ -12,6 +12,7 @@ interface OrderCardProps {
     onUpdateTrackingInfo: (orderId: number, carrier: string, trackingNumber: string) => void;
     isSelected: boolean;
     onToggleSelect: () => void;
+    onRefundShippingGroup: (shippingGroupId: number) => void;
 }
 
 export default function OrderCard({ 
@@ -19,7 +20,8 @@ export default function OrderCard({
     onUpdateStatus, 
     onUpdateTrackingInfo,
     isSelected,
-    onToggleSelect
+    onToggleSelect,
+    onRefundShippingGroup
 }: OrderCardProps) {
     const [isCancelOpen, setIsCancelOpen] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
@@ -60,7 +62,25 @@ export default function OrderCard({
                             배송
                         </span>
                     </div>
-                    <div className={styles.headerRight}>
+                    <div className={styles.headerRight} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        {order.shippingGroupId && (
+                            <div style={{ fontSize: '12px', padding: '2px 6px', background: '#e0e7ff', color: '#4338ca', borderRadius: '4px', fontWeight: 600 }}>
+                                합배송 #{order.shippingGroupId}
+                            </div>
+                        )}
+                        {order.shippingGroupId && order.shippingGroupIsRefunded === false && (
+                            <button
+                                onClick={(e) => { e.stopPropagation(); onRefundShippingGroup(order.shippingGroupId!); }}
+                                style={{ fontSize: '11px', padding: '2px 6px', background: '#fee2e2', color: '#dc2626', border: '1px solid #fecaca', borderRadius: '4px', cursor: 'pointer' }}
+                            >
+                                환불 필요
+                            </button>
+                        )}
+                        {order.shippingGroupId && order.shippingGroupIsRefunded === true && (
+                            <div style={{ fontSize: '11px', padding: '2px 6px', background: '#dcfce7', color: '#166534', borderRadius: '4px' }}>
+                                환불 완료
+                            </div>
+                        )}
                         <div className={`${styles.statusBadge} ${styles[`badge-${order.status.toLowerCase()}`]}`}>
                             {order.statusLabel}
                         </div>
@@ -199,6 +219,11 @@ export default function OrderCard({
                                                 취소
                                             </button>
                                         </div>
+                                        {order.shippingGroupId && (
+                                            <div style={{ fontSize: '11px', color: '#6b7280', marginTop: '4px' }}>
+                                                * 동일 합배송 그룹 전체에 일괄 적용됩니다.
+                                            </div>
+                                        )}
                                     </div>
                                 )}
                                 {order.status === 'CANCELLED' && order.cancelReasonType && (

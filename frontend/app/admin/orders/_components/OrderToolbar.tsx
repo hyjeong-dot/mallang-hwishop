@@ -23,13 +23,15 @@ interface OrderToolbarProps {
     onExcelUploadSuccess: () => void;
     selectedOrderIds: Set<number>;
     onBatchUpdateStatus: (status: string) => void;
+    onBatchCreateShippingGroup: () => void;
 }
 
 export default function OrderToolbar({
     searchQuery, onSearchChange,
     statusFilter, onStatusChange,
     resultCount, onExcelUploadSuccess,
-    selectedOrderIds, onBatchUpdateStatus
+    selectedOrderIds, onBatchUpdateStatus,
+    onBatchCreateShippingGroup
 }: OrderToolbarProps) {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const activeLabel = STATUS_FILTERS.find(f => f.value === statusFilter)?.label;
@@ -131,6 +133,13 @@ export default function OrderToolbar({
                         style={{ padding: '6px 12px', fontSize: '13px', borderRadius: '6px', border: 'none', background: 'var(--color-success)', color: '#fff', cursor: 'pointer' }}
                     >
                         제공 완료
+                    </button>
+                    <div style={{ width: '1px', height: '20px', background: 'var(--border-color)', margin: '0 8px' }} />
+                    <button 
+                        onClick={onBatchCreateShippingGroup}
+                        style={{ padding: '6px 12px', fontSize: '13px', borderRadius: '6px', border: 'none', background: '#3b82f6', color: '#fff', cursor: 'pointer', fontWeight: 600 }}
+                    >
+                        합배송 묶기
                     </button>
                 </div>
             )}

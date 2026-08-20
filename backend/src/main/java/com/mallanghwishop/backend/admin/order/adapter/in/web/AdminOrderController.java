@@ -2,6 +2,8 @@ package com.mallanghwishop.backend.admin.order.adapter.in.web;
 
 import com.mallanghwishop.backend.admin.order.application.port.in.GetAdminOrderListUseCase;
 import com.mallanghwishop.backend.admin.order.application.port.in.UpdateOrderStatusUseCase;
+import com.mallanghwishop.backend.admin.order.application.port.in.CreateShippingGroupUseCase;
+import com.mallanghwishop.backend.admin.order.application.port.in.RefundShippingGroupUseCase;
 import com.mallanghwishop.backend.admin.order.application.result.AdminOrderResult;
 import com.mallanghwishop.backend.order.domain.model.OrderStatus;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +17,6 @@ import com.mallanghwishop.backend.admin.order.application.service.AdminOrderExce
 import com.mallanghwishop.backend.admin.order.application.service.AdminOrderExcelImportService;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.Map;
@@ -30,6 +31,8 @@ public class AdminOrderController {
     private final OrderSseEmitters orderSseEmitters;
     private final AdminOrderExcelExportService excelExportService;
     private final AdminOrderExcelImportService excelImportService;
+    private final CreateShippingGroupUseCase createShippingGroupUseCase;
+    private final RefundShippingGroupUseCase refundShippingGroupUseCase;
 
     @GetMapping("/excel/download")
     public ResponseEntity<InputStreamResource> downloadOrdersExcel() {
@@ -94,5 +97,25 @@ public class AdminOrderController {
     @GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public SseEmitter streamOrders() {
         return orderSseEmitters.add();
+    }
+
+    // --- 합배송 관리 ---
+
+    @PostMapping("/shipping-groups")
+    public ResponseEntity<?> createShippingGroup(@RequestBody Map<String, Object> request) {
+        List<Integer> orderIdsInt = (List<Integer>) request.get("orderIds");
+        List<Long> orderIds = orderIdsInt.stream().map(Integer::longValue).toList();
+        
+        CreateShippingGroupUseCase.CreateShippingGroupCommand command = CreateShippingGroupUseCase.CreateShippingGroupCommand.builder()
+                .orderIds(orderIds)
+                .build();
+        createShippingGroupUseCase.createShippingGroup(command);
+        return ResponseEntity.ok(Map.of("success", true, "message", "합배송 그룹이 생성되었습니다."));
+    }
+
+    @PatchMapping("/shipping-groups/{id}/refund")
+    public ResponseEntity<?> refundShippingGroup(@PathVariable Long id) {
+        refundShippingGroupUseCase.refundShippingGroup(id);
+        return ResponseEntity.ok(Map.of("success", true, "message", "합배송 배송비 수동 환불이 완료되었습니다."));
     }
 }

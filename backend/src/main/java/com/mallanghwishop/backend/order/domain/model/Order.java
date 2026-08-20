@@ -32,6 +32,7 @@ public class Order {
     private String cancelReasonType;
     private String trackingCarrier;
     private String trackingNumber;
+    private Long shippingGroupId;
     
     @Builder.Default
     private int pointUsed = 0;

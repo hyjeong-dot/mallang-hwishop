@@ -9,6 +9,8 @@ import java.util.UUID;
 public interface OrderRepository extends JpaRepository<OrderJpaEntity, Long> {
     List<OrderJpaEntity> findAllByMemberIdOrderByCreatedAtDesc(UUID memberId);
 
+    List<OrderJpaEntity> findByShippingGroupId(Long shippingGroupId);
+
     java.util.Optional<OrderJpaEntity> findByOrderUid(String orderUid);
 
     long countByCreatedAtAfter(java.time.LocalDateTime createdAt);

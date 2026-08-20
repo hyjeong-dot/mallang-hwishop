@@ -70,6 +70,9 @@ public class OrderJpaEntity {
     @Column(name = "tracking_number")
     private String trackingNumber;
 
+    @Column(name = "shipping_group_id")
+    private Long shippingGroupId;
+
     @Column(nullable = false, columnDefinition = "integer default 0")
     @Builder.Default
     private int pointUsed = 0;
@@ -133,6 +136,7 @@ public class OrderJpaEntity {
                 .cancelReasonType(order.getCancelReasonType())
                 .trackingCarrier(order.getTrackingCarrier())
                 .trackingNumber(order.getTrackingNumber())
+                .shippingGroupId(order.getShippingGroupId())
                 .pointUsed(order.getPointUsed())
                 .pointEarned(order.getPointEarned())
                 .deliveryFee(order.getDeliveryFee())
@@ -168,6 +172,7 @@ public class OrderJpaEntity {
                 .cancelReasonType(this.cancelReasonType)
                 .trackingCarrier(this.trackingCarrier)
                 .trackingNumber(this.trackingNumber)
+                .shippingGroupId(this.shippingGroupId)
                 .pointUsed(this.pointUsed)
                 .pointEarned(this.pointEarned)
                 .deliveryFee(this.deliveryFee)

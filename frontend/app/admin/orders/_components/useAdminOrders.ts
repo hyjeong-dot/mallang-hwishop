@@ -28,6 +28,9 @@ export interface AdminOrder {
     pointUsed?: number;
     pointEarned?: number;
     deliveryFee?: number;
+    shippingGroupId?: number;
+    shippingGroupRefundAmount?: number;
+    shippingGroupIsRefunded?: boolean;
     items: AdminOrderItem[];
     createdAt: string;
 }
@@ -174,12 +177,56 @@ export function useAdminOrders() {
         }
     };
 
+    const createShippingGroup = async (orderIds: number[]) => {
+        if (orderIds.length < 2) {
+            toast.error('합배송은 2개 이상의 주문을 선택해야 합니다.');
+            return;
+        }
+        try {
+            const response = await fetch('/api/admin/orders/shipping-groups', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ orderIds })
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.message || '합배송 처리에 실패했습니다.');
+            }
+            toast.success(data.message || '합배송 그룹이 생성되었습니다.');
+            setSelectedOrderIds(new Set());
+            // Since we listen to SSE or we can just fetchOrders() again, wait for SSE is not triggered by shipping-groups right now in backend, so let's call fetchOrders manually.
+            fetchOrders();
+        } catch (error: any) {
+            console.error('Create shipping group error:', error);
+            toast.error(error.message || '합배송 처리 중 오류가 발생했습니다.');
+        }
+    };
+
+    const refundShippingGroup = async (shippingGroupId: number) => {
+        try {
+            const response = await fetch(`/api/admin/orders/shipping-groups/${shippingGroupId}/refund`, {
+                method: 'PATCH'
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.message || '환불 처리에 실패했습니다.');
+            }
+            toast.success(data.message || '합배송 배송비 수동 환불이 완료되었습니다.');
+            fetchOrders();
+        } catch (error: any) {
+            console.error('Refund shipping group error:', error);
+            toast.error(error.message || '환불 처리 중 오류가 발생했습니다.');
+        }
+    };
+
     return {
         orders,
         isLoading,
         updateStatus,
         updateTrackingInfo,
         batchUpdateStatus,
+        createShippingGroup,
+        refundShippingGroup,
         selectedOrderIds,
         toggleSelectOrder,
         toggleSelectAll,

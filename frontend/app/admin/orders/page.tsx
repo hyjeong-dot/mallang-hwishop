@@ -15,6 +15,8 @@ export default function AdminOrdersPage() {
         updateStatus, 
         updateTrackingInfo,
         batchUpdateStatus,
+        createShippingGroup,
+        refundShippingGroup,
         selectedOrderIds,
         toggleSelectOrder,
         toggleSelectAll,
@@ -37,6 +39,7 @@ export default function AdminOrdersPage() {
                 onExcelUploadSuccess={refresh}
                 selectedOrderIds={selectedOrderIds}
                 onBatchUpdateStatus={(status) => batchUpdateStatus(Array.from(selectedOrderIds), status)}
+                onBatchCreateShippingGroup={() => createShippingGroup(Array.from(selectedOrderIds))}
             />
 
             {filteredOrders.length === 0 ? (
@@ -49,6 +52,7 @@ export default function AdminOrdersPage() {
                     selectedOrderIds={selectedOrderIds}
                     toggleSelectOrder={toggleSelectOrder}
                     toggleSelectAll={toggleSelectAll}
+                    onRefundShippingGroup={refundShippingGroup}
                 />
             )}
         </div>

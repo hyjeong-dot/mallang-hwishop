@@ -11,6 +11,7 @@ interface OrderListProps {
     selectedOrderIds: Set<number>;
     toggleSelectOrder: (orderId: number) => void;
     toggleSelectAll: (isSelectAll: boolean) => void;
+    onRefundShippingGroup: (shippingGroupId: number) => void;
 }
 
 export default function OrderList({ 
@@ -19,7 +20,8 @@ export default function OrderList({
     onUpdateTrackingInfo,
     selectedOrderIds,
     toggleSelectOrder,
-    toggleSelectAll
+    toggleSelectAll,
+    onRefundShippingGroup
 }: OrderListProps) {
     const isAllSelected = orders.length > 0 && orders.length === selectedOrderIds.size;
 
@@ -42,6 +44,7 @@ export default function OrderList({
                     onUpdateTrackingInfo={onUpdateTrackingInfo}
                     isSelected={selectedOrderIds.has(order.id)}
                     onToggleSelect={() => toggleSelectOrder(order.id)}
+                    onRefundShippingGroup={onRefundShippingGroup}
                 />
             ))}
         </div>

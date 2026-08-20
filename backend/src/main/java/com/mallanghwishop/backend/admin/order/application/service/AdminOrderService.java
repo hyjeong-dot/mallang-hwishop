@@ -7,7 +7,9 @@ import com.mallanghwishop.backend.admin.order.application.result.AdminOrderLineI
 import com.mallanghwishop.backend.admin.order.application.result.AdminOrderResult;
 
 import com.mallanghwishop.backend.member.adapter.out.persistence.MemberJpaRepository;
+import com.mallanghwishop.backend.order.adapter.out.persistence.entity.ShippingGroupJpaEntity;
 import com.mallanghwishop.backend.order.adapter.out.persistence.repository.OrderRepository;
+import com.mallanghwishop.backend.order.adapter.out.persistence.repository.ShippingGroupJpaRepository;
 import com.mallanghwishop.backend.order.domain.model.Order;
 import com.mallanghwishop.backend.order.domain.model.OrderStatus;
 import com.mallanghwishop.backend.point.application.port.in.PointUseCase;
@@ -29,6 +31,7 @@ public class AdminOrderService implements GetAdminOrderListUseCase, UpdateOrderS
     private final OrderRepository orderRepository;
     private final MemberJpaRepository memberRepository;
     private final ProductJpaRepository productRepository;
+    private final ShippingGroupJpaRepository shippingGroupRepository;
     private final PointUseCase pointUseCase;
     private final PaymentService paymentService;
 
@@ -102,9 +105,18 @@ public class AdminOrderService implements GetAdminOrderListUseCase, UpdateOrderS
                 .map(com.mallanghwishop.backend.order.adapter.out.persistence.entity.OrderJpaEntity::toDomain)
                 .orElseThrow(() -> new IllegalArgumentException("Order not found with id: " + orderId));
         
-        order.setTrackingCarrier(trackingCarrier);
-        order.setTrackingNumber(trackingNumber);
-        orderRepository.save(com.mallanghwishop.backend.order.adapter.out.persistence.entity.OrderJpaEntity.fromDomain(order));
+        if (order.getShippingGroupId() != null) {
+            List<com.mallanghwishop.backend.order.adapter.out.persistence.entity.OrderJpaEntity> groupedOrders = orderRepository.findByShippingGroupId(order.getShippingGroupId());
+            for (com.mallanghwishop.backend.order.adapter.out.persistence.entity.OrderJpaEntity go : groupedOrders) {
+                go.setTrackingCarrier(trackingCarrier);
+                go.setTrackingNumber(trackingNumber);
+                orderRepository.save(go);
+            }
+        } else {
+            order.setTrackingCarrier(trackingCarrier);
+            order.setTrackingNumber(trackingNumber);
+            orderRepository.save(com.mallanghwishop.backend.order.adapter.out.persistence.entity.OrderJpaEntity.fromDomain(order));
+        }
     }
 
     @Override
@@ -134,6 +146,21 @@ public class AdminOrderService implements GetAdminOrderListUseCase, UpdateOrderS
                 })
                 .collect(Collectors.toList());
 
+        Long shippingGroupId = order.getShippingGroupId();
+        Integer shippingGroupRefundAmount = null;
+        Boolean shippingGroupIsRefunded = null;
+
+        if (shippingGroupId != null) {
+            shippingGroupRepository.findById(shippingGroupId).ifPresent(group -> {
+                // Since this is inside lambda, can't easily modify effectively final variables, but we can just use variables
+            });
+            ShippingGroupJpaEntity group = shippingGroupRepository.findById(shippingGroupId).orElse(null);
+            if (group != null) {
+                shippingGroupRefundAmount = group.getRefundAmount();
+                shippingGroupIsRefunded = group.isRefunded();
+            }
+        }
+
         return AdminOrderResult.builder()
                 .id(order.getId())
                 .orderUid(order.getOrderUid())
@@ -155,6 +182,9 @@ public class AdminOrderService implements GetAdminOrderListUseCase, UpdateOrderS
                 .pointUsed(order.getPointUsed())
                 .pointEarned(order.getPointEarned())
                 .deliveryFee(order.getDeliveryFee())
+                .shippingGroupId(shippingGroupId)
+                .shippingGroupRefundAmount(shippingGroupRefundAmount)
+                .shippingGroupIsRefunded(shippingGroupIsRefunded)
                 .items(itemResults)
                 .createdAt(order.getCreatedAt())
                 .build();
