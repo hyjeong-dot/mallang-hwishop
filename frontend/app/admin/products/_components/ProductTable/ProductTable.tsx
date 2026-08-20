@@ -90,7 +90,7 @@ export default function ProductTable({ products, onToggleSoldOut, onDelete }: Pr
                             </td>
                             <td className={styles.actions}>
                                 <Link
-                                    href={`/admin/products/${product.id}`}
+                                    href={`/admin/products/${product.id}/edit`}
                                     className={styles.actionBtn}
                                     title="수정"
                                 >

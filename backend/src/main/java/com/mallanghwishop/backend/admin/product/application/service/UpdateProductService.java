@@ -40,6 +40,7 @@ public class UpdateProductService implements UpdateProductUseCase {
         product.setSaleStartAt(command.getSaleStartAt());
         product.setStock(command.getStock());
         product.setMaxPerOrder(command.getMaxPerOrder());
+        product.setInstagramUrl(command.getInstagramUrl());
 
         // 예약 판매 상태 갱신 로직
         if (command.getSaleStartAt() != null && command.getSaleStartAt().isAfter(java.time.LocalDateTime.now())) {

@@ -42,6 +42,7 @@ public class RegisterProductService implements RegisterProductUseCase {
                 .saleStartAt(command.getSaleStartAt())
                 .stock(command.getStock())
                 .maxPerOrder(command.getMaxPerOrder())
+                .instagramUrl(command.getInstagramUrl())
                 .build();
 
         return saveProductPort.save(product);

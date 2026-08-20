@@ -199,15 +199,17 @@ export default function ProductDetailInfo({ slug }: ProductDetailInfoProps) {
             <div className={styles.descSection}>
                 <h3 className={styles.sectionTitle}><Info size={16} /> 상품 설명</h3>
                 <p className={styles.description}>{product.description || '준비된 설명이 없습니다.'}</p>
-                <a 
-                    href="https://instagram.com/" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className={styles.instagramLink}
-                >
-                    <Instagram size={18} />
-                    <span>인스타그램에서 더 많은 사진 보기</span>
-                </a>
+                {product.instagramUrl && (
+                    <a 
+                        href={product.instagramUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className={styles.instagramLink}
+                    >
+                        <Instagram size={18} />
+                        <span>인스타그램에서 더 많은 사진 보기</span>
+                    </a>
+                )}
             </div>
 
             <div className={styles.commonInfoSection}>

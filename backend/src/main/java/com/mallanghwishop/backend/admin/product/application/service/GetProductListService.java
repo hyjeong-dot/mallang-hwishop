@@ -56,6 +56,7 @@ public class GetProductListService implements GetProductListUseCase {
                         .isAvailable(product.getIsAvailable())
                         .isSoldOut(product.getIsSoldOut())
                         .sortOrder(product.getSortOrder())
+                        .instagramUrl(product.getInstagramUrl())
                         .createdAt(product.getCreatedAt())
                         .updatedAt(product.getUpdatedAt())
                         .categoryName(category != null ? category.getName() : "알 수 없음")

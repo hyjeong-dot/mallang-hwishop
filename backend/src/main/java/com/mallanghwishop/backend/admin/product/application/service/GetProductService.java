@@ -66,6 +66,7 @@ public class GetProductService implements GetProductUseCase {
                 .saleStatus(product.getSaleStatus() != null ? product.getSaleStatus().name() : null)
                 .stock(product.getStock())
                 .maxPerOrder(product.getMaxPerOrder())
+                .instagramUrl(product.getInstagramUrl())
                 .createdAt(product.getCreatedAt())
                 .updatedAt(product.getUpdatedAt())
                 .build();

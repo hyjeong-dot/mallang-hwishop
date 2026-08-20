@@ -22,4 +22,5 @@ public class ProductResult {
     private String saleStatus;
     private Integer stock;
     private Integer maxPerOrder;
+    private String instagramUrl;
 }

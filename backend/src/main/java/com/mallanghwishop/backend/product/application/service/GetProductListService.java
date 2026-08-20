@@ -70,6 +70,7 @@ public class GetProductListService implements GetProductListUseCase {
                     .saleStatus(product.getSaleStatus() != null ? product.getSaleStatus().name() : "ON_SALE")
                     .stock(product.getStock())
                     .maxPerOrder(product.getMaxPerOrder())
+                    .instagramUrl(product.getInstagramUrl())
                     .build();
         }).collect(Collectors.toList());
 

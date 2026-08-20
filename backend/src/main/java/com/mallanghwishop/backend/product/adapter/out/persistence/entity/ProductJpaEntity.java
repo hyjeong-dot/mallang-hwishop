@@ -66,6 +66,9 @@ public class ProductJpaEntity {
     @Column(name = "max_per_order")
     private Integer maxPerOrder;
 
+    @Column(name = "instagram_url", length = 500)
+    private String instagramUrl;
+
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
@@ -115,6 +118,7 @@ public class ProductJpaEntity {
                 .saleStatus(saleStatus)
                 .stock(stock)
                 .maxPerOrder(maxPerOrder)
+                .instagramUrl(instagramUrl)
                 .createdAt(createdAt)
                 .updatedAt(updatedAt)
                 .build();
@@ -137,6 +141,7 @@ public class ProductJpaEntity {
                 .saleStatus(product.getSaleStatus())
                 .stock(product.getStock())
                 .maxPerOrder(product.getMaxPerOrder())
+                .instagramUrl(product.getInstagramUrl())
                 .createdAt(product.getCreatedAt())
                 .updatedAt(product.getUpdatedAt())
                 .build();

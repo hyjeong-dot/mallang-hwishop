@@ -16,6 +16,7 @@ export interface ProductResponse {
     saleStatus?: string;
     stock?: number;
     maxPerOrder?: number;
+    instagramUrl?: string;
 }
 
 export interface ProductListResponse {

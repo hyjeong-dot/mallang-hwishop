@@ -19,6 +19,7 @@ export interface ProductResponse {
     sortOrder: number;
     createdAt?: string;
     updatedAt?: string;
+    instagramUrl?: string;
 }
 
 export interface ProductListResponse {

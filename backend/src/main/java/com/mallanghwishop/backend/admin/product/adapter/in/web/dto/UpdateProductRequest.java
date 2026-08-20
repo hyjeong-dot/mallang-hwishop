@@ -17,6 +17,7 @@ public class UpdateProductRequest {
     private java.time.LocalDateTime saleStartAt;
     private Integer stock;
     private Integer maxPerOrder;
+    private String instagramUrl;
 
     public UpdateProductCommand toCommand(Long id) {
         return UpdateProductCommand.builder()
@@ -33,6 +34,7 @@ public class UpdateProductRequest {
                 .saleStartAt(saleStartAt)
                 .stock(stock)
                 .maxPerOrder(maxPerOrder)
+                .instagramUrl(instagramUrl)
                 .build();
     }
 }

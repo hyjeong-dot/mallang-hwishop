@@ -1,11 +1,12 @@
-package com.mallanghwishop.backend.admin.delivery.application.result;
+package com.mallanghwishop.backend.admin.settings.domain.model;
 
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 @Builder
-public class DeliverySettingsResult {
+public class SiteSettings {
     private final int basicFee;
     private final int jejuExtraFee;
+    private final String instagramUrl;
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Settings, LogIn, LogOut, User, UserPlus, Menu, X, ShoppingBag, Instagram } from "lucide-react";
 import Image from "next/image";
 import styles from "./layout.module.css";
@@ -12,6 +12,17 @@ export default function Header() {
     const { user, logout } = useAuth();
     const { totalCount, setCartOpen } = useCart();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+    const [instagramUrl, setInstagramUrl] = useState("https://instagram.com/");
+
+    useEffect(() => {
+        fetch("/api/settings")
+            .then(res => res.json())
+            .then(data => {
+                if (data.instagramUrl) setInstagramUrl(data.instagramUrl);
+            })
+            .catch(err => console.error("Failed to fetch settings:", err));
+    }, []);
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -52,7 +63,7 @@ export default function Header() {
                         </button>
                         
                         <a 
-                            href="https://instagram.com/" 
+                            href={instagramUrl} 
                             target="_blank" 
                             rel="noopener noreferrer" 
                             className={styles.desktopCartBtn}

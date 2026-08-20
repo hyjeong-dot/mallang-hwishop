@@ -116,6 +116,7 @@ export function useProductSubmit() {
                     saleStartAt: formData.isReservation && formData.saleStartAt ? formData.saleStartAt + ':00' : null,
                     stock: formData.isUnlimitedStock ? null : Number(formData.stock),
                     maxPerOrder: 2,
+                    instagramUrl: formData.instagramUrl.trim(),
                 }),
             });
             
@@ -163,6 +164,7 @@ export function useProductSubmit() {
                     saleStartAt: formData.isReservation && formData.saleStartAt ? formData.saleStartAt + ':00' : null,
                     stock: formData.isUnlimitedStock ? null : Number(formData.stock),
                     maxPerOrder: 2,
+                    instagramUrl: formData.instagramUrl.trim(),
                 }),
             });
             

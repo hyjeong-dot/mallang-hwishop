@@ -17,14 +17,27 @@ export default function ProductDetailImage({ slug }: ProductDetailImageProps) {
     const { images, isLoading: isDataLoading } = useProductImages(product?.id ?? 0);
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [isImageReady, setIsImageReady] = useState(false);
-    const [zoomStyle, setZoomStyle] = useState({});
+    const [isHovering, setIsHovering] = useState(false);
+    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+    const [bgPos, setBgPos] = useState({ x: 0, y: 0 });
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
         const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
-        const x = ((e.clientX - left) / width) * 100;
-        const y = ((e.clientY - top) / height) * 100;
-        setZoomStyle({ transformOrigin: `${x}% ${y}%` });
+        
+        // Mouse position relative to the container
+        const x = e.clientX - left;
+        const y = e.clientY - top;
+        setMousePos({ x, y });
+
+        // Calculate background position for the magnifier
+        // For a zoom level of 2x, background size will be 200% 200%
+        const bgX = (x / width) * 100;
+        const bgY = (y / height) * 100;
+        setBgPos({ x: bgX, y: bgY });
     };
+
+    const handleMouseEnter = () => setIsHovering(true);
+    const handleMouseLeave = () => setIsHovering(false);
 
     // 데이터 로딩 중일 때 표시
     if (isDataLoading) return <LoadingCharacter message="이미지를 불러오는 중..." />;
@@ -38,17 +51,29 @@ export default function ProductDetailImage({ slug }: ProductDetailImageProps) {
             <div 
                 className={`${styles.mainImageWrapper} ${!isImageReady ? styles.hidden : styles.fadeIn}`}
                 onMouseMove={handleMouseMove}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
             >
                 <Image
                     src={mainImageSrc}
                     alt={product?.korName || '상품 이미지'}
                     fill
                     className={styles.mainImage}
-                    style={zoomStyle}
                     priority
                     onLoad={() => setIsImageReady(true)}
                     onError={() => setIsImageReady(true)}
                 />
+                {isHovering && !product?.isSoldOut && (
+                    <div 
+                        className={styles.magnifier}
+                        style={{
+                            left: `${mousePos.x}px`,
+                            top: `${mousePos.y}px`,
+                            backgroundImage: `url(${mainImageSrc})`,
+                            backgroundPosition: `${bgPos.x}% ${bgPos.y}%`
+                        }}
+                    />
+                )}
                 {product?.isSoldOut && (
                     <div className={styles.soldOutOverlay}>품절 😢</div>
                 )}

@@ -1,20 +1,22 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import useDeliverySettings from './useDeliverySettings';
+import useSiteSettings from './useSiteSettings';
 import styles from '../page.module.css';
 import { Save } from 'lucide-react';
 
-export default function DeliverySettingsForm() {
-    const { settings, isLoading, updateSettings } = useDeliverySettings();
+export default function SiteSettingsForm() {
+    const { settings, isLoading, updateSettings } = useSiteSettings();
     const [basicFee, setBasicFee] = useState<number>(3500);
     const [jejuExtraFee, setJejuExtraFee] = useState<number>(3000);
+    const [instagramUrl, setInstagramUrl] = useState<string>('');
     const [isSaving, setIsSaving] = useState(false);
 
     useEffect(() => {
         if (settings) {
             setBasicFee(settings.basicFee);
             setJejuExtraFee(settings.jejuExtraFee);
+            setInstagramUrl(settings.instagramUrl || '');
         }
     }, [settings]);
 
@@ -22,8 +24,8 @@ export default function DeliverySettingsForm() {
         e.preventDefault();
         setIsSaving(true);
         try {
-            await updateSettings({ basicFee, jejuExtraFee });
-            alert('배송비 설정이 저장되었습니다.');
+            await updateSettings({ basicFee, jejuExtraFee, instagramUrl });
+            alert('상점 설정이 저장되었습니다.');
         } catch (error) {
             alert('저장에 실패했습니다.');
         } finally {
@@ -66,6 +68,20 @@ export default function DeliverySettingsForm() {
                     min="0"
                     step="100"
                     required
+                />
+            </div>
+            
+            <div className={styles.formGroup}>
+                <label className={styles.label}>
+                    기본 인스타그램 URL
+                    <span className={styles.tooltip}>상점 헤더 등에 사용될 기본 인스타그램 링크입니다.</span>
+                </label>
+                <input
+                    type="text"
+                    className={styles.input}
+                    value={instagramUrl}
+                    onChange={(e) => setInstagramUrl(e.target.value)}
+                    placeholder="https://instagram.com/..."
                 />
             </div>
 

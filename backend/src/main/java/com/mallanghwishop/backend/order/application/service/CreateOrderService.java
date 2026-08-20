@@ -3,8 +3,8 @@ package com.mallanghwishop.backend.order.application.service;
 
 
 import com.mallanghwishop.backend.member.application.port.out.LoadMemberPort;
-import com.mallanghwishop.backend.admin.delivery.application.port.in.GetDeliverySettingsUseCase;
-import com.mallanghwishop.backend.admin.delivery.application.result.DeliverySettingsResult;
+import com.mallanghwishop.backend.admin.settings.application.port.in.GetSiteSettingsUseCase;
+import com.mallanghwishop.backend.admin.settings.application.result.SiteSettingsResult;
 import com.mallanghwishop.backend.member.domain.model.Member;
 import com.mallanghwishop.backend.product.application.port.out.LoadProductPort;
 import com.mallanghwishop.backend.product.domain.model.Product;
@@ -30,7 +30,7 @@ public class CreateOrderService implements CreateOrderUseCase {
     private final com.mallanghwishop.backend.product.application.port.out.SaveProductPort saveProductPort;
     private final LoadMemberPort loadMemberPort;
     private final com.mallanghwishop.backend.point.application.port.in.PointUseCase pointUseCase;
-    private final GetDeliverySettingsUseCase getDeliverySettingsUseCase;
+    private final GetSiteSettingsUseCase getSiteSettingsUseCase;
 
     @Override
     @Transactional
@@ -41,7 +41,7 @@ public class CreateOrderService implements CreateOrderUseCase {
 
         String orderUid = "ORDER-" + System.currentTimeMillis() + "-" + java.util.UUID.randomUUID().toString().substring(0, 8);
 
-        DeliverySettingsResult deliverySettings = getDeliverySettingsUseCase.getSettings();
+        SiteSettingsResult deliverySettings = getSiteSettingsUseCase.getSettings();
         int calculatedDeliveryFee = deliverySettings.getBasicFee();
         if (command.getZipcode() != null && command.getZipcode().startsWith("63")) {
             calculatedDeliveryFee += deliverySettings.getJejuExtraFee();

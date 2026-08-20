@@ -17,4 +17,5 @@ public class RegisterProductCommand {
     private final java.time.LocalDateTime saleStartAt;
     private final Integer stock;
     private final Integer maxPerOrder;
+    private final String instagramUrl;
 }

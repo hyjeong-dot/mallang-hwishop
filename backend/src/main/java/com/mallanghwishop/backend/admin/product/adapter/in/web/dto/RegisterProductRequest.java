@@ -16,6 +16,7 @@ public class RegisterProductRequest {
     private java.time.LocalDateTime saleStartAt;
     private Integer stock;
     private Integer maxPerOrder;
+    private String instagramUrl;
 
     public RegisterProductCommand toCommand() {
         return RegisterProductCommand.builder()
@@ -30,6 +31,7 @@ public class RegisterProductRequest {
                 .saleStartAt(saleStartAt)
                 .stock(stock)
                 .maxPerOrder(maxPerOrder)
+                .instagramUrl(instagramUrl)
                 .build();
     }
 }

@@ -29,6 +29,7 @@ public class Product {
     private SaleStatus saleStatus;
     private Integer stock;
     private Integer maxPerOrder;
+    private String instagramUrl;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

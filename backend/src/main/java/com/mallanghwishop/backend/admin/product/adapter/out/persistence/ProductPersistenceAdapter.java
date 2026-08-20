@@ -34,6 +34,7 @@ public class ProductPersistenceAdapter implements SaveProductPort, LoadProductPo
                 .saleStatus(product.getSaleStatus())
                 .stock(product.getStock())
                 .maxPerOrder(product.getMaxPerOrder())
+                .instagramUrl(product.getInstagramUrl())
                 .createdAt(product.getCreatedAt())
                 .updatedAt(product.getUpdatedAt())
                 .build();
@@ -56,6 +57,7 @@ public class ProductPersistenceAdapter implements SaveProductPort, LoadProductPo
                 .saleStatus(entity.getSaleStatus())
                 .stock(entity.getStock())
                 .maxPerOrder(entity.getMaxPerOrder())
+                .instagramUrl(entity.getInstagramUrl())
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
                 .build();

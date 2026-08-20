@@ -1,28 +1,29 @@
 import { useState, useEffect } from 'react';
 import { fetchAPI } from '@/lib/api';
 
-interface DeliverySettings {
+interface SiteSettings {
     basicFee: number;
     jejuExtraFee: number;
+    instagramUrl: string;
 }
 
-export default function useDeliverySettings() {
-    const [settings, setSettings] = useState<DeliverySettings | null>(null);
+export default function useSiteSettings() {
+    const [settings, setSettings] = useState<SiteSettings | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
     const fetchSettings = async () => {
         try {
-            const data = await fetchAPI('/admin/delivery/settings');
+            const data = await fetchAPI('/admin/settings');
             setSettings(data);
         } catch (error) {
-            console.error('Failed to fetch delivery settings:', error);
+            console.error('Failed to fetch site settings:', error);
         } finally {
             setIsLoading(false);
         }
     };
 
-    const updateSettings = async (newSettings: DeliverySettings) => {
-        const data = await fetchAPI('/admin/delivery/settings', {
+    const updateSettings = async (newSettings: SiteSettings) => {
+        const data = await fetchAPI('/admin/settings', {
             method: 'PUT',
             body: JSON.stringify(newSettings)
         });

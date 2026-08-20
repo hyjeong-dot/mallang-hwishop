@@ -28,6 +28,7 @@ export interface ProductFormData {
     saleStartAt: string;
     stock: string;
     isUnlimitedStock: boolean;
+    instagramUrl: string;
 }
 
 // Option form data
@@ -83,6 +84,7 @@ export default function ProductForm({
         saleStartAt: initialFormData?.saleStartAt ? new Date(initialFormData.saleStartAt).toISOString().slice(0, 16) : '',
         stock: initialFormData?.stock !== undefined && initialFormData?.stock !== null ? String(initialFormData.stock) : '',
         isUnlimitedStock: initialFormData?.stock === null || initialFormData?.stock === undefined,
+        instagramUrl: initialFormData?.instagramUrl || '',
     });
 
     // Sync formData when initialFormData changes (important for edit mode)
@@ -432,6 +434,20 @@ export default function ProductForm({
                         {errors.categoryId && (
                             <span className={styles.errorText}>{errors.categoryId}</span>
                         )}
+                    </div>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="instagramUrl" className={styles.label}>
+                            인스타그램 URL
+                        </label>
+                        <input
+                            type="text"
+                            id="instagramUrl"
+                            name="instagramUrl"
+                            value={formData.instagramUrl}
+                            onChange={handleChange}
+                            className={styles.input}
+                            placeholder="예: https://instagram.com/p/..."
+                        />
                     </div>
                 </div>
 

@@ -25,6 +25,7 @@ public class ProductResult {
     private final String saleStatus;
     private final Integer stock;
     private final Integer maxPerOrder;
+    private final String instagramUrl;
     private final Integer sortOrder;
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;

@@ -1,6 +1,6 @@
-package com.mallanghwishop.backend.admin.delivery.adapter.out.persistence.entity;
+package com.mallanghwishop.backend.admin.settings.adapter.out.persistence.entity;
 
-import com.mallanghwishop.backend.admin.delivery.domain.model.DeliverySettings;
+import com.mallanghwishop.backend.admin.settings.domain.model.SiteSettings;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -10,31 +10,34 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "delivery_settings")
+@Table(name = "site_settings")
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DeliverySettingsJpaEntity {
+public class SiteSettingsJpaEntity {
 
     @Id
     private Long id; // 단일 레코드 유지를 위해 1 고정
 
     private int basicFee;
     private int jejuExtraFee;
+    private String instagramUrl;
 
-    public static DeliverySettingsJpaEntity fromDomain(DeliverySettings settings) {
-        return DeliverySettingsJpaEntity.builder()
+    public static SiteSettingsJpaEntity fromDomain(SiteSettings settings) {
+        return SiteSettingsJpaEntity.builder()
                 .id(1L)
                 .basicFee(settings.getBasicFee())
                 .jejuExtraFee(settings.getJejuExtraFee())
+                .instagramUrl(settings.getInstagramUrl())
                 .build();
     }
 
-    public DeliverySettings toDomain() {
-        return DeliverySettings.builder()
+    public SiteSettings toDomain() {
+        return SiteSettings.builder()
                 .basicFee(this.basicFee)
                 .jejuExtraFee(this.jejuExtraFee)
+                .instagramUrl(this.instagramUrl)
                 .build();
     }
 }
