@@ -68,7 +68,8 @@ export default function AdminSidebar() {
         {
             group: '설정',
             items: [
-                { href: '/admin/settings', label: '상점 설정', icon: Settings }
+                { href: '/admin/settings', label: '상점 설정', icon: Settings },
+                { href: '/admin/popups', label: '공지 팝업 관리', icon: MessageSquarePlus }
             ],
         }
     ];

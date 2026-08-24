@@ -5,7 +5,7 @@ import ProductHeader from './_components/ProductHeader/ProductHeader';
 import SearchBar from './_components/SearchBar/SearchBar';
 import CategoryFilter from './_components/CategoryFilter/CategoryFilter';
 import ProductGrid from './_components/ProductGrid/ProductGrid';
-import NoticePopup from '@/components/common/NoticePopup/NoticePopup';
+import MainPopups from './_components/MainPopups/MainPopups';
 import styles from './page.module.css';
 
 export default function ProductsPage() {
@@ -14,10 +14,7 @@ export default function ProductsPage() {
 
     return (
         <div className={styles.page}>
-            <NoticePopup 
-                id="main_notice_popup" 
-                imageUrl="/images/notice.png" // 더미 이미지
-            />
+            <MainPopups />
             <ProductHeader />
             <SearchBar
                 searchQuery={searchQuery}
