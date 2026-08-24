@@ -29,25 +29,12 @@
 
 .mainImage {
     object-fit: cover;
-    pointer-events: none; /* Prevents image drag and interference with hover */
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.magnifier {
-    position: absolute;
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    border: 3px solid var(--color-primary-400, #FFB5C2);
-    box-shadow: 0 0 15px rgba(0,0,0,0.2), inset 0 0 10px rgba(0,0,0,0.1);
-    transform: translate(-50%, -50%);
-    pointer-events: none; /* Crucial: lets mouse events pass through to wrapper */
-    background-repeat: no-repeat;
-    background-size: 200% 200%; /* Adjust zoom level here */
-    z-index: 10;
-    cursor: none;
-}
-.mainImageWrapper {
-    cursor: none; /* Hide default cursor when magnifier is active */
+.mainImageWrapper:hover .mainImage {
+    transform: scale(2.2);
+    cursor: crosshair;
 }
 
 .soldOutOverlay {
