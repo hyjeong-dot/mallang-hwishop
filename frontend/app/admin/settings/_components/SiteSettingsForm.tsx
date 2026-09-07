@@ -10,6 +10,7 @@ export default function SiteSettingsForm() {
     const [basicFee, setBasicFee] = useState<number>(3500);
     const [jejuExtraFee, setJejuExtraFee] = useState<number>(3000);
     const [instagramUrl, setInstagramUrl] = useState<string>('');
+    const [cancelTimeoutMinutes, setCancelTimeoutMinutes] = useState<number>(60);
     const [isSaving, setIsSaving] = useState(false);
 
     useEffect(() => {
@@ -17,6 +18,7 @@ export default function SiteSettingsForm() {
             setBasicFee(settings.basicFee);
             setJejuExtraFee(settings.jejuExtraFee);
             setInstagramUrl(settings.instagramUrl || '');
+            setCancelTimeoutMinutes(settings.cancelTimeoutMinutes || 60);
         }
     }, [settings]);
 
@@ -24,7 +26,7 @@ export default function SiteSettingsForm() {
         e.preventDefault();
         setIsSaving(true);
         try {
-            await updateSettings({ basicFee, jejuExtraFee, instagramUrl });
+            await updateSettings({ basicFee, jejuExtraFee, instagramUrl, cancelTimeoutMinutes });
             alert('상점 설정이 저장되었습니다.');
         } catch (error) {
             alert('저장에 실패했습니다.');
@@ -82,6 +84,22 @@ export default function SiteSettingsForm() {
                     value={instagramUrl}
                     onChange={(e) => setInstagramUrl(e.target.value)}
                     placeholder="https://instagram.com/..."
+                />
+            </div>
+
+            <div className={styles.formGroup}>
+                <label className={styles.label}>
+                    미결제 주문 자동 취소 시간 (분)
+                    <span className={styles.tooltip}>무통장 입금 등 결제 대기 상태인 주문이 이 시간을 초과하면 자동 취소됩니다.</span>
+                </label>
+                <input
+                    type="number"
+                    className={styles.input}
+                    value={cancelTimeoutMinutes}
+                    onChange={(e) => setCancelTimeoutMinutes(Number(e.target.value))}
+                    min="10"
+                    step="10"
+                    required
                 />
             </div>
 

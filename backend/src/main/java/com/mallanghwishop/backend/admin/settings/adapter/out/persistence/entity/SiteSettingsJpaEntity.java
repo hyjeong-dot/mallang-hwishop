@@ -23,6 +23,7 @@ public class SiteSettingsJpaEntity {
     private int basicFee;
     private int jejuExtraFee;
     private String instagramUrl;
+    private int cancelTimeoutMinutes;
 
     public static SiteSettingsJpaEntity fromDomain(SiteSettings settings) {
         return SiteSettingsJpaEntity.builder()
@@ -30,6 +31,7 @@ public class SiteSettingsJpaEntity {
                 .basicFee(settings.getBasicFee())
                 .jejuExtraFee(settings.getJejuExtraFee())
                 .instagramUrl(settings.getInstagramUrl())
+                .cancelTimeoutMinutes(settings.getCancelTimeoutMinutes())
                 .build();
     }
 
@@ -38,6 +40,7 @@ public class SiteSettingsJpaEntity {
                 .basicFee(this.basicFee)
                 .jejuExtraFee(this.jejuExtraFee)
                 .instagramUrl(this.instagramUrl)
+                .cancelTimeoutMinutes(this.cancelTimeoutMinutes)
                 .build();
     }
 }

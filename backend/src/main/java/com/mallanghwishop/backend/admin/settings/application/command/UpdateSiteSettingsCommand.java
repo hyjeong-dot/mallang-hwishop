@@ -7,4 +7,5 @@ public class UpdateSiteSettingsCommand {
     private int basicFee;
     private int jejuExtraFee;
     private String instagramUrl;
+    private int cancelTimeoutMinutes;
 }

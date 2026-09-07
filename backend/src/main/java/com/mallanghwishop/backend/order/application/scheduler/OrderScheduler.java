@@ -20,19 +20,21 @@ public class OrderScheduler {
 
     private final OrderRepository orderRepository;
     private final PointUseCase pointUseCase;
+    private final com.mallanghwishop.backend.admin.settings.application.port.in.GetSiteSettingsUseCase getSiteSettingsUseCase;
 
     @Scheduled(fixedRate = 600000) // 10분마다 실행
     @Transactional
     public void cancelOldPendingOrders() {
-        LocalDateTime oneHourAgo = LocalDateTime.now().minusHours(1);
-        List<OrderJpaEntity> oldPendingOrders = orderRepository.findAllByStatusAndCreatedAtBefore(OrderStatus.PENDING, oneHourAgo);
+        int timeoutMinutes = getSiteSettingsUseCase.getSettings().getCancelTimeoutMinutes();
+        LocalDateTime thresholdTime = LocalDateTime.now().minusMinutes(timeoutMinutes);
+        List<OrderJpaEntity> oldPendingOrders = orderRepository.findAllByStatusAndCreatedAtBefore(OrderStatus.PENDING, thresholdTime);
 
         for (OrderJpaEntity entity : oldPendingOrders) {
             log.info("Canceling old pending order: {}", entity.getOrderUid());
             
             // 상태 및 사유 업데이트
             entity.setStatus(OrderStatus.CANCELLED);
-            entity.setCancelReason("[SYS] 결제 대기 시간(1시간) 초과로 인한 자동 취소");
+            entity.setCancelReason("[SYS] 결제 대기 시간(" + timeoutMinutes + "분) 초과로 인한 자동 취소");
             entity.setCancelReasonType("OTHER");
             
             // 포인트 환불 처리

@@ -5,6 +5,7 @@ interface SiteSettings {
     basicFee: number;
     jejuExtraFee: number;
     instagramUrl: string;
+    cancelTimeoutMinutes: number;
 }
 
 export default function useSiteSettings() {
