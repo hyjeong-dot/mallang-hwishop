@@ -7,6 +7,7 @@ import com.mallanghwishop.backend.admin.settings.application.port.in.GetSiteSett
 import com.mallanghwishop.backend.admin.settings.application.result.SiteSettingsResult;
 import com.mallanghwishop.backend.member.domain.model.Member;
 import com.mallanghwishop.backend.product.application.port.out.LoadProductPort;
+import com.mallanghwishop.backend.product.application.port.out.SaveProductPort;
 import com.mallanghwishop.backend.product.domain.model.Product;
 import com.mallanghwishop.backend.order.application.port.in.CreateOrderUseCase;
 import com.mallanghwishop.backend.order.application.port.in.command.CreateOrderCommand;
@@ -15,6 +16,7 @@ import com.mallanghwishop.backend.order.application.result.OrderResult;
 import com.mallanghwishop.backend.order.domain.model.Order;
 import com.mallanghwishop.backend.order.domain.model.OrderLineItem;
 import com.mallanghwishop.backend.order.domain.model.OrderStatus;
+import com.mallanghwishop.backend.point.application.port.in.PointUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -27,9 +29,9 @@ public class CreateOrderService implements CreateOrderUseCase {
 
     private final OrderPort orderPort;
     private final LoadProductPort loadProductPort;
-    private final com.mallanghwishop.backend.product.application.port.out.SaveProductPort saveProductPort;
+    private final SaveProductPort saveProductPort;
     private final LoadMemberPort loadMemberPort;
-    private final com.mallanghwishop.backend.point.application.port.in.PointUseCase pointUseCase;
+    private final PointUseCase pointUseCase;
     private final GetSiteSettingsUseCase getSiteSettingsUseCase;
 
     @Override
@@ -45,6 +47,13 @@ public class CreateOrderService implements CreateOrderUseCase {
         int calculatedDeliveryFee = deliverySettings.getBasicFee();
         if (command.getZipcode() != null && command.getZipcode().startsWith("63")) {
             calculatedDeliveryFee += deliverySettings.getJejuExtraFee();
+        }
+
+        if (command.getPointUsed() != null && command.getPointUsed() > 0) {
+            int minPointUse = getSiteSettingsUseCase.getSettings().getMinPointUse();
+            if (command.getPointUsed() < minPointUse) {
+                throw new IllegalArgumentException("적립금은 " + minPointUse + "원 이상부터 사용 가능합니다.");
+            }
         }
 
         Order order = Order.builder()
@@ -83,11 +92,11 @@ public class CreateOrderService implements CreateOrderUseCase {
                 finalPrice = itemCmd.getUnitPrice();
             }
 
-            // 적립금 계산 (정가 판매 상품만 3% 적립)
+            // 적립금 계산 (정가 판매 상품만 적립)
             int pointEarned = 0;
             if (!isDiscounted) {
-                // 정가 판매 상품인 경우 3% 적립
-                pointEarned = (int) Math.floor((finalPrice * itemCmd.getQuantity()) * 0.03);
+                double rate = product.getPointRate() != null ? product.getPointRate() : getSiteSettingsUseCase.getSettings().getDefaultPointRate();
+                pointEarned = (int) Math.floor((finalPrice * itemCmd.getQuantity()) * rate);
             }
 
             OrderLineItem lineItem = OrderLineItem.builder()

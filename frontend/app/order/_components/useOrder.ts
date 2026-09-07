@@ -60,20 +60,20 @@ export function useOrder() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccessModalOpen, setSuccessModalOpen] = useState(false);
 
-    // 포인트 및 배송비 상태
+    // 포인트 및 배송비/설정 상태
     const [pointUsed, setPointUsed] = useState(0);
-    const [deliverySettings, setDeliverySettings] = useState({ basicFee: 3500, jejuExtraFee: 3000 });
+    const [siteSettings, setSiteSettings] = useState({ basicFee: 3500, jejuExtraFee: 3000, minPointUse: 1000 });
 
     useEffect(() => {
-        const fetchDeliverySettings = async () => {
+        const fetchSettings = async () => {
             try {
-                const data = await fetchAPI('/admin/delivery/settings');
-                setDeliverySettings(data);
+                const data = await fetchAPI('/settings');
+                setSiteSettings(data);
             } catch (error) {
-                console.error('배송비 설정을 불러오는데 실패했습니다.', error);
+                console.error('설정을 불러오는데 실패했습니다.', error);
             }
         };
-        fetchDeliverySettings();
+        fetchSettings();
     }, []);
 
     // Redirect to login if unauthenticated or products if empty cart
@@ -134,18 +134,27 @@ export function useOrder() {
     };
 
     const isJeju = shippingInfo.zipcode.startsWith('63');
-    const calculatedDeliveryFee = deliverySettings.basicFee + (isJeju ? deliverySettings.jejuExtraFee : 0);
+    const deliveryFee = siteSettings.basicFee + (isJeju ? siteSettings.jejuExtraFee : 0);
     
     // 상품 총합이 0원이면 배송비도 0원으로 처리 (장바구니 비었을 때 방어코드)
-    const finalDeliveryFee = items.length > 0 ? calculatedDeliveryFee : 0;
+    const finalDeliveryFee = items.length > 0 ? deliveryFee : 0;
     
     // 최종 금액 = 상품 가격 총합 + 배송비 - 사용 포인트
     const finalPrice = Math.max(0, totalPrice + finalDeliveryFee - pointUsed);
 
     const handleSubmitOrder = async () => {
-        if (items.length === 0) return;
+        if (items.length === 0) {
+            toast.error('주문할 상품이 없습니다.');
+            return;
+        }
+
         if (!shippingInfo.recipientName || !shippingInfo.phoneNumber || !shippingInfo.zipcode || !shippingInfo.address) {
             toast.error('배송지 정보를 모두 입력해 주세요.');
+            return;
+        }
+
+        if (pointUsed > 0 && pointUsed < siteSettings.minPointUse) {
+            toast.error(`적립금은 ${siteSettings.minPointUse.toLocaleString()}원 이상부터 사용 가능합니다.`);
             return;
         }
 

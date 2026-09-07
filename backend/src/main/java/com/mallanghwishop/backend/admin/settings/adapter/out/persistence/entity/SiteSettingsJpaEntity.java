@@ -24,6 +24,8 @@ public class SiteSettingsJpaEntity {
     private int jejuExtraFee;
     private String instagramUrl;
     private int cancelTimeoutMinutes;
+    private double defaultPointRate;
+    private int minPointUse;
 
     public static SiteSettingsJpaEntity fromDomain(SiteSettings settings) {
         return SiteSettingsJpaEntity.builder()
@@ -32,6 +34,8 @@ public class SiteSettingsJpaEntity {
                 .jejuExtraFee(settings.getJejuExtraFee())
                 .instagramUrl(settings.getInstagramUrl())
                 .cancelTimeoutMinutes(settings.getCancelTimeoutMinutes())
+                .defaultPointRate(settings.getDefaultPointRate())
+                .minPointUse(settings.getMinPointUse())
                 .build();
     }
 
@@ -41,6 +45,8 @@ public class SiteSettingsJpaEntity {
                 .jejuExtraFee(this.jejuExtraFee)
                 .instagramUrl(this.instagramUrl)
                 .cancelTimeoutMinutes(this.cancelTimeoutMinutes)
+                .defaultPointRate(this.defaultPointRate)
+                .minPointUse(this.minPointUse)
                 .build();
     }
 }

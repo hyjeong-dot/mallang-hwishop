@@ -34,6 +34,8 @@ public class SiteSettingsService implements GetSiteSettingsUseCase, UpdateSiteSe
                 .jejuExtraFee(command.getJejuExtraFee())
                 .instagramUrl(command.getInstagramUrl())
                 .cancelTimeoutMinutes(command.getCancelTimeoutMinutes())
+                .defaultPointRate(command.getDefaultPointRate())
+                .minPointUse(command.getMinPointUse())
                 .build();
 
         SiteSettings saved = repository.save(SiteSettingsJpaEntity.fromDomain(updated)).toDomain();
@@ -48,6 +50,8 @@ public class SiteSettingsService implements GetSiteSettingsUseCase, UpdateSiteSe
                         .jejuExtraFee(3000)
                         .instagramUrl("")
                         .cancelTimeoutMinutes(60)
+                        .defaultPointRate(0.03)
+                        .minPointUse(1000)
                         .build())).toDomain());
     }
 
@@ -57,6 +61,8 @@ public class SiteSettingsService implements GetSiteSettingsUseCase, UpdateSiteSe
                 .jejuExtraFee(settings.getJejuExtraFee())
                 .instagramUrl(settings.getInstagramUrl())
                 .cancelTimeoutMinutes(settings.getCancelTimeoutMinutes())
+                .defaultPointRate(settings.getDefaultPointRate())
+                .minPointUse(settings.getMinPointUse())
                 .build();
     }
 }

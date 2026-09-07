@@ -11,6 +11,8 @@ export default function SiteSettingsForm() {
     const [jejuExtraFee, setJejuExtraFee] = useState<number>(3000);
     const [instagramUrl, setInstagramUrl] = useState<string>('');
     const [cancelTimeoutMinutes, setCancelTimeoutMinutes] = useState<number>(60);
+    const [defaultPointRate, setDefaultPointRate] = useState<number>(0.03);
+    const [minPointUse, setMinPointUse] = useState<number>(1000);
     const [isSaving, setIsSaving] = useState(false);
 
     useEffect(() => {
@@ -19,6 +21,8 @@ export default function SiteSettingsForm() {
             setJejuExtraFee(settings.jejuExtraFee);
             setInstagramUrl(settings.instagramUrl || '');
             setCancelTimeoutMinutes(settings.cancelTimeoutMinutes || 60);
+            setDefaultPointRate(settings.defaultPointRate || 0);
+            setMinPointUse(settings.minPointUse || 0);
         }
     }, [settings]);
 
@@ -26,7 +30,7 @@ export default function SiteSettingsForm() {
         e.preventDefault();
         setIsSaving(true);
         try {
-            await updateSettings({ basicFee, jejuExtraFee, instagramUrl, cancelTimeoutMinutes });
+            await updateSettings({ basicFee, jejuExtraFee, instagramUrl, cancelTimeoutMinutes, defaultPointRate, minPointUse });
             alert('상점 설정이 저장되었습니다.');
         } catch (error) {
             alert('저장에 실패했습니다.');
@@ -99,6 +103,39 @@ export default function SiteSettingsForm() {
                     onChange={(e) => setCancelTimeoutMinutes(Number(e.target.value))}
                     min="10"
                     step="10"
+                    required
+                />
+            </div>
+
+            <div className={styles.formGroup}>
+                <label className={styles.label}>
+                    기본 적립률 (%)
+                    <span className={styles.tooltip}>상품 신규 등록 시 기본으로 적용되는 포인트 적립률입니다.</span>
+                </label>
+                <input
+                    type="number"
+                    className={styles.input}
+                    value={defaultPointRate * 100}
+                    onChange={(e) => setDefaultPointRate(Number(e.target.value) / 100)}
+                    min="0"
+                    step="0.5"
+                    max="100"
+                    required
+                />
+            </div>
+
+            <div className={styles.formGroup}>
+                <label className={styles.label}>
+                    최소 사용 가능 적립금 (원)
+                    <span className={styles.tooltip}>결제 시 적립금을 사용하기 위한 최소 보유 금액 조건입니다.</span>
+                </label>
+                <input
+                    type="number"
+                    className={styles.input}
+                    value={minPointUse}
+                    onChange={(e) => setMinPointUse(Number(e.target.value))}
+                    min="0"
+                    step="100"
                     required
                 />
             </div>

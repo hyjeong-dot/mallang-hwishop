@@ -41,6 +41,7 @@ public class Product {
     private Integer stock;
     private Integer maxPerOrder;
     private String instagramUrl;
+    private Double pointRate;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

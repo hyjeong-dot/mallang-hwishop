@@ -5,6 +5,7 @@ import com.mallanghwishop.backend.admin.product.application.port.in.RegisterProd
 import com.mallanghwishop.backend.admin.product.application.port.out.LoadProductPort;
 import com.mallanghwishop.backend.admin.product.application.port.out.SaveProductPort;
 import com.mallanghwishop.backend.admin.product.domain.model.Product;
+import com.mallanghwishop.backend.admin.settings.application.port.in.GetSiteSettingsUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,7 @@ public class RegisterProductService implements RegisterProductUseCase {
 
     private final SaveProductPort saveProductPort;
     private final LoadProductPort loadProductPort;
+    private final GetSiteSettingsUseCase getSiteSettingsUseCase;
 
     @Override
     public Long registerProduct(RegisterProductCommand command) {
@@ -43,6 +45,7 @@ public class RegisterProductService implements RegisterProductUseCase {
                 .stock(command.getStock())
                 .maxPerOrder(command.getMaxPerOrder())
                 .instagramUrl(command.getInstagramUrl())
+                .pointRate(getSiteSettingsUseCase.getSettings().getDefaultPointRate())
                 .build();
 
         return saveProductPort.save(product);

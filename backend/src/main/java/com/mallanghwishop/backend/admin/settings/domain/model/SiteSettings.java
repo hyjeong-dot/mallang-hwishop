@@ -10,4 +10,6 @@ public class SiteSettings {
     private final int jejuExtraFee;
     private final String instagramUrl;
     private final int cancelTimeoutMinutes;
+    private final double defaultPointRate;
+    private final int minPointUse;
 }

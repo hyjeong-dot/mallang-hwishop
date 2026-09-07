@@ -69,6 +69,9 @@ public class ProductJpaEntity {
     @Column(name = "instagram_url", length = 500)
     private String instagramUrl;
 
+    @Column(name = "point_rate")
+    private Double pointRate;
+
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
@@ -119,6 +122,7 @@ public class ProductJpaEntity {
                 .stock(stock)
                 .maxPerOrder(maxPerOrder)
                 .instagramUrl(instagramUrl)
+                .pointRate(pointRate)
                 .createdAt(createdAt)
                 .updatedAt(updatedAt)
                 .build();
@@ -142,9 +146,9 @@ public class ProductJpaEntity {
                 .stock(product.getStock())
                 .maxPerOrder(product.getMaxPerOrder())
                 .instagramUrl(product.getInstagramUrl())
+                .pointRate(product.getPointRate())
                 .createdAt(product.getCreatedAt())
                 .updatedAt(product.getUpdatedAt())
                 .build();
     }
 }
-
