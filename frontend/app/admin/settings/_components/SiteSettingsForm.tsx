@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import useSiteSettings from './useSiteSettings';
+import NoticeImageManager from './NoticeImageManager';
 import styles from '../page.module.css';
 import { Save } from 'lucide-react';
 

@@ -25,6 +25,13 @@ export default function ProductDetailInfo({ slug }: ProductDetailInfoProps) {
     const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
     const [isCartConfirmModalOpen, setIsCartConfirmModalOpen] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
+    const [noticeImages, setNoticeImages] = useState<{ id: number, url: string }[]>([]);
+
+    useEffect(() => {
+        fetchAPI('/settings/notices')
+            .then(data => setNoticeImages(data || []))
+            .catch(err => console.error("Error fetching notice images:", err));
+    }, []);
 
     // Initial check on mount or when product/user changes
     useEffect(() => {
@@ -212,9 +219,19 @@ export default function ProductDetailInfo({ slug }: ProductDetailInfoProps) {
                 )}
             </div>
 
-            <div className={styles.commonInfoSection}>
-                <img src="/images/common-info-placeholder.png" alt="공통 안내사항" className={styles.commonInfoImage} onError={(e) => { e.currentTarget.style.display = 'none'; }} />
-            </div>
+            {noticeImages.length > 0 && (
+                <div className={styles.commonInfoSection}>
+                    {noticeImages.map(img => (
+                        <img 
+                            key={img.id} 
+                            src={img.url} 
+                            alt="공통 안내사항" 
+                            className={styles.commonInfoImage} 
+                            onError={(e) => { e.currentTarget.style.display = 'none'; }} 
+                        />
+                    ))}
+                </div>
+            )}
 
             <div className={styles.ctaRow}>
                 <button

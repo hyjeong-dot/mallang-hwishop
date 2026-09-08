@@ -1,0 +1,100 @@
+.container {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+}
+
+.header {
+    margin-bottom: 1rem;
+}
+
+.header h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+    color: #212529;
+}
+
+.header p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.uploadSection {
+    margin-bottom: 1rem;
+}
+
+.uploadLabel {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: #e9ecef;
+    border: 1px dashed #adb5bd;
+    border-radius: 4px;
+    color: #495057;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.uploadLabel:hover {
+    background: #dee2e6;
+    border-color: #6c757d;
+}
+
+.imageList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.imageItem {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 0.5rem;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    gap: 1rem;
+}
+
+.dragHandle {
+    cursor: grab;
+    padding: 0.5rem;
+    color: #adb5bd;
+}
+
+.dragHandle:active {
+    cursor: grabbing;
+}
+
+.imagePreview {
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+    flex: 1;
+}
+
+.deleteBtn {
+    padding: 0.25rem 0.75rem;
+    background: #ffe3e3;
+    color: #c92a2a;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.deleteBtn:hover {
+    background: #ffc9c9;
+}
+
+.emptyMsg {
+    text-align: center;
+    padding: 2rem;
+    color: #adb5bd;
+    background: white;
+    border: 1px dashed #dee2e6;
+    border-radius: 4px;
+}
